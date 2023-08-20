@@ -1,0 +1,16 @@
+{
+  "index": "Get Started",
+  
+  "-- apis": {
+    "type": "separator",
+    "title": "API References"
+  },
+  "aptos": "Aptos API Reference",
+  "flatsat": "Flatsat API Reference",
+  
+  "-- manuals": {
+    "type": "separator",
+    "title": "Manuals"
+  },
+  "vota": "Vota Operator Manual"
+}

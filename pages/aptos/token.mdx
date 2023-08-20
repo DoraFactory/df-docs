@@ -1,0 +1,496 @@
+import { Callout } from 'nextra/components'
+
+# `token`
+
+## `collection_data`
+
+### `GetCollectionDetailById`
+
+Get the corresponding collection data information based on `collection_data_id_hash`.
+
+```text
+POST /token/collection_data/GetCollectionDetailById
+```
+
+```ts filename="Request"
+interface ReqGetCollectionDetailById {
+  collection_data_id_hash: string;
+  transaction_version?: string;
+  token: string;
+}
+```
+
+```ts filename="Response"
+interface ResGetCollectionDetailById {
+  collectionData: {
+    collection_data_id_hash: string;
+    transaction_version: string;
+    creator_address: string;
+    collection_name: string;
+    description: string;
+    metadata_uri: string;
+    supply: string;
+    maximum: string;
+    maximum_mutable: boolean;
+    uri_mutable: boolean;
+    description_mutable: boolean;
+    inserted_at: /*datetime*/ string;
+    table_handle: string;
+    transaction_timestamp: /*datetime*/ string;
+  };
+}
+```
+
+```ts filename="Client"
+import { HttpClient } from "tsrpc";
+import { serviceProto } from "../shared/protocols/serviceProto";
+
+// Create the Client
+let client = new HttpClient(serviceProto, {
+  server: "https://aptos.dorafactory.org/mainnet-api/",
+  logger: console,
+});
+
+async function main() {
+  // callApi
+  let ret = await client.callApi(
+    "token/collection_data/GetCollectionDetailById",
+    {
+      collection_data_id_hash:
+        "fb648e574d632589a2f026d8341ca0c95a7c3f8cb9ec6b8c82f76755a0d37afb",
+      token: "203db03b-1880-4926-b0a3-9937521a1386",
+    }
+  );
+  if (ret.res != undefined) {
+    console.log(ret.res);
+  }
+  // Error
+  if (!ret.isSucc) {
+    return;
+  }
+}
+main();
+```
+
+## `current_token_ownership`
+
+### `GetCurrentTokenById`
+
+Query the owner of a current token.
+
+```text
+POST /token/current_token_ownership/GetCurrentTokenById
+```
+
+```ts filename="Request"
+interface ReqGetCurrentTokenById {
+  token_data_id_hash: string;
+  last_transaction_version?: string;
+  token: string;
+}
+```
+
+```ts filename="Response"
+interface ResGetCurrentTokenById {
+  currentToken: {
+    token_data_id_hash: string;
+    property_version: string;
+    owner_address: string;
+    creator_address: string;
+    collection_name: string;
+    name: string;
+    amount: string;
+    token_properties: string;
+    last_transaction_version: string;
+    inserted_at: /*datetime*/ string;
+    collection_data_id_hash: string;
+    table_type: string;
+    last_transaction_timestamp: /*datetime*/ string;
+  };
+}
+```
+
+```ts filename="Client"
+import { HttpClient } from "tsrpc";
+import { serviceProto } from "../shared/protocols/serviceProto";
+
+// Create the Client
+let client = new HttpClient(serviceProto, {
+  server: "https://aptos.dorafactory.org/mainnet-api/",
+  logger: console,
+});
+
+async function main() {
+  // callApi
+  let ret = await client.callApi(
+    "token/current_token_ownership/GetCurrentTokenById",
+    {
+      token_data_id_hash:
+        "77482d3a8adda7a1827a42e59824cc231884541d8fbfa3e9c24dae9be0c40190",
+      token: "203db03b-1880-4926-b0a3-9937521a1386",
+    }
+  );
+  if (ret.res != undefined) {
+    console.log(ret.res);
+  }
+  // Error
+  if (!ret.isSucc) {
+    return;
+  }
+}
+main();
+```
+
+### `ListCurrentToken`
+
+Query the relevant current tokens according to `creator_address`/`collections_name`, you can use this way to count the relevant holder information.
+
+<Callout type="warning">
+`creator_address` and `collections_name` cannot both be empty.
+</Callout>
+
+```text
+POST `/token/current_token_ownership/ListCurrentToken
+```
+
+```ts filename="Request"
+interface ReqListCurrentToken {
+  creator_address?: string;
+  collections_name?: string;
+  offset?: number;
+  limit?: number;
+  token: string;
+}
+```
+
+```ts filename="Response"
+interface ResListCurrentToken {
+  currentTokens: {
+    token_data_id_hash: string;
+    property_version: string;
+    owner_address: string;
+    creator_address: string;
+    collection_name: string;
+    name: string;
+    amount: string;
+    token_properties: string;
+    last_transaction_version: string;
+    inserted_at: /*datetime*/ string;
+    collection_data_id_hash: string;
+    table_type: string;
+    last_transaction_timestamp: /*datetime*/ string;
+  }[];
+  total: number;
+}
+```
+
+```ts filename="Client"
+import { HttpClient } from "tsrpc";
+import { serviceProto } from "../shared/protocols/serviceProto";
+
+// Create the Client
+let client = new HttpClient(serviceProto, {
+  server: "https://aptos.dorafactory.org/mainnet-api/",
+  logger: console,
+});
+
+async function main() {
+  // callApi
+  let ret = await client.callApi(
+    "token/current_token_ownership/ListCurrentToken",
+    {
+      creator_address:
+        "0x3488a32e97334466be5a7977207e4eba513dda8730364878a670db6c1354d567",
+      token: "203db03b-1880-4926-b0a3-9937521a1386",
+    }
+  );
+  if (ret.res != undefined) {
+    console.log(ret.res);
+  }
+  // Error
+  if (!ret.isSucc) {
+    return;
+  }
+}
+main();
+```
+
+### `ListCurrentTokenByAddress`
+
+Get the current token information under a user.
+
+```text
+POST /token/current_token_ownership/ListCurrentTokenByAddress
+```
+
+```ts filename="Request"
+interface ReqListCurrentTokenByAddress {
+  owner_address: string;
+  offset?: number;
+  limit?: number;
+  token: string;
+}
+```
+
+```ts filename="Response"
+interface ResListCurrentTokenByAddress {
+  currentTokens: {
+    token_data_id_hash: string;
+    property_version: string;
+    owner_address: string;
+    creator_address: string;
+    collection_name: string;
+    name: string;
+    amount: string;
+    token_properties: string;
+    last_transaction_version: string;
+    inserted_at: /*datetime*/ string;
+    collection_data_id_hash: string;
+    table_type: string;
+    last_transaction_timestamp: /*datetime*/ string;
+  }[];
+  total: number;
+}
+```
+
+```ts filename="Client"
+import { HttpClient } from "tsrpc";
+import { serviceProto } from "../shared/protocols/serviceProto";
+
+// Create the Client
+let client = new HttpClient(serviceProto, {
+  server: "https://aptos.dorafactory.org/mainnet-api/",
+  logger: console,
+});
+
+async function main() {
+  // callApi
+  let ret = await client.callApi(
+    "token/current_token_ownership/ListCurrentTokenByAddress",
+    {
+      owner_address:
+        "0x3ca30f13c0392e7ae03ab48b560595454805925b1bc23e47157bb8232633021b",
+      token: "203db03b-1880-4926-b0a3-9937521a1386",
+    }
+  );
+  if (ret.res != undefined) {
+    console.log(ret.res);
+  }
+  // Error
+  if (!ret.isSucc) {
+    return;
+  }
+}
+main();
+```
+
+## `token_data`
+
+### `GetTokenDetailById`
+
+Get the corresponding token data based on `token_data_id_hash`.
+
+```text
+POST /token/token_data/GetTokenDetailById
+```
+
+```ts filename="Request"
+interface ReqGetTokenDetailById {
+  token_data_id_hash: string;
+  transaction_version?: string;
+  token: string;
+}
+```
+
+```ts filename="Response"
+interface ResGetTokenDetailById {
+  tokenData: {
+    token_data_id_hash: string;
+    transaction_version: string;
+    creator_address: string;
+    collection_name: string;
+    name: string;
+    maximum: string;
+    supply: string;
+    largest_property_version: string;
+    metadata_uri: string;
+    payee_address: string;
+    royalty_points_numerator: string;
+    royalty_points_denominator: string;
+    maximum_mutable: boolean;
+    uri_mutable: boolean;
+    description_mutable: boolean;
+    properties_mutable: boolean;
+    royalty_mutable: boolean;
+    default_properties: string;
+    inserted_at: /*datetime*/ string;
+    collection_data_id_hash: string;
+    transaction_timestamp: /*datetime*/ string;
+    description: string;
+  };
+}
+```
+
+```ts filename="Client"
+import { HttpClient } from "tsrpc";
+import { serviceProto } from "../shared/protocols/serviceProto";
+
+// Create the Client
+let client = new HttpClient(serviceProto, {
+  server: "https://aptos.dorafactory.org/mainnet-api/",
+  logger: console,
+});
+
+async function main() {
+  // callApi
+  let ret = await client.callApi("token/token_data/GetTokenDetailById", {
+    token_data_id_hash:
+      "7f7b7e3e8f12ef925b8feb0016f4ec51db9cbc4c4e779edccf7de63a1b38b1f8",
+    token: "203db03b-1880-4926-b0a3-9937521a1386",
+  });
+  if (ret.res != undefined) {
+    console.log(ret.res);
+  }
+  // Error
+  if (!ret.isSucc) {
+    return;
+  }
+}
+main();
+```
+
+## `token_ownership`
+
+### `GetTokenById`
+
+Query the token.
+
+```text
+POST /token/token_ownership/GetTokenById
+```
+
+```ts filename="Request"
+interface ReqGetTokenById {
+  token_data_id_hash: string;
+  property_version: string;
+  table_handle: string;
+  transaction_version?: string;
+  token: string;
+}
+```
+
+```ts filename="Response"
+interface ResGetTokenById {
+  token: {
+    token_data_id_hash: string;
+    property_version: string;
+    transaction_version: string;
+    table_handle: string;
+    collection_name: string;
+    name: string;
+    owner_address: string;
+    amount: string;
+    table_type: string;
+    inserted_at: /*datetime*/ string;
+    collection_data_id_hash: string;
+    transaction_timestamp: /*datetime*/ string;
+  };
+}
+```
+
+```ts filename="Client"
+import { HttpClient } from "tsrpc";
+import { serviceProto } from "../shared/protocols/serviceProto";
+
+// Create the Client
+let client = new HttpClient(serviceProto, {
+  server: "https://aptos.dorafactory.org/mainnet-api/",
+  logger: console,
+});
+
+async function main() {
+  // callApi
+  let ret = await client.callApi("token/token_ownership/GetTokenById", {
+    token_data_id_hash:
+      "72bb4980fd7b1866fa660c496fc555fbbb28baa23b68463df4763d485da1c100",
+    property_version: "0",
+    table_handle:
+      "0xa3ce7bb4acea0bcc6827d23c8ccef3bb388df2c8478696b7d061474b01392803",
+    token: "203db03b-1880-4926-b0a3-9937521a1386",
+  });
+  if (ret.res != undefined) {
+    console.log(ret.res);
+  }
+  // Error
+  if (!ret.isSucc) {
+    return;
+  }
+}
+main();
+```
+
+### `ListTokenByAddress`
+
+List relevant token ownership data by `owner_address`.
+
+```text
+POST /token/token_ownership/ListTokenByAddress
+```
+
+```ts filename="Request"
+interface ReqListTokenByAddress {
+  owner_address: string;
+  transaction_version?: string;
+  offset?: number;
+  limit?: number;
+  token: string;
+}
+```
+
+```ts filename="Response"
+interface ResListTokenByAddress {
+  tokens: {
+    token_data_id_hash: string;
+    property_version: string;
+    transaction_version: string;
+    table_handle: string;
+    collection_name: string;
+    name: string;
+    owner_address: string;
+    amount: string;
+    table_type: string;
+    inserted_at: /*datetime*/ string;
+    collection_data_id_hash: string;
+    transaction_timestamp: /*datetime*/ string;
+  }[];
+  total: number;
+}
+```
+
+```ts filename="Client"
+import { HttpClient } from "tsrpc";
+import { serviceProto } from "../shared/protocols/serviceProto";
+
+// Create the Client
+let client = new HttpClient(serviceProto, {
+  server: "https://aptos.dorafactory.org/mainnet-api/",
+  logger: console,
+});
+
+async function main() {
+  // callApi
+  let ret = await client.callApi("token/token_ownership/ListTokenByAddress", {
+    owner_address:
+      "0x3ca30f13c0392e7ae03ab48b560595454805925b1bc23e47157bb8232633021b",
+    token: "203db03b-1880-4926-b0a3-9937521a1386",
+  });
+  if (ret.res != undefined) {
+    console.log(ret.res);
+  }
+  // Error
+  if (!ret.isSucc) {
+    return;
+  }
+}
+main();
+```
