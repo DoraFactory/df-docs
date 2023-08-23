@@ -12,64 +12,64 @@ POST /blockchain/event/ListenEvents
 
 ```ts filename="Request"
 interface ReqListenEventsByAddress {
-  account_address: string;
-  startVersion?: string;
-  endVersion?: string;
-  offset?: number;
-  limit?: number;
-  token: string;
+  account_address: string
+  startVersion?: string
+  endVersion?: string
+  offset?: number
+  limit?: number
+  token: string
 }
 ```
 
 ```ts filename="Response"
 interface ResListenEventsByAddress {
   events: {
-    sequence_number: string;
-    creation_number: string;
-    account_address: string;
-    transaction_version: string;
-    transaction_block_height: string;
-    type: string;
-    data: string;
-    inserted_at: /*datetime*/ string;
-  }[];
-  total: number;
+    sequence_number: string
+    creation_number: string
+    account_address: string
+    transaction_version: string
+    transaction_block_height: string
+    type: string
+    data: string
+    inserted_at: /*datetime*/ string
+  }[]
+  total: number
 }
 ```
 
 ```ts filename="Client"
-import { WsClient } from "tsrpc";
-import { serviceProto } from "../shared/protocols/serviceProto";
+import { WsClient } from 'tsrpc'
+import { serviceProto } from '../shared/protocols/serviceProto'
 
 const main = async () => {
   // Create Client
   let client = new WsClient(serviceProto, {
-    server: "wss://aptos.dorafactory.org/mainnet-ws/",
-    logger: console,
-  });
+    server: 'wss://aptos.dorafactory.org/mainnet-ws/',
+    logger: console
+  })
   // Connect
-  await client.connect().then((res) => {
+  await client.connect().then(res => {
     if (!res.isSucc) {
-      console.log(res.errMsg);
+      console.log(res.errMsg)
     }
-  });
+  })
 
-  let ret = await client.callApi("blockchain/event/ListenEvents", {
+  let ret = await client.callApi('blockchain/event/ListenEvents', {
     account_address:
-      "0x7865f4682eefa75b360b6c426a1f73de8261749d472ad71ba2f88a2e31ebf096",
-    startVersion: "1",
+      '0x7865f4682eefa75b360b6c426a1f73de8261749d472ad71ba2f88a2e31ebf096',
+    startVersion: '1',
     limit: 20,
-    token: "5ba58ba8-49f2-43e8-856a-8bc503ad0ed2",
-  });
+    token: '5ba58ba8-49f2-43e8-856a-8bc503ad0ed2'
+  })
 
-  let handle = client.listenMsg("blockchain/events/ListenEventsBy", (msg) => {
-    console.log(msg);
-  });
+  let handle = client.listenMsg('blockchain/events/ListenEventsBy', msg => {
+    console.log(msg)
+  })
 
   // await client.disconnect();
-};
+}
 
-main();
+main()
 ```
 
 ### `ListenLatestOneByAddress`
@@ -82,58 +82,58 @@ POST /blockchain/event/ListenLatestOneByAddress
 
 ```ts filename="Request"
 interface ReqListenLatestOneByAddress {
-  account_address: string;
-  token: string;
+  account_address: string
+  token: string
 }
 ```
 
 ```ts filename="Response"
 interface ResListenLatestOneByAddress {
-  sequence_number: string;
-  creation_number: string;
-  account_address: string;
-  transaction_version: string;
-  transaction_block_height: string;
-  type: string;
-  data: string;
-  inserted_at: /*datetime*/ string;
+  sequence_number: string
+  creation_number: string
+  account_address: string
+  transaction_version: string
+  transaction_block_height: string
+  type: string
+  data: string
+  inserted_at: /*datetime*/ string
 }
 ```
 
 ```ts filename="Client"
-import { WsClient } from "tsrpc";
-import { serviceProto } from "../shared/protocols/serviceProto";
+import { WsClient } from 'tsrpc'
+import { serviceProto } from '../shared/protocols/serviceProto'
 
 const main = async () => {
   // Create Connect
   let client = new WsClient(serviceProto, {
-    server: "wss://aptos.dorafactory.org/mainnet-ws/",
-    logger: console,
-  });
+    server: 'wss://aptos.dorafactory.org/mainnet-ws/',
+    logger: console
+  })
   // Connect
-  await client.connect().then((res) => {
+  await client.connect().then(res => {
     if (!res.isSucc) {
-      console.log(res.errMsg);
+      console.log(res.errMsg)
     }
-  });
+  })
 
-  let ret = await client.callApi("blockchain/event/ListenLatestOneByAddress", {
+  let ret = await client.callApi('blockchain/event/ListenLatestOneByAddress', {
     account_address:
-      "0x7865f4682eefa75b360b6c426a1f73de8261749d472ad71ba2f88a2e31ebf096",
-    token: "5ba58ba8-49f2-43e8-856a-8bc503ad0ed2",
-  });
-  console.log(ret);
+      '0x7865f4682eefa75b360b6c426a1f73de8261749d472ad71ba2f88a2e31ebf096',
+    token: '5ba58ba8-49f2-43e8-856a-8bc503ad0ed2'
+  })
+  console.log(ret)
   let handle = client.listenMsg(
-    "blockchain/event/ListenLatestOneByAddress",
-    (msg) => {
-      console.log(msg);
+    'blockchain/event/ListenLatestOneByAddress',
+    msg => {
+      console.log(msg)
     }
-  );
+  )
 
   // await client.disconnect();
-};
+}
 
-main();
+main()
 ```
 
 ## `move_resource`
@@ -148,69 +148,69 @@ POST /blockchain/move_resource/ListenResourcesByAddress
 
 ```ts filename="Request"
 interface ReqListenResourcesByAddress {
-  address: string;
-  module?: string;
-  name?: string;
-  startVersion?: string;
-  endVersion?: string;
-  offset?: number;
-  limit?: number;
-  token: string;
+  address: string
+  module?: string
+  name?: string
+  startVersion?: string
+  endVersion?: string
+  offset?: number
+  limit?: number
+  token: string
 }
 ```
 
 ```ts filename="Response"
 interface ResListenResourcesByAddress {
   resources: {
-    transaction_version: string;
-    write_set_change_index: string;
-    transaction_block_height: string;
-    name: string;
-    address: string;
-    type: string;
-    module: string;
-    generic_type_params: string;
-    data: string;
-    inserted_at: /*datetime*/ string;
-  }[];
-  total: number;
+    transaction_version: string
+    write_set_change_index: string
+    transaction_block_height: string
+    name: string
+    address: string
+    type: string
+    module: string
+    generic_type_params: string
+    data: string
+    inserted_at: /*datetime*/ string
+  }[]
+  total: number
 }
 ```
 
 ```ts filename="Client"
-import { WsClient } from "tsrpc";
-import { serviceProto } from "../shared/protocols/serviceProto";
+import { WsClient } from 'tsrpc'
+import { serviceProto } from '../shared/protocols/serviceProto'
 
 export const main = async (token: string) => {
   // Create Client
   let client = new WsClient(serviceProto, {
-    server: "wss://aptos.dorafactory.org/mainnet-ws/",
-    logger: console,
-  });
+    server: 'wss://aptos.dorafactory.org/mainnet-ws/',
+    logger: console
+  })
   // Connect
-  await client.connect().then((res) => {
+  await client.connect().then(res => {
     if (!res.isSucc) {
-      console.log(res.errMsg);
+      console.log(res.errMsg)
     }
-  });
+  })
 
   let ret = await client.callApi(
-    "blockchain/move_resource/ListenResourcesByAddress",
+    'blockchain/move_resource/ListenResourcesByAddress',
     {
       address:
-        "0x1066cd66f48841107052acc6050532e890d5d1bfb39029dbb80df71a96d6b2d1",
-      token: "203db03b-1880-4926-b0a3-9937521a1386",
+        '0x1066cd66f48841107052acc6050532e890d5d1bfb39029dbb80df71a96d6b2d1',
+      token: '203db03b-1880-4926-b0a3-9937521a1386'
     }
-  );
+  )
 
   let handle = client.listenMsg(
-    "blockchain/move_resource/ListenResourcesByAddress",
-    (msg) => {
-      console.log(msg);
+    'blockchain/move_resource/ListenResourcesByAddress',
+    msg => {
+      console.log(msg)
     }
-  );
+  )
 
-  await client.disconnect();
-};
-main();
+  await client.disconnect()
+}
+main()
 ```

@@ -1,14 +1,14 @@
 import '../style.css'
-import { Public_Sans, Fira_Code } from "next/font/google"
+import { Public_Sans, Fira_Code } from 'next/font/google'
 
 export const publicSans = Public_Sans({
-  subsets: ["latin"],
-  display: "swap",
+  subsets: ['latin'],
+  display: 'swap'
 })
 
 export const firaCode = Fira_Code({
-  subsets: ["latin"],
-  display: "swap",
+  subsets: ['latin'],
+  display: 'swap'
 })
 
 export default function MyApp({ Component, pageProps }) {
@@ -16,10 +16,32 @@ export default function MyApp({ Component, pageProps }) {
     <>
       <style jsx global>{`
         body {
-          font-family: ${publicSans.style.fontFamily}, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+          font-family:
+            ${publicSans.style.fontFamily},
+            system-ui,
+            -apple-system,
+            BlinkMacSystemFont,
+            'Segoe UI',
+            Roboto,
+            Oxygen,
+            Ubuntu,
+            Cantarell,
+            'Helvetica Neue',
+            Arial,
+            sans-serif;
         }
-        code, kbd, pre, samp {
-          font-family: ${firaCode.style.fontFamily}, ui-monospace, "SF Mono", Menlo, Consolas, Liberation Mono, monospace;
+        code,
+        kbd,
+        pre,
+        samp {
+          font-family:
+            ${firaCode.style.fontFamily},
+            ui-monospace,
+            'SF Mono',
+            Menlo,
+            Consolas,
+            Liberation Mono,
+            monospace;
         }
       `}</style>
       <Component {...pageProps} />
