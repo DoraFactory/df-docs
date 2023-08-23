@@ -4,7 +4,7 @@ import { Lockup } from '@components/icons'
 export default {
   // logo: <span>DF Documentation</span>,
   logo: (
-    <span className="nx-text-gray-800 dark:nx-text-gray-200"><Lockup /></span>
+    <span className="nx-text-gray-800 dark:nx-text-gray-200"><span className="opacity-0 absolute">Dora Factory</span><Lockup /></span>
   ),
   docsRepositoryBase: 'https://github.com/dorafactory/df-docs/blob/master/pages',
   sidebar: {
