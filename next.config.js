@@ -1,7 +1,7 @@
 const withNextra = require('nextra')({
   theme: 'nextra-theme-docs',
   themeConfig: './theme.config.jsx',
-  defaultShowCopyCode: true,
+  defaultShowCopyCode: true
 })
 
 // module.exports = withNextra()
@@ -10,7 +10,7 @@ const withNextra = require('nextra')({
 module.exports = withNextra({
   /* other next.js config */
   reactStrictMode: true, // Recommended for the `pages` directory, default in `app`.
-  
+
   webpack(config) {
     // const allowedSvgRegex = /components\/icons\/.+\.svg$/
     const allowedSvgRegex = /\.svg$/i
@@ -25,5 +25,5 @@ module.exports = withNextra({
       use: ['@svgr/webpack']
     })
     return config
-  },
+  }
 })

@@ -4,24 +4,28 @@ import { Lockup } from '@components/icons'
 export default {
   // logo: <span>DF Documentation</span>,
   logo: (
-    <span className="nx-text-gray-800 dark:nx-text-gray-200"><span className="opacity-0 absolute">Dora Factory</span><Lockup /></span>
+    <span className="nx-text-gray-800 dark:nx-text-gray-200">
+      <span className="absolute opacity-0">Dora Factory</span>
+      <Lockup />
+    </span>
   ),
-  docsRepositoryBase: 'https://github.com/dorafactory/df-docs/blob/master/pages',
+  docsRepositoryBase:
+    'https://github.com/dorafactory/df-docs/blob/master/pages',
   sidebar: {
-    defaultMenuCollapseLevel: 1,
+    defaultMenuCollapseLevel: 1
     // autoCollapse: true,
   },
   project: {
-    link: 'https://github.com/dorafactory',
+    link: 'https://github.com/dorafactory'
   },
-  
+
   toc: {
-    title: 'On this page',
+    title: 'On this page'
   },
-  
+
   footer: {
     text: (
-      <div className="flex w-full flex-row gap-2 items-center text-xs">
+      <div className="flex w-full flex-row items-center gap-2 text-xs">
         <p>© {new Date().getFullYear()} Dora Factory</p>
         <p>·</p>
         <p>Terms</p>
@@ -30,18 +34,18 @@ export default {
       </div>
     )
   },
-  
+
   useNextSeoProps() {
     const { asPath } = useRouter()
     if (asPath !== '/' && asPath !== '') {
       return {
-        titleTemplate: '%s · Dora Factory Documentation',
+        titleTemplate: '%s · Dora Factory Documentation'
       }
     } else {
       return {
-        titleTemplate: 'Dora Factory Documentation',
+        titleTemplate: 'Dora Factory Documentation'
       }
     }
-  },
+  }
   // ...
 }
