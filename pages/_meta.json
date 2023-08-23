@@ -12,5 +12,12 @@
     "type": "separator",
     "title": "Manuals"
   },
-  "vota": "Vota Operator Manual"
+  "vota": "Vota Operator’s Manual",
+
+  "df.org": {
+    "title": "Home",
+    "type": "page",
+    "href": "https://dorafactory.org/",
+    "newWindow": true
+  }
 }
