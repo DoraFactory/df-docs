@@ -1,5 +1,14 @@
 {
-  "index": "Get Started",
+  "index": {
+    "type": "page",
+    "title": "Dora Factory Documentation",
+    "display": "hidden",
+    "theme": {
+      "layout": "raw"
+    }
+  },
+
+  "start": "Get Started",
 
   "-- apis": {
     "type": "separator",
@@ -14,10 +23,39 @@
   },
   "vota": "Vota Operator’s Manual",
 
-  "df.org": {
-    "title": "Home",
+  "docs": {
     "type": "page",
-    "href": "https://dorafactory.org/",
-    "newWindow": true
+    "title": "Docs",
+    "href": "/start"
+  },
+  "products": {
+    "type": "menu",
+    "title": "Products",
+    "items": {
+      "vota": {
+        "title": "Dora Vota",
+        "href": "https://vota.dorafactory.org/",
+        "newWindow": true
+      },
+      "deardoge": {
+        "title": "Dear Doge",
+        "href": "https://deardoge.dorafactory.org/",
+        "newWindow": true
+      },
+      "aptos-api": {
+        "title": "Aptos API Service",
+        "href": "/aptos"
+      },
+      "qrng-faucet": {
+        "title": "QRNG Faucet",
+        "href": "https://qrng.dorafactory.org/",
+        "newWindow": true
+      },
+      "dora-ksm": {
+        "title": "Dora-KSM Parachain",
+        "href": "https://core-pallet.dorafactory.org/",
+        "newWindow": true
+      }
+    }
   }
 }
