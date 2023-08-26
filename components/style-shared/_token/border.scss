@@ -1,0 +1,21 @@
+@use 'color';
+
+/*************************
+ * Border styles
+ *************************/
+
+//----- Lines -----//
+// Grey lines
+$line-primary  : 1px solid color.$line-primary;
+$line-secondary: 1px solid color.$line-secondary;
+// Accent lines
+$accent        : 1px solid color.$accent-primary;
+$accent--medium: 2px solid color.$accent-primary;
+$accent--thick : 4px solid color.$accent-primary;
+//--- Lines END ---//
+
+// Corners
+$corner-xs  : 2px;
+$corner-sm  : 4px;
+$corner-md  : 8px;
+$corner-pill: 999em;

@@ -1,0 +1,31 @@
+/*************************
+ * Colors
+ *************************/
+
+// Basic
+$ink-primary     : var(--color-ink-primary);
+$ink-secondary   : var(--color-ink-secondary);
+$ink-doc         : var(--color-ink-doc);
+$bg-primary      : var(--color-bg-primary);
+$bg-secondary    : var(--color-bg-secondary);
+
+// Line
+$line-primary    : var(--color-line-primary);
+$line-secondary  : var(--color-line-secondary);
+
+// Accent
+$accent-primary  : var(--color-accent-primary);
+$accent-secondary: var(--color-accent-secondary);
+$accent-bg       : var(--color-accent-bg);
+
+// Error
+$error-primary   : var(--color-error-primary);
+$error-bg        : var(--color-error-bg);
+
+// Safe
+$safe-primary    : var(--color-safe-primary);
+$safe-bg         : var(--color-safe-bg);
+
+// Selection
+$selection-ink   : var(--color-selection-ink);
+$selection-bg    : var(--color-selection-bg);

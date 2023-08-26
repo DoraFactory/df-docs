@@ -1,0 +1,46 @@
+/*************************
+ * Grids
+ *************************/
+
+// Grid modular
+$track : 72px;
+$gutter: 24px;
+
+// Grid template
+@mixin col-12-fixed {
+  display              : grid;
+  grid-template-columns: repeat(12, $track);
+  column-gap           : $gutter;
+  justify-content      : center;
+}
+
+@mixin col-12-flexible {
+  display              : grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap           : $gutter;
+  justify-content      : center;
+}
+
+@mixin col-6-fixed {
+  display              : grid;
+  grid-template-columns: repeat(6, $track);
+  column-gap           : $gutter;
+  justify-content      : center;
+}
+
+@mixin col-6-flexible {
+  display              : grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  column-gap           : $gutter;
+  justify-content      : center;
+}
+
+@mixin col-4-flexible {
+  display              : grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap           : $gutter;
+  justify-content      : center;
+}
+
+// Chrome metrics
+$navbar: 64px;
