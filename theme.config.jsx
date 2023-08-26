@@ -20,7 +20,8 @@ export default {
   },
 
   toc: {
-    title: 'On this page'
+    title: 'On this page',
+    backToTop: true
   },
 
   footer: {
