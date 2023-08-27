@@ -3,4 +3,7 @@
  *************************/
 
 $duration: 0.25s;
-$easefunc: ease;
+
+// https://twitter.com/necatikcl/status/1695168893789130807
+// $easefunc: ease;
+$easefunc: cubic-bezier(0.6, 0.6, 0, 1);
