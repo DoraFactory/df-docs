@@ -17,7 +17,7 @@ function LandingPage() {
           </p>
           <Link
             className={`${styles.button} button-pill-secondary-md`}
-            href="/start"
+            href="/docs"
           >
             Get Started
           </Link>
