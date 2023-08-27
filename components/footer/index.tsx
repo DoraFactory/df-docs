@@ -24,6 +24,10 @@ const links = [
     link: 'https://qrng.dorafactory.org/'
   },
   {
+    name: 'Dora-KSM Parachain',
+    link: 'https://core-pallet.dorafactory.org/'
+  },
+  {
     name: 'Dora Research Blog',
     link: 'https://research.dorahacks.io/'
   },
@@ -34,10 +38,6 @@ const links = [
   {
     name: 'Dora Grant DAO',
     link: 'https://dorahacks.io/dora'
-  },
-  {
-    name: 'Dora-KSM Parachain',
-    link: 'https://core-pallet.dorafactory.org/'
   }
 ]
 
