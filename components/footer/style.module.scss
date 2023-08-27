@@ -1,0 +1,88 @@
+@use '/components/style-shared/_token';
+
+.footer {
+  @include token.text-note-rg;
+
+  flex-grow: 1;
+  
+  display        : flex;
+  justify-content: space-between;
+  color          : token.$color-ink-secondary;
+}
+
+.nav {
+  order         : 2;
+
+  display       : flex;
+  flex-direction: column;
+  flex-wrap     : wrap;
+  row-gap       : 8px;
+  width         : (token.$grid-gutter * 7 * 2 + token.$grid-gutter * 2);
+  height        : (token.$font-leading-note * 4 + 8px * 3);
+  margin-top    : 4px;
+}
+.nav-item {
+  width: (token.$grid-gutter * 7);
+  // padding-right: 3em;
+  margin-left  : (token.$grid-gutter);
+  
+  a {
+    transition: color token.$motion-duration token.$motion-easefunc;
+  }
+  a:hover {
+    color: token.$color-ink-primary;
+  }
+}
+
+.about {
+  order          : 1;
+
+  display        : flex;
+  flex-direction : column;
+  justify-content: space-between;
+}
+
+.social {
+  display: flex;
+  gap    : 8px;
+}
+.social-item {
+  position: relative;
+  width   : 32px;
+  height  : 32px;
+  
+  span {
+    position: absolute;
+    opacity : 0;
+  }
+  a {
+    display   : block;
+    width     : 100%;
+    height    : 100%;
+    mask-size : 100% 100%;
+    background: token.$color-ink-primary;
+    transition: opacity token.$motion-duration token.$motion-easefunc;
+    
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+.info {
+  display: flex;
+}
+.info-item {
+  &:not(:first-child)::before {
+    content: "·";
+    margin : 0 8px;
+  }
+  
+  a {
+    transition: color token.$motion-duration token.$motion-easefunc;
+  }
+  a:hover {
+    color: token.$color-ink-primary;
+  }
+}
+
