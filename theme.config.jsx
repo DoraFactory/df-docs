@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { Lockup } from '@components/icons'
+import { Lockup } from '@components/svgs'
 import { Footer } from '@components/footer'
 
 export default {
