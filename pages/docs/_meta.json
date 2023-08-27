@@ -5,8 +5,8 @@
     "type": "separator",
     "title": "API References"
   },
-  "aptos": "Aptos API Reference",
-  "flatsat": "Flatsat API Reference",
+  "aptos": "Aptos APIs",
+  "qrng": "QRNG Faucet",
 
   "-- manuals": {
     "type": "separator",
