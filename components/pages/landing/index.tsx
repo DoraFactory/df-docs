@@ -28,7 +28,7 @@ function LandingPage() {
       </header>
       <style jsx global>{`
         .nextra-nav-container-blur {
-          background-color: rgba(255, 255, 255, 0.15);
+          background-color: rgba(255, 255, 255, 0.45);
           backdrop-filter: saturate(180%) blur(12px);
         }
         :is(html[class~='dark'] .nextra-nav-container-blur) {

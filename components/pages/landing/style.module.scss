@@ -1,4 +1,4 @@
-@use '../../style-shared/_token';
+@use '/components/style-shared/_token';
 
 .header {
   @include token.grid-col-12-fixed;
@@ -6,7 +6,7 @@
   position     : relative;
   z-index      : token.$z-lv0;
   overflow     : hidden;
-  min-height   : 100vh;
+  min-height   : calc(100vh - 44px);
   margin-top   : (- token.$grid-navbar);
   border-bottom: token.$border-line-secondary;
 }
