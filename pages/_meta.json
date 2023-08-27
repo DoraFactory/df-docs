@@ -8,26 +8,11 @@
     }
   },
 
-  "start": "Get Started",
-
-  "-- apis": {
-    "type": "separator",
-    "title": "API References"
-  },
-  "aptos": "Aptos API Reference",
-  "flatsat": "Flatsat API Reference",
-
-  "-- manuals": {
-    "type": "separator",
-    "title": "Manuals"
-  },
-  "vota": "Vota Operator’s Manual",
-
   "docs": {
     "type": "page",
-    "title": "Docs",
-    "href": "/start"
+    "title": "Docs"
   },
+
   "products": {
     "type": "menu",
     "title": "Products",
