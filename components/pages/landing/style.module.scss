@@ -6,7 +6,7 @@
   position     : relative;
   z-index      : token.$z-lv0;
   overflow     : hidden;
-  min-height   : calc(100vh - 44px);
+  min-height   : 100vh;
   margin-top   : (- token.$grid-navbar);
   border-bottom: token.$border-line-secondary;
 }
@@ -98,33 +98,27 @@
 
 @keyframes aurora-motion {
   0% {
-    // opacity: 1;
-    filter: hue-rotate(0deg);
+    filter   : hue-rotate(0deg);
     transform: rotate(0deg) translate(0px, 0px) scale(1);
   }
   15% {
-    // opacity: 1;
-    filter: hue-rotate(0deg);
+    filter   : hue-rotate(0deg);
     transform: rotate(0deg) translate(0px, 0px) scale(1);
   }
   45% {
-    // opacity: 0.75;
-    filter: hue-rotate(-144deg);
+    filter   : hue-rotate(-144deg);
     transform: rotate(-0.25deg) translate(-2px, -2px) scale(1.0125);
   }
   55% {
-    // opacity: 0.75;
-    filter: hue-rotate(-144deg);
+    filter   : hue-rotate(-144deg);
     transform: rotate(-0.25deg) translate(-2px, -2px) scale(1.0125);
   }
   85% {
-    // opacity: 1;
-    filter: hue-rotate(0deg);
+    filter   : hue-rotate(0deg);
     transform: rotate(0deg) translate(0px, 0px) scale(1);
   }
   100% {
-    // opacity: 1;
-    filter: hue-rotate(0deg);
+    filter   : hue-rotate(0deg);
     transform: rotate(0deg) translate(0px, 0px) scale(1);
   }
 }
@@ -137,7 +131,7 @@ $aurora-delay: 0.5s;
   position : absolute;
   top      : 0;
   left     : 50%;
-  transform: translate(-192px, -192px);
+  transform: translate(-216px, -216px);
 }
 .aurora svg {
   g {
