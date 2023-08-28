@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
-import { Lockup } from '@components/icons'
+import { Lockup } from '@components/svgs'
+import { Footer } from '@components/footer'
 
 export default {
   // logo: <span>DF Documentation</span>,
@@ -20,19 +21,12 @@ export default {
   },
 
   toc: {
-    title: 'On this page'
+    title: 'On this page',
+    backToTop: true
   },
 
   footer: {
-    text: (
-      <div className="flex w-full flex-row items-center gap-2 text-xs">
-        <p>© {new Date().getFullYear()} Dora Factory</p>
-        <p>·</p>
-        <p>Terms</p>
-        <p>·</p>
-        <p>Privacy</p>
-      </div>
-    )
+    text: Footer
   },
 
   useNextSeoProps() {

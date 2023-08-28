@@ -12,18 +12,18 @@ module.exports = withNextra({
   reactStrictMode: true, // Recommended for the `pages` directory, default in `app`.
 
   webpack(config) {
-    // const allowedSvgRegex = /components\/icons\/.+\.svg$/
-    const allowedSvgRegex = /\.svg$/i
-
+    // Config for SVGR
+    // const allowedSvgRegex = /\.svg$/i
+    const allowedSvgRegex = /components\/svgs\/.+\.svg$/
     const fileLoaderRule = config.module.rules.find(rule =>
       rule.test?.test('.svg')
     )
     fileLoaderRule.exclude = allowedSvgRegex
-
     config.module.rules.push({
       test: allowedSvgRegex,
       use: ['@svgr/webpack']
     })
+
     return config
   }
 })

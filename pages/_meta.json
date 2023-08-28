@@ -1,23 +1,46 @@
 {
-  "index": "Get Started",
-
-  "-- apis": {
-    "type": "separator",
-    "title": "API References"
-  },
-  "aptos": "Aptos API Reference",
-  "flatsat": "Flatsat API Reference",
-
-  "-- manuals": {
-    "type": "separator",
-    "title": "Manuals"
-  },
-  "vota": "Vota Operator’s Manual",
-
-  "df.org": {
-    "title": "Home",
+  "index": {
     "type": "page",
-    "href": "https://dorafactory.org/",
-    "newWindow": true
+    "title": "Dora Factory Documentation",
+    "display": "hidden",
+    "theme": {
+      "layout": "raw"
+    }
+  },
+
+  "docs": {
+    "type": "page",
+    "title": "Docs"
+  },
+
+  "products": {
+    "type": "menu",
+    "title": "Products",
+    "items": {
+      "vota": {
+        "title": "Dora Vota",
+        "href": "https://vota.dorafactory.org/",
+        "newWindow": true
+      },
+      "deardoge": {
+        "title": "Dear Doge",
+        "href": "https://deardoge.dorafactory.org/",
+        "newWindow": true
+      },
+      "aptos-api": {
+        "title": "Aptos API Service",
+        "href": "/aptos"
+      },
+      "qrng-faucet": {
+        "title": "QRNG Faucet",
+        "href": "https://qrng.dorafactory.org/",
+        "newWindow": true
+      },
+      "dora-ksm": {
+        "title": "Dora-KSM Parachain",
+        "href": "https://core-pallet.dorafactory.org/",
+        "newWindow": true
+      }
+    }
   }
 }

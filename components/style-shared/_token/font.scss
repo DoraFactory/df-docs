@@ -1,0 +1,25 @@
+//----- Font weights -----//
+$weight-rg: 400;
+$weight-md: 500;
+$weight-sb: 600;
+$weight-bd: 700;
+$weight-eb: 800;
+//--- Font weights END ---//
+
+//----- Em sizes -----//
+/* Em sizes, aka font sizes, are the unit sizes of horizontal grids */
+$em-display : 32px;
+$em-headline: 24px;
+$em-body    : 16px;
+$em-note    : 14px;
+$em-caption : 12px;
+//--- Em sizes END ---//
+
+//----- Leadings -----//
+/* Leading, aka line heights, are the unit sizes of vertical grids */
+$leading-display : 36px;
+$leading-headline: 32px;
+$leading-body    : 24px;
+$leading-note    : 20px;
+$leading-caption : 16px;
+//--- Leadings END ---//

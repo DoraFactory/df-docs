@@ -1,0 +1,54 @@
+# On-chain Faucet
+
+## Introduction
+
+The QRNG Oracle is divided into two main components: one is the random number request, and the other is the random number backfill interface.
+
+Users can request random numbers by calling the request component of the [`QrngCoordinator.sol`](https://github.com/DoraFactory/DI-QRNG-Faucet/blob/main/contracts/QrngCoordinator.sol) contract.
+
+An off-chain process listens for these random number requests and subsequently backfills the corresponding quantity of random numbers into the designated contract.
+
+In regards to the backfilling of random numbers, users should implement a fulfill method based the [`ConsumerBase.sol`](https://github.com/DoraFactory/DI-QRNG-Faucet/blob/main/contracts/ConsumerBase.sol) contract The internal logic for processing random numbers can be customized according to user needs.
+
+## How to use
+
+```solidity filename="Demo"
+pragma solidity ^0.8.4;
+
+// Import the official contract
+import "./QrngCoordinator.sol";
+import "./ConsumerBase.sol";
+
+contract QrngUserDemo is ConsumerBase {
+  // Set the maximum gas that can be used by oracle under the chain.
+  uint32 callbackGasLimit = 80_000;
+  // Set the number of qrng random numbers to request
+  uint32 numWords = 1;
+  address owner;
+
+  QrngCoordinator COORDINATOR;
+
+  // Official QrngCoordinator's contract address
+  address doraCoordinatorAddr = 0x7156e92AF2d3DEeC0F04E3e321226389D16F6e93;
+
+  uint256 public requestId;
+  uint256[] public s_randomWords;
+
+  constructor() ConsumerBase(doraCoordinatorAddr)  {
+    COORDINATOR = QrngCoordinator(doraCoordinatorAddr);
+    owner = msg.sender;
+  }
+
+  function requestRandomWords() external {
+    require(msg.sender == owner);
+    requestId = COORDINATOR.requestRandomWords(
+      callbackGasLimit,
+      numWords
+    );
+  }
+
+  function fulfillRandomWords(uint256 requestId, uint256[] memory randomWords) internal override {
+    s_randomWords = randomWords;
+  }
+}
+```
