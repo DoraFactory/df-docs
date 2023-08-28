@@ -42,5 +42,10 @@ $gutter: 24px;
   justify-content      : center;
 }
 
+// Page margins for flexible template
+$margin-12col: $gutter * 3;
+$margin-6col : $gutter * 1.5;
+$margin-4col : $gutter * 1;
+
 // Chrome metrics
 $navbar: 64px;

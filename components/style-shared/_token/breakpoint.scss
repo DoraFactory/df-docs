@@ -1,0 +1,23 @@
+@use 'grid';
+
+// Breakpoints
+/* Define the values of max-width, i.e., value of min-width is ($foo + 1px) */
+$desktop--md: ((grid.$track     + grid.$gutter) * 12 - grid.$gutter + grid.$margin-12col * 2); // 1272px
+$desktop--sm: ((grid.$track / 2 + grid.$gutter) * 12 - grid.$gutter + grid.$margin-12col * 2); // 840px
+$mobile--lg : ((grid.$track     + grid.$gutter) * 6  - grid.$gutter + grid.$margin-6col  * 2); // 624px
+$mobile--md : ((grid.$track / 2 + grid.$gutter) * 6  - grid.$gutter + grid.$margin-6col  * 2); // 408px
+$mobile--sm : 360px;
+// $mobile--xs : 319px; // 320 px is the minimal viewport width of existing mobile phones
+$floor      : -1px;
+
+// Minimal viewport width
+$vw-min: 320px;
+
+
+// Tailwind breakpoints
+/* https://tailwindcss.com/docs/responsive-design */
+$tw-2xl: 1536px; // @media (min-width: 1536px) { ... }
+$tw-xl : 1280px; // @media (min-width: 1280px) { ... }
+$tw-lg : 1024px; // @media (min-width: 1024px) { ... }
+$tw-md : 768px;  // @media (min-width: 768px)  { ... }
+$tw-sm : 640px;  // @media (min-width: 640px)  { ... }
