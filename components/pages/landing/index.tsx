@@ -6,21 +6,23 @@ function LandingPage() {
   return (
     <>
       <header className={styles.header}>
-        <div className={styles.hero}>
-          <h1 className={styles.title}>
-            The Digital Infrastructure of Global Hacker Movement
-          </h1>
-          <p className={styles.desc}>
-            Dora Factory creates protocols, toolings, and public good
-            infrastructures that help open source communities and frontier tech
-            builders to thrive.
-          </p>
-          <Link
-            className={`${styles.button} button-pill-secondary-md`}
-            href="/docs"
-          >
-            Get Started
-          </Link>
+        <div className={styles.main}>
+          <div className={styles.hero}>
+            <h1 className={styles.title}>
+              The Digital Infrastructure of Global Hacker Movement
+            </h1>
+            <p className={styles.desc}>
+              Dora Factory creates protocols, toolings, and public good
+              infrastructures that help open source communities and frontier
+              tech builders to thrive.
+            </p>
+            <Link
+              className={`${styles.button} button-pill-secondary-md`}
+              href="/docs"
+            >
+              Get Started
+            </Link>
+          </div>
         </div>
         <figure className={styles.aurora}>
           <Aurora />
