@@ -63,6 +63,13 @@ The production branch is [`main`](https://github.com/github/renaming).
 
 ### Preview
 
-The preview site is deployed by [Vercel](https://vercel.com/). The default preview branch is `develop`. The preview link is <https://df-docs.vercel.app>.
+The preview site is deployed by [Vercel](https://vercel.com/).
 
-Vercel will automatically deploy every latest commit, and assign a unique preview URL (`df-docs-git-[branch-name]-realfish.vercel.app`) for each commit. As for the lastest preview of a certain branch, e.g., `feature/landing-page`, the URL is <https://df-docs-git-feature-landing-page-realfish.vercel.app>.
+- Default preview branch: `develop`
+- Preview link: <https://df-docs.vercel.app>
+
+### Preview per commit
+
+Vercel will automatically deploy every latest commit, and assign a unique preview URL.
+
+The same applies for every branch (`df-docs-git-[branch-name]-realfish.vercel.app`). As for the latest preview of a specific branch, e.g., `feature/landing-page`, the URL is <https://df-docs-git-feature-landing-page-realfish.vercel.app>.
