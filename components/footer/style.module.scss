@@ -33,6 +33,13 @@
   @media (min-width: token.$bp-tw-md) {
     padding-right: 3em;
   }
+
+  a {
+    transition: color token.$motion-duration token.$motion-easefunc;
+  }
+  a:hover {
+    color: token.$color-ink-primary;
+  }
 }
 
 .about {
