@@ -190,13 +190,14 @@ $aurora-delay: 0.5s;
   }
 }
 .aurora svg {
-  width: 100%;
+  width          : 100%;
+  shape-rendering: optimizeSpeed;
 
   g {
     cursor          : crosshair;
     transform-origin: top left;
     animation       : aurora-motion $aurora-dura $aurora-func 0s infinite both;
-    // will-change     : filter, transform;
+    will-change     : filter;
 
     @for $i from 1 through 10 {
       &:nth-child(#{$i}) {
