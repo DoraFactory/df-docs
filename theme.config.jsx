@@ -1,15 +1,40 @@
 import { useRouter } from 'next/router'
-import { Lockup } from '@components/svgs'
+import { Logo } from '@components/logo'
 import { Footer } from '@components/footer'
 
 export default {
-  // logo: <span>DF Documentation</span>,
-  logo: (
-    <span className="nx-text-gray-800 dark:nx-text-gray-200">
-      <span className="absolute opacity-0">Dora Factory</span>
-      <Lockup />
-    </span>
-  ),
+  head: () => {
+    return (
+      <>
+        <meta
+          name="description"
+          content="The Digital Infrastructure of Global Hacker Movement"
+        />
+
+        <meta name="apple-mobile-web-app-title" content="DF Docs" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+        <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+        <link
+          rel="mask-icon"
+          href="/assets/favicon-mask.svg"
+          type="image/svg+xml"
+          color="#FF8533"
+        />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+        <link
+          rel="manifest"
+          href="/assets/manifest.json"
+          crossOrigin="use-credentials"
+        />
+      </>
+    )
+  },
+
+  logo: <Logo />,
   docsRepositoryBase:
     'https://github.com/dorafactory/df-docs/blob/master/pages',
   sidebar: {
@@ -29,7 +54,7 @@ export default {
     text: Footer
   },
 
-  useNextSeoProps() {
+  useNextSeoProps: () => {
     const { asPath } = useRouter()
     if (asPath !== '/' && asPath !== '') {
       return {
