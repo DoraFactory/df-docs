@@ -1,6 +1,6 @@
 {
-  "short_name": "Dora Factory",
-  "name": "Dora Factory",
+  "short_name": "DF Docs",
+  "name": "Dora Factory Documentation",
   "icons": [
     {
       "src": "manifest-icon-192--dark.png",
@@ -22,9 +22,9 @@
   "theme_color": "#16161D",
   "shortcuts": [
     {
-      "name": "Welcome to Dora Factory",
-      "short_name": "Welcome",
-      "description": "Empower the global hacker movement and bring future technology to the present.",
+      "name": "Dora Factory Documentation",
+      "short_name": "DF Docs",
+      "description": "The Digital Infrastructure of Global Hacker Movement",
       "url": "/",
       "icons": [
         {
@@ -41,7 +41,7 @@
       ]
     }
   ],
-  "description": "Empower the global hacker movement and bring future technology to the present.",
+  "description": "The Digital Infrastructure of Global Hacker Movement",
   "screenshots": [
     {
       "src": "manifest-screenshot--1.0.0.png",
