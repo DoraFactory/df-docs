@@ -1,16 +1,16 @@
 {
   "index": "Get Started",
 
-  "-- apis": {
-    "type": "separator",
-    "title": "API References"
-  },
-  "aptos": "Aptos APIs",
-  "qrng": "QRNG Faucet",
-
   "-- manuals": {
     "type": "separator",
     "title": "Manuals"
   },
-  "vota": "Vota Operator’s Manual"
+  "vota": "Vota Operator’s Manual",
+
+  "-- references": {
+    "type": "separator",
+    "title": "References"
+  },
+  "aptos": "Aptos APIs",
+  "qrng": "QRNG Faucet"
 }
