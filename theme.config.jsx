@@ -13,11 +13,7 @@ export default {
       title: 'The Digital Infrastructure of Global Hacker Movement',
       desc: 'Dora Factory creates protocols, toolings, and public good infrastructures that help open source communities and frontier tech builders to thrive.'
     }
-    // const SITE_ROOT = 'https://df-docs.vercel.app'
-    // const SITE_ROOT = 'http://localhost:3000'
     const SITE_ROOT = process.env.SITE_ROOT
-    console.log('ENV')
-    console.log(process.env)
     const asPath = router.asPath
 
     let ogTitle = frontMatter.title || COPY_FALLBACK.title
