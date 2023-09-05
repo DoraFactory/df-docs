@@ -31,7 +31,7 @@ export default {
       <>
         <meta
           name="description"
-          content="The Digital Infrastructure of Global Hacker Movement"
+          content={frontMatter.desc || COPY_FALLBACK.desc}
         />
 
         <meta name="apple-mobile-web-app-title" content="DF Docs" />
