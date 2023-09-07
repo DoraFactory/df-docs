@@ -6,7 +6,7 @@ import { Footer } from '@components/footer'
 export default {
   head: () => {
     const router = useRouter()
-    const { systemTheme = 'system' } = useTheme()
+    const { systemTheme, theme } = useTheme()
     const { frontMatter } = useConfig()
 
     const COPY_FALLBACK = {
@@ -16,16 +16,21 @@ export default {
     const SITE_ROOT = process.env.SITE_ROOT
     const asPath = router.asPath
 
+    // Open Graph
     let ogTitle = frontMatter.title || COPY_FALLBACK.title
     let ogDesc = frontMatter.desc || COPY_FALLBACK.desc
     let ogUrl = asPath === '/' ? SITE_ROOT : `${SITE_ROOT}${router.asPath}`
     let ogImg = `${SITE_ROOT}/api/og`
-
     if (asPath !== '/') {
       const encTitle = encodeURIComponent(ogTitle)
       const encDesc = encodeURIComponent(ogDesc)
       ogImg = `${SITE_ROOT}/api/og?title=${encTitle}&desc=${encDesc}`
     }
+
+    // Apple touch icons
+    let touchIcon = `/assets/apple-touch-icon-${
+      theme === 'system' ? systemTheme : theme
+    }.png`
 
     return (
       <>
@@ -46,7 +51,7 @@ export default {
           type="image/svg+xml"
           color="#FF8533"
         />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="apple-touch-icon" href={touchIcon} />
 
         <link
           rel="manifest"
