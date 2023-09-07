@@ -7,6 +7,10 @@
   min-height   : 100vh;
   margin-top   : (- token.$grid-navbar);
   border-bottom: token.$border-line-secondary;
+
+  // @supports(height: 100dvh) {
+  //   min-height: 100dvh;
+  // }
 }
 
 .main {
@@ -47,12 +51,14 @@
   }
 
   @media (min-width: (token.$bp-mobile--md + 1)) and (max-width: token.$bp-desktop--sm) {
-    grid-column: 1 / 7;
-    padding-top: (token.$grid-navbar + token.$font-leading-body * 6);
+    grid-column   : 1 / 7;
+    padding-top   : (token.$grid-navbar + token.$font-leading-body * 6);
+    padding-bottom: (token.$font-leading-body * 6);
   }
   @media (min-width: (token.$bp-floor + 1)) and (max-width: token.$bp-mobile--md) {
-    grid-column: 1 / 5;
-    padding-top: (token.$grid-navbar + token.$font-leading-body * 4);
+    grid-column   : 1 / 5;
+    padding-top   : (token.$grid-navbar + token.$font-leading-body * 4);
+    padding-bottom: (token.$font-leading-body * 4);
   }
   
   pointer-events: none;
