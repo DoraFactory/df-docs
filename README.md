@@ -1,11 +1,11 @@
 # Dora Factory Documentation
 
-The documentation hub powered by [Nextra](https://github.com/shuding/nextra).
+The documentation site is powered by [Nextra](https://github.com/shuding/nextra).
 
 ## Links
 
-- Production (TBD)：<https://docs.dorafactory.org>
-- Preview (dev)：<https://df-docs.vercel.app>
+- Production (`main`)：<https://docs.dorafactory.org>
+- Preview (`develop`)：<https://df-docs.vercel.app>
 
 ## Conventions
 
@@ -16,9 +16,9 @@ The documentation hub powered by [Nextra](https://github.com/shuding/nextra).
 
 ## Development
 
-### Installation
-
 This repo uses [PNPM](https://pnpm.io/) as the package manager.
+
+### Installation
 
 ```bash
 pnpm install
@@ -30,7 +30,7 @@ pnpm install
 pnpm dev
 ```
 
-### Build for production
+### Building for production
 
 ```bash
 pnpm build
@@ -57,6 +57,10 @@ pnpm prettier
 
 ## Deployment
 
+### Dependencies
+
+The Open Graph image generation API [`/api/og`](pages/api/og.tsx), which uses [`@vercel/og`](https://vercel.com/docs/functions/edge-functions/og-image-generation) library, is dependent on [Vercel Edge Functions](https://vercel.com/docs/functions/edge-functions).
+
 ### Production
 
 The production branch is [`main`](https://github.com/github/renaming).
@@ -68,7 +72,7 @@ The preview site is deployed by [Vercel](https://vercel.com/).
 - Default preview branch: `develop`
 - Preview link: <https://df-docs.vercel.app>
 
-### Preview per commit
+### Preview per commit/branch
 
 Vercel will automatically deploy every latest commit, and assign a unique preview URL.
 
