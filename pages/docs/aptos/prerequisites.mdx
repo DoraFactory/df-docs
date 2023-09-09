@@ -1,0 +1,83 @@
+---
+title: 'Prerequisites · Aptos APIs'
+desc: 'Dora Factory offers a set of Aptos APIs for hackers, developers, and teams working on Aptos native applications. More APIs will be added over time.'
+---
+
+import { Callout, Steps } from 'nextra/components'
+
+# Prerequisites
+
+<Callout type="info">
+  Our Aptos API service is built on the [TSRPC](https://tsrpc.cn/) framework.
+  Learn more from the [official
+  documentation](https://tsrpc.cn/docs/introduction.html).
+</Callout>
+
+## TypeScript clients
+
+If you wish to use TypeScript to implement a client that calls APIs, please first follow the configuration steps.
+
+<Steps>
+### Install TSRPC
+
+```bash npm2yarn
+npm install tsrpc
+```
+
+### Download `serviceProto` resources to local
+
+[Download the tarball](/download/shared_protocols.tar-f00685eb8c316519f94da4a2dcbbe2a9.gz), move it to the project folder, and extract the contents.
+
+```bash
+tar -zxvf service_protocols.tar.gz
+```
+
+<Callout type="info">
+  TSRPC automatically parses the TypeScript source code into the format required
+  by the runtime type system—`serviceProto`, which is also the first parameter
+  you pass when creating a TSRPC `client` instance.
+</Callout>
+
+### Import `serviceProto`
+
+After decompression, the `serviceProto` file will appear and the `client` needs to import this file.
+
+```ts
+import { serviceProto } from '../shared/protocols/serviceProto'
+```
+
+### Make a client call
+
+```ts
+import { HttpClient } from 'tsrpc'
+import { serviceProto } from '../shared/protocols/serviceProto' // import serviceProto
+
+// Create the Client
+let client = new HttpClient(serviceProto, {
+  server: 'https://aptos.dorafactory.org/mainnet-api/', // our api url
+  logger: console
+})
+
+async function main() {
+  // callApi
+  let ret = await client.callApi('coin/coin_info/GetCoinInfo', {
+    coin_type_hash:
+      '91ceb1308a98389691e05158b07ed5f079ab78461a6bb8d5a4054b1bb5cb8bb6',
+    token: '203db03b-1880-4926-b0a3-9937521a1386'
+  })
+  if (ret.res != undefined) {
+    console.log(ret.res.coinInfos)
+  }
+  // Error
+  if (!ret.isSucc) {
+    return
+  }
+}
+main()
+```
+
+</Steps>
+
+## Other clients
+
+You can also call APIs in other programming languages based on requests using HTTPS or WebSockets.

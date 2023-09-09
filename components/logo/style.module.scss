@@ -1,0 +1,22 @@
+@use '/components/style-shared/_token';
+
+.logo {
+  width: 165px;
+  color: token.$color-ink-primary;
+
+  svg {
+    width: 100%;
+  }
+}
+
+.label {
+  // Ref: https://stackoverflow.com/a/19758620/3253041
+  position: absolute;
+  overflow: hidden;
+  width   : 1px;
+  height  : 1px;
+  padding : 0;
+  margin  : -1px;
+  border  : 0;
+  clip    : rect(0, 0, 0, 0);
+}

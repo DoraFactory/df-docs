@@ -1,0 +1,59 @@
+{
+  "short_name": "DF Docs",
+  "name": "Dora Factory Documentation",
+  "icons": [
+    {
+      "src": "manifest-icon-192--dark.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "manifest-icon-512--dark.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#16161D",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#16161D",
+  "shortcuts": [
+    {
+      "name": "Dora Factory Documentation",
+      "short_name": "DF Docs",
+      "description": "The Digital Infrastructure of Global Hacker Movement",
+      "url": "/",
+      "icons": [
+        {
+          "src": "manifest-icon-192--dark.png",
+          "sizes": "192x192",
+          "purpose": "any"
+        },
+        {
+          "src": "manifest-icon-512--dark.png",
+          "type": "image/png",
+          "sizes": "512x512",
+          "purpose": "any"
+        }
+      ]
+    }
+  ],
+  "description": "The Digital Infrastructure of Global Hacker Movement",
+  "screenshots": [
+    {
+      "src": "manifest-screenshot--1.0.0.png",
+      "type": "image/png",
+      "sizes": "720x960",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "manifest-screenshot--1.0.0.jpg",
+      "type": "image/jpg",
+      "sizes": "720x960",
+      "form_factor": "narrow"
+    }
+  ]
+}

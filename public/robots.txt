@@ -1,0 +1,3 @@
+User-Agent: *
+# https://vercel.com/docs/functions/edge-functions/og-image-generation#requirements
+Allow: /api/og/*

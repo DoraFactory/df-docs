@@ -1,0 +1,318 @@
+---
+title: 'Coin API · Aptos APIs'
+desc: 'Dora Factory offers a set of Aptos APIs for hackers, developers, and teams working on Aptos native applications. More APIs will be added over time.'
+---
+
+# `coin`
+
+## `coin_info`
+
+### `GetCoinInfo`
+
+Returns the corresponding coin information according to `coin_type_hash`.
+
+```text
+POST /coin/coin_info/GetCoinInfo
+```
+
+```ts filename="Request"
+interface ReqGetCoinInfo {
+  coin_type_hash: string
+  token: string
+}
+```
+
+```ts filename="Response"
+interface ResGetCoinInfo {
+  coinInfo: {
+    coin_type_hash: string
+    coin_type: string
+    transaction_version_created: string
+    creator_address: string
+    name: string
+    symbol: string
+    decimals: number
+    transaction_created_timestamp: /*datetime*/ string
+    inserted_at: /*datetime*/ string
+    supply_aggregator_table_handle: string
+    supply_aggregator_table_key: string
+  }
+}
+```
+
+```ts filename="Client"
+import { HttpClient } from 'tsrpc'
+import { serviceProto } from '../shared/protocols/serviceProto'
+
+// Create the Client
+let client = new HttpClient(serviceProto, {
+  server: 'https://aptos.dorafactory.org/mainnet-api/',
+  logger: console
+})
+
+async function main() {
+  // callApi
+  let ret = await client.callApi('coin/coin_info/GetCoinInfo', {
+    coin_type_hash:
+      '91ceb1308a98389691e05158b07ed5f079ab78461a6bb8d5a4054b1bb5cb8bb6',
+    token: '203db03b-1880-4926-b0a3-9937521a1386'
+  })
+  if (ret.res != undefined) {
+    console.log(ret.res.coinInfos)
+  }
+  // Error
+  if (!ret.isSucc) {
+    return
+  }
+}
+main()
+```
+
+### `ListCoinInfo`
+
+List all coin information.
+
+```text
+POST /coin/coin_info/ListCoinInfo
+```
+
+```ts filename="Request"
+interface ReqListCoinInfo {
+  token: string
+}
+```
+
+```ts filename="Response"
+interface ResListCoinInfo {
+  coinInfos: {
+    coin_type_hash: string
+    coin_type: string
+    transaction_version_created: string
+    creator_address: string
+    name: string
+    symbol: string
+    decimals: number
+    transaction_created_timestamp: /*datetime*/ string
+    inserted_at: /*datetime*/ string
+    supply_aggregator_table_handle: string
+    supply_aggregator_table_key: string
+  }[]
+  total: number
+}
+```
+
+```ts filename="Client"
+import { HttpClient } from 'tsrpc'
+import { serviceProto } from '../shared/protocols/serviceProto'
+
+// Create the Client
+let client = new HttpClient(serviceProto, {
+  server: 'https://aptos.dorafactory.org/mainnet-api/',
+  logger: console
+})
+
+async function main() {
+  // callApi
+  let ret = await client.callApi('coin/coin_info/ListCoinInfo', {
+    token: '5ba58ba8-49f2-43e8-856a-8bc503ad0ed2'
+  })
+  if (ret.res != undefined) {
+    ret.res.coinInfos.map(coininfo => {
+      console.log(coininfo)
+    })
+  }
+  // Error
+  if (!ret.isSucc) {
+    return
+  }
+}
+main()
+```
+
+## `current_coin_balance`
+
+### `GetCurrentBalanceByAddress`
+
+Get the coin balance of your account.
+
+```text
+POST /coin/current_coin_balance/GetCurrentBalanceByAddress
+```
+
+```ts filename="Request"
+interface ReqGetCurrentBalanceByAddress {
+  owner_address: string
+  coin_type_hash: string
+  token: string
+}
+```
+
+```ts filename="Response"
+interface ResGetCurrentBalanceByAddress {
+  currentCoin: {
+    owner_address: string
+    coin_type_hash: string
+    coin_type: string
+    amount: string
+    last_transaction_version: string
+    last_transaction_timestamp: /*datetime*/ string
+    inserted_at: /*datetime*/ string
+  }
+}
+```
+
+```ts filename="Client"
+import { HttpClient } from 'tsrpc'
+import { serviceProto } from '../shared/protocols/serviceProto'
+
+// Create the Client
+let client = new HttpClient(serviceProto, {
+  server: 'https://aptos.dorafactory.org/mainnet-api/',
+  logger: console
+})
+
+async function main() {
+  // callApi
+  let ret = await client.callApi(
+    'coin/current_coin_balance/GetCurrentBalanceByAddress',
+    {
+      owner_address:
+        '0xc610048001bfb3391b4ddf4b3d9748b148ef6635814362e5a335f9a4f76625a0',
+      coin_type_hash:
+        '91ceb1308a98389691e05158b07ed5f079ab78461a6bb8d5a4054b1bb5cb8bb6',
+      token: '203db03b-1880-4926-b0a3-9937521a1386'
+    }
+  )
+
+  if (ret.res != undefined) {
+    console.log(ret.res)
+  }
+  // Error
+  if (!ret.isSucc) {
+    return
+  }
+}
+main()
+```
+
+### `ListCurrentBalanceByAddress`
+
+Get information about all coins owned by `owner_address`.
+
+```text
+POST /coin/current_coin_balance/ListCurrentBalanceByAddress
+```
+
+```ts filename="Request"
+interface ReqListCurrentBalanceByAddress {
+  owner_address: string
+  token: string
+}
+```
+
+```ts filename="Response"
+interface ResListCurrentBalanceByAddress {
+  currentCoins: {
+    owner_address: string
+    coin_type_hash: string
+    coin_type: string
+    amount: string
+    last_transaction_version: string
+    last_transaction_timestamp: /*datetime*/ string
+    inserted_at: /*datetime*/ string
+  }[]
+  total: number
+}
+```
+
+```ts filename="Client"
+import { HttpClient } from 'tsrpc'
+import { serviceProto } from '../shared/protocols/serviceProto'
+
+// Create the Client
+let client = new HttpClient(serviceProto, {
+  server: 'https://aptos.dorafactory.org/mainnet-api/',
+  logger: console
+})
+
+async function main() {
+  // callApi
+  let ret = await client.callApi(
+    'coin/current_coin_balance/ListCurrentBalanceByAddress',
+    {
+      owner_address:
+        '0x1c1635c05968d9715e5e5cfad10567bba6a63cbfb3280c2777a2bbbcd8194e1a',
+      token: '203db03b-1880-4926-b0a3-9937521a1386'
+    }
+  )
+  if (ret.res != undefined) {
+    console.log(ret.res)
+  }
+  // Error
+  if (!ret.isSucc) {
+    return
+  }
+}
+main()
+```
+
+### `ListCurrentCoin`
+
+Returns the corresponding current coin information based on `coin_type_hash`, which allows you to query all holders of a certain coin in this way.
+
+```text
+POST /coin/current_coin_balance/ListCurrentCoin
+```
+
+```ts filename="Request"
+interface ReqListCurrentCoin {
+  coin_type_hash: string
+  offset?: number
+  limit?: number
+  token: string
+}
+```
+
+```ts filename="Response"
+interface ResListCurrentCoin {
+  currentCoins: {
+    owner_address: string
+    coin_type_hash: string
+    coin_type: string
+    amount: string
+    last_transaction_version: string
+    last_transaction_timestamp: /*datetime*/ string
+    inserted_at: /*datetime*/ string
+  }[]
+  total: number
+}
+```
+
+```ts filename="Client"
+import { HttpClient } from 'tsrpc'
+import { serviceProto } from '../shared/protocols/serviceProto'
+
+// Create the Client
+let client = new HttpClient(serviceProto, {
+  server: 'https://aptos.dorafactory.org/mainnet-api/',
+  logger: console
+})
+
+async function main() {
+  // callApi
+  let ret = await client.callApi('coin/current_coin_balance/ListCurrentCoin', {
+    coin_type_hash:
+      '91ceb1308a98389691e05158b07ed5f079ab78461a6bb8d5a4054b1bb5cb8bb6',
+    limit: 3,
+    token: '203db03b-1880-4926-b0a3-9937521a1386'
+  })
+  if (ret.res != undefined) {
+    console.log(ret.res)
+  }
+  // Error
+  if (!ret.isSucc) {
+    return
+  }
+}
+main()
+```

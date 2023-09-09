@@ -1,0 +1,49 @@
+@use '_token';
+
+//----- Pill buttons -----//
+// Primary
+.button-pill-primary-md {
+  @include token.text-body-sb;
+  display        : flex;
+  justify-content: center;
+  align-items    : center;
+  height         : (token.$font-leading-body * 1.5);
+  padding        : 0 (token.$font-leading-body * 0.75);
+  border-radius  : token.$border-corner-pill;
+  background     : token.$color-accent-primary;
+  color          : token.$color-bg-primary;
+  white-space    : nowrap;
+  user-select    : none;
+  
+  // Hover motion
+  // transition:
+  //   opacity @motion-duration ease-in-out;
+  // will-change:
+  //   opacity;
+  // .ua-Pointer &:hover,
+  // &:active {
+  //   opacity: 0.75;
+  // }
+}
+
+// Secondary
+.button-pill-secondary-md {
+  @include token.text-body-sb;
+  display        : flex;
+  justify-content: center;
+  align-items    : center;
+  height         : (token.$font-leading-body * 1.5);
+  padding        : 0 (token.$font-leading-body * 0.75 - 1);
+  border         : token.$border-line-secondary;
+  border-radius  : token.$border-corner-pill;
+  box-sizing     : border-box;
+  white-space    : nowrap;
+  user-select    : none;
+  
+  // Hover motion
+  transition: all (token.$motion-duration * 0.75) token.$motion-easefunc;
+  &:hover {
+    transition: all token.$motion-duration token.$motion-easefunc;
+  }
+}
+//--- Pill buttons END ---//

@@ -1,0 +1,144 @@
+@use 'font';
+
+//----- Text styles -----//
+// Display
+@mixin display-rg {
+  font-size  : font.$em-display;
+  line-height: font.$leading-display;
+  font-weight: font.$weight-rg;
+}
+
+@mixin display-sb {
+  font-size  : font.$em-display;
+  line-height: font.$leading-display;
+  font-weight: font.$weight-sb;
+}
+
+@mixin display-eb {
+  font-size  : font.$em-display;
+  line-height: font.$leading-display;
+  font-weight: font.$weight-eb;
+}
+
+// Headline
+@mixin headline-rg {
+  font-size  : font.$em-headline;
+  line-height: font.$leading-headline;
+  font-weight: font.$weight-rg;
+}
+
+@mixin headline-sb {
+  font-size  : font.$em-headline;
+  line-height: font.$leading-headline;
+  font-weight: font.$weight-sb;
+}
+
+@mixin headline-eb {
+  font-size  : font.$em-headline;
+  line-height: font.$leading-headline;
+  font-weight: font.$weight-eb;
+}
+
+// Body
+@mixin body-rg {
+  font-size  : font.$em-body;
+  line-height: font.$leading-body;
+  font-weight: font.$weight-rg;
+}
+
+@mixin body-sb {
+  font-size  : font.$em-body;
+  line-height: font.$leading-body;
+  font-weight: font.$weight-sb;
+}
+
+@mixin body-eb {
+  font-size  : font.$em-body;
+  line-height: font.$leading-body;
+  font-weight: font.$weight-eb;
+}
+
+// Note
+@mixin note-rg {
+  font-size  : font.$em-note;
+  line-height: font.$leading-note;
+  font-weight: font.$weight-rg;
+}
+
+@mixin note-sb {
+  font-size  : font.$em-note;
+  line-height: font.$leading-note;
+  font-weight: font.$weight-sb;
+}
+
+@mixin note-eb {
+  font-size  : font.$em-note;
+  line-height: font.$leading-note;
+  font-weight: font.$weight-eb;
+}
+
+// Caption
+@mixin caption-rg {
+  font-size  : font.$em-caption;
+  line-height: font.$leading-caption;
+  font-weight: font.$weight-rg;
+}
+
+@mixin caption-sb {
+  font-size  : font.$em-caption;
+  line-height: font.$leading-caption;
+  font-weight: font.$weight-sb;
+}
+
+@mixin caption-eb {
+  font-size  : font.$em-caption;
+  line-height: font.$leading-caption;
+  font-weight: font.$weight-eb;
+}
+
+// Tabular figures
+@mixin display-eb--tnum {
+  @include display-eb;
+  font-feature-settings: "tnum", "lnum";
+}
+
+@mixin body-eb--tnum {
+  @include body-eb;
+  font-feature-settings: "tnum", "lnum";
+}
+
+@mixin body-rg--tnum {
+  @include body-rg;
+  font-feature-settings: "tnum", "lnum";
+}
+
+@mixin body-sb--tnum {
+  @include body-sb;
+  font-feature-settings: "tnum", "lnum";
+}
+
+@mixin caption-eb--tnum {
+  @include caption-eb;
+  font-feature-settings: "tnum", "lnum";
+}
+
+@mixin caption-rg--tnum {
+  @include caption-rg;
+  font-feature-settings: "tnum", "lnum";
+}
+
+
+// All caps
+@mixin caption-eb--caps {
+  @include caption-eb;
+  letter-spacing: (1em / 16);
+  transform     : uppercase;
+}
+
+@mixin caption-sb--caps {
+  @include caption-sb;
+  letter-spacing: (1em / 16);
+  transform     : uppercase;
+}
+
+//--- Text styles END ---//

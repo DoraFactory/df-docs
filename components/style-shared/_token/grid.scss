@@ -1,0 +1,51 @@
+/*************************
+ * Grids
+ *************************/
+
+// Grid modular
+$track : 72px;
+$gutter: 24px;
+
+// Grid template
+@mixin col-12-fixed {
+  display              : grid;
+  grid-template-columns: repeat(12, $track);
+  column-gap           : $gutter;
+  justify-content      : center;
+}
+
+@mixin col-12-flexible {
+  display              : grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap           : $gutter;
+  justify-content      : center;
+}
+
+@mixin col-6-fixed {
+  display              : grid;
+  grid-template-columns: repeat(6, $track);
+  column-gap           : $gutter;
+  justify-content      : center;
+}
+
+@mixin col-6-flexible {
+  display              : grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  column-gap           : $gutter;
+  justify-content      : center;
+}
+
+@mixin col-4-flexible {
+  display              : grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap           : $gutter;
+  justify-content      : center;
+}
+
+// Page margins for flexible template
+$margin-12col: $gutter * 3;
+$margin-6col : $gutter * 1.5;
+$margin-4col : $gutter * 1;
+
+// Chrome metrics
+$navbar: 64px;
