@@ -1,6 +1,7 @@
-# Dora Factory Documentation
-
-The documentation site is powered by [Nextra](https://github.com/shuding/nextra).
+<div align="center">
+  <a href="https://df-docs.vercel.app/"><img src="assets/readme-hero.png" alt="DF Docs"></a>
+  <p><strong>Dora Factory Documentation</strong><br/><a href="https://dorafactory.org/">Home</a> · <a href="https://twitter.com/DoraFactory">Twitter</a> · <a href="https://discord.com/invite/gKT5DsWwQ5">Discord</a></p>
+</div>
 
 ## Links
 
@@ -16,7 +17,7 @@ The documentation site is powered by [Nextra](https://github.com/shuding/nextra)
 
 ## Development
 
-This repo uses [PNPM](https://pnpm.io/) as the package manager.
+The documentation site is powered by [Nextra](https://github.com/shuding/nextra). This repo uses [PNPM](https://pnpm.io/) as the package manager.
 
 ### Installation
 
