@@ -76,7 +76,7 @@ export default {
 
   logo: <Logo />,
   docsRepositoryBase:
-    'https://github.com/dorafactory/df-docs/blob/master/pages',
+    'https://github.com/dorafactory/df-docs/tree/main',
   sidebar: {
     defaultMenuCollapseLevel: 1
     // autoCollapse: true,
