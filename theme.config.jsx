@@ -75,14 +75,13 @@ export default {
   },
 
   logo: <Logo />,
-  docsRepositoryBase:
-    'https://github.com/dorafactory/df-docs/tree/main',
+  docsRepositoryBase: 'https://github.com/DoraFactory/df-docs/tree/main',
   sidebar: {
     defaultMenuCollapseLevel: 1
     // autoCollapse: true,
   },
   project: {
-    link: 'https://github.com/dorafactory'
+    link: 'https://github.com/DoraFactory'
   },
 
   toc: {
