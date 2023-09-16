@@ -3,6 +3,36 @@ title: 'Vota Operator’s Manual'
 desc: 'Vota is a special purpose blockchain for voting and decentralized community governance.'
 ---
 
+import { Cards } from 'nextra/components'
+import { IconChecklist, IconCli, IconGui, IconHelp } from '@components/svgs'
+
 # Vota Operator’s Manual
 
-[Vota](https://vota.dorafactory.org/) is a special purpose blockchain for voting and decentralized community governance.
+[Dora Vota](https://vota.dorafactory.org/) is a specialized blockchain for voting and decentralized community governance.
+
+Dora Factory has developed a user-friendly [GUI](https://vota.dorafactory.org/) and [CLI](https://github.com/DoraFactory/vota-operator-scripts) for MACI (Minimal Anti-collusion Infrastructure) voting round deployment and operation.
+
+If you're interested in the mechanisms and details of MACI, you can explore further by reading “[Light-weight MACI Anonymization](https://research.dorahacks.io/2022/04/30/light-weight-maci-anonymization/)”.
+
+<Cards num={2}>
+  <Cards.Card
+    icon={<IconChecklist />}
+    title="Prerequisites"
+    href="/docs/vota/prerequisites"
+  />
+  <Cards.Card
+    icon={<IconGui />}
+    title="Deploy Round"
+    href="/docs/vota/deploy"
+  />
+  <Cards.Card
+    icon={<IconCli />}
+    title="Tally and Proof"
+    href="/docs/vota/tally"
+  />
+  <Cards.Card
+    icon={<IconHelp />}
+    title="Troubleshooting"
+    href="/docs/vota/troubleshooting"
+  />
+</Cards>
