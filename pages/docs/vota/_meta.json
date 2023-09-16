@@ -1,5 +1,6 @@
 {
-  "deploy": "Deploy Rounds",
-  "tally": "Tallying",
-  "proof": "Zero-knowledge Proofing"
+  "prerequisites": "Prerequisites",
+  "deploy": "Deploy Round",
+  "tally": "Tally and Proof",
+  "troubleshoot": "Troubleshooting"
 }

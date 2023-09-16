@@ -1,0 +1,57 @@
+---
+title: 'Deploy Round · Vota Operator’s Manual'
+desc: 'Vota is a special purpose blockchain for voting and decentralized community governance.'
+---
+
+import { Callout } from 'nextra/components'
+
+# Deploy Round
+
+## Generating keys for operator
+
+<Callout type="warning">
+  Please store your keys securely, and keep your private key confidential.
+</Callout>
+
+If you are performing as a Vota MACI operator for the first time, please run the following command to generate your public-private key pair for MACI operation.
+
+```bash npm2yarn
+npm run operator
+# Your key pair will be printed on the terminal.
+```
+
+## Deploy round on Dora Vota
+
+You can easily deploy a new round via the GUI on the Dora Vota website:
+
+<a
+  className="mt-3 block"
+  target="_blank"
+  href="https://vota.dorafactory.org/?action=deploy"
+>
+  ![](/assets/button-deploy-maci.svg)
+</a>
+
+### Creating and deploying
+
+1. Follow the steps on the GUI to fill the required information, during which you will be asked to input the **operator’s public key** generated above.
+2. Send the transaction to deploy through the Keplr wallet extension. Make sure you have **sufficient DORA tokens** in your wallet account as gas fee.
+3. After waiting a few seconds for successful deployment, you can find your round on the website.
+
+### About MACI signup allowlist
+
+You can [download the template](/download/maci-allowlist.csv) of the MACI signup allowlist. The allowlist is a CSV file with two columns:
+
+- The first column is the address of the voter, which must be a valid Dora Vota Mainnet address.
+- The second column is the amount of voice credits each voter will be assigned, which must be a positive integer.
+
+```csv filename="maci-allowlist.csv"
+dora1234567890abcdefghijklmnopqrstuvwxyz123, 100
+```
+
+### Maintaining the round information
+
+By clicking the ⚙️ button on the page of round details, you can find the entries for the information editing:
+
+- **Voting options**: It is recommended to assign semantic names to the voting options _before the round starts_, which will be displayed for the voters.
+- **Round information**: You can update the title, description, and related links of the round at any time.
