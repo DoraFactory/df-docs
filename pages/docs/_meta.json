@@ -3,13 +3,13 @@
 
   "-- manuals": {
     "type": "separator",
-    "title": "Manuals"
+    "title": "Dora Vota"
   },
   "vota": "Vota Operator’s Manual",
 
   "-- references": {
     "type": "separator",
-    "title": "References"
+    "title": "API References"
   },
   "aptos": "Aptos APIs",
   "qrng": "QRNG Faucet"
