@@ -10,6 +10,7 @@ const withNextra = require('nextra')({
 module.exports = withNextra({
   /* other next.js config */
   reactStrictMode: true, // Recommended for the `pages` directory, default in `app`.
+  output: 'standalone',
 
   env: {
     SITE_ROOT: process.env.SITE_ROOT
