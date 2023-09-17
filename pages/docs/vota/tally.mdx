@@ -9,14 +9,14 @@ import { Callout } from 'nextra/components'
 
 The tally and proof process for each MACI round begins at the ending of the voting period.
 
-## Configure `credential.env` file
+## Configuring `secret.env` file
 
 <Callout type="warning">
   Please ensure that the credential.env file remains confidential and prevent
   from committing this file to your git repository.
 </Callout>
 
-Before starting the tally and proof operation, you need to properly configure the `credential.env` file.
+Before starting the tally and proof operation, you need to properly configure the `secret.env` file. You can edit `secret.env` file with any text editor app.
 
 - **Contract address**, which can be found and copied from the Dora Vota website.
 - **Operator’s private key**, which has been generated from the [previous step](/docs/vota/deploy#generating-keys-for-operator).
@@ -33,7 +33,7 @@ COORDINATOR_KEY=1234567890123456789012345678901234567890123456789012345678901234
 MNEMONIC='lorem ipsum dolor sit amet consectetur adipiscing elit donec scelerisque ante non'
 ```
 
-## Tally and proof automatically
+## Automatic tally and proof
 
 For smooth and uninterrupted operations, ensure you have:
 
