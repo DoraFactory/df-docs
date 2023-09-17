@@ -20,7 +20,6 @@ Before starting the tally and proof operation, you need to properly configure th
 
 - **Contract address**, which can be found and copied from the Dora Vota website.
 - **Operator’s private key**, which has been generated from the [previous step](/docs/vota/deploy#generating-keys-for-operator).
-- **[Salt](<https://en.wikipedia.org/wiki/Salt_(cryptography)>) for […]**, which can be a random string (recommended to be more than 16 bytes long).
 - **Mnemonic of operator’s Keplr wallet**, which can found and copied from the Keplr wallet. For more help, check out the [Keplr’s official guide](https://help.keplr.app/articles/how-to-view-your-seed-phrase).
 
 ```bash filename="credential.env"
@@ -29,9 +28,6 @@ CONTRACT_ADDRESS=dora1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklm
 
 # Operator's prviate key
 COORDINATOR_KEY=12345678901234567890123456789012345678901234567890123456789012345678901234567
-
-# A random string as salt
-STATE_SALT=abcdefg0123456789
 
 # Mnemonic of operator's Keplr wallet
 MNEMONIC='lorem ipsum dolor sit amet consectetur adipiscing elit donec scelerisque ante non'
