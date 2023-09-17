@@ -6,6 +6,7 @@
     "title": "Dora Vota"
   },
   "vota": "Vota Operator Manual",
+  "vota-dev": "Vota Developer Guide",
 
   "-- references": {
     "type": "separator",
