@@ -2,7 +2,7 @@ import { Cards } from 'nextra/components'
 import {
   IconChecklist,
   IconCli,
-  IconGui,
+  IconCode,
   IconHelp,
   IconReference
 } from '@components/svgs'
@@ -23,19 +23,19 @@ This beginner-friendly guide is intended to help you get started with Dora Vota 
     icon={<IconCli />}
     title={
       <span>
-        Install and Use <code>dorad</code>
+        Get Started with <code>dorad</code>
       </span>
     }
     href="/docs/vota-dev/dorad"
   />
   <Cards.Card
+    icon={<IconCode />}
+    title="CosmWasm Contract"
+    href="/docs/vota-dev/cosmwasm"
+  />
+  <Cards.Card
     icon={<IconReference />}
     title="Public Resources"
     href="/docs/vota-dev/resources"
-  />
-  <Cards.Card
-    icon={<IconHelp />}
-    title="Under Construction…"
-    href="/docs/vota-dev/xxxxxx"
   />
 </Cards>
