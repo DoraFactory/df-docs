@@ -1,6 +1,6 @@
 {
   "dependencies": "Install Dependencies",
-  "dorad": "Install and Use dorad",
-  "resources": "Public Resources",
-  "xxxxxx": "Under Construction…"
+  "dorad": "Get Started with dorad",
+  "cosmwasm": "CosmWasm Contract",
+  "resources": "Public Resources"
 }
