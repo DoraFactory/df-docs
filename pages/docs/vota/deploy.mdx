@@ -7,7 +7,7 @@ import { Callout } from 'nextra/components'
 
 # Deploy Round
 
-## Generating keys for operator
+## Generate keys for operator
 
 <Callout type="warning">
   Please store your keys securely, and keep your private key confidential.
@@ -17,10 +17,10 @@ If you are performing as a Vota MACI operator for the first time, please run the
 
 ```bash npm2yarn
 npm run key
-# Your key pair will be printed on the terminal.
+# Your key pair will be printed on the terminal. Please securely sotre your key pairs for future use, and do not leak or lose your key pairs.
 ```
 
-## Deploying a round on Dora Vota
+## Deploy a voting round on Dora Vota
 
 You can easily deploy a new round via the GUI on the Dora Vota website:
 
@@ -32,7 +32,7 @@ You can easily deploy a new round via the GUI on the Dora Vota website:
   ![](/assets/button-deploy-maci.svg)
 </a>
 
-### Creating and deploying
+### Create and deploy a round
 
 1. Follow the steps on the GUI to fill the required information, during which you will be asked to input the **operator’s public key** generated above.
 2. Send the transaction to deploy through the Keplr wallet extension. Make sure you have **sufficient DORA tokens** in your wallet account as gas fee.
@@ -42,16 +42,16 @@ You can easily deploy a new round via the GUI on the Dora Vota website:
 
 You can [download the template](/download/maci-allowlist.csv) of the MACI signup allowlist. The allowlist is a CSV file with two columns:
 
-- The first column is the address of the voter, which must be a valid Dora Vota Mainnet address.
+- The first column is the address of the voters allowed in this round. The addresses must be a valid Dora Vota Mainnet addresses.
 - The second column is the amount of voice credits each voter will be assigned, which must be a positive integer.
 
 ```csv filename="maci-allowlist.csv"
 dora1234567890abcdefghijklmnopqrstuvwxyz123, 100
 ```
 
-### Maintaining the round information
+### Maintain the round information
 
-By clicking the ⚙️ button on the page of round details, you can find the entries for the information editing:
+By clicking the ⚙️ button on the page of round details, you can find the entries to edit round information:
 
-- **Voting options**: It is recommended to assign semantic names to the voting options _before the round starts_, which will be displayed for the voters.
+- **Voting options**: It is recommended to assign semantic names to the voting options _before the round starts_, which will be displayed to the voters.
 - **Round information**: You can update the title, description, and related link of the round at any time.
