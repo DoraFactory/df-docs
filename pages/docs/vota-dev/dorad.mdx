@@ -126,7 +126,7 @@ The denom of Dora Vota is `peaka`, and `1 DORA = 10^18 peaka`.
 Here is an example of token transfer on Dora Vota:
 
 ```ansi filename="Terminal"
-$ dorad tx bank send <from_addr> <to_addr> <amount> --chain-id vota-ash --gas-prices=0.01peaka --gas=auto --gas-adjustment=1.3 --node https://vota-rpc.dorafactory.org:26657/
+$ dorad tx bank send <from_addr> <to_addr> <amount> --chain-id vota-ash --gas-prices=0.01peaka --gas=auto --gas-adjustment=1.3 --node https://vota-rpc.dorafactory.org:443
 ```
 
 ### Query the balance of account
@@ -134,5 +134,5 @@ $ dorad tx bank send <from_addr> <to_addr> <amount> --chain-id vota-ash --gas-pr
 You can use this command to query the balance of a specific account address.
 
 ```ansi filename="Terminal"
-$ dorad query bank balances <account_address> --node https://vota-rpc.dorafactory.org:26657/
+$ dorad query bank balances <account_address> --node https://vota-rpc.dorafactory.org:443
 ```
