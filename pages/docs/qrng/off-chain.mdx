@@ -3,7 +3,7 @@ title: 'Off-chain Faucet · QRNG Faucet'
 desc: 'Dora Factory offers a faucet of QRNG (quantum random number generation) for scientific research and product testing. You can request device-independent quantum random numbers for free.'
 ---
 
-import { Callout, Tabs, Tab } from 'nextra/components'
+import { Callout, Tabs } from 'nextra/components'
 
 # Off-chain Faucet
 
@@ -11,16 +11,16 @@ import { Callout, Tabs, Tab } from 'nextra/components'
 
 {/* prettier-ignore */}
 <Tabs items={['HTTPS', 'WebSockets']}>
-  <Tab>
+  <Tabs.Tab>
     ```text
     https://qrng.dorafactory.org/faucet-api
     ```
-  </Tab>
-  <Tab>
+  </Tabs.Tab>
+  <Tabs.Tab>
     ```text
     wss://qrng.dorafactory.org/faucet-ws
     ```
-  </Tab>
+  </Tabs.Tab>
 </Tabs>
 
 ## API reference

@@ -3,7 +3,7 @@ title: 'Aptos APIs'
 desc: 'Dora Factory offers a set of Aptos APIs for hackers, developers, and teams working on Aptos native applications. More APIs will be added over time.'
 ---
 
-import { Callout, Tabs, Tab } from 'nextra/components'
+import { Callout, Tabs } from 'nextra/components'
 
 # Aptos APIs
 
@@ -22,16 +22,16 @@ To apply for the free 45-day use of the Aptos APIs, please fill in the applicati
 
 {/* prettier-ignore */}
 <Tabs items={['HTTPS', 'WebSockets']}>
-  <Tab>
+  <Tabs.Tab>
     ```text
     https://aptos.dorafactory.org/mainnet-api/
     ```
-  </Tab>
-  <Tab>
+  </Tabs.Tab>
+  <Tabs.Tab>
     ```text
     wss://aptos.dorafactory.org/mainnet-ws/
     ```
-  </Tab>
+  </Tabs.Tab>
 </Tabs>
 
 - Request method is `POST`.
