@@ -1,5 +1,32 @@
 # CHANGELOG
 
+## [0.1.0-beta][0.1.0-beta] · 2023-09-21
+
+### Added
+
+- Feat: Add Vota Operator Manual.
+  - https://docs.dorafactory.org/docs/vota
+- Feat: Add Vota Developer Guide.
+  - https://docs.dorafactory.org/docs/vota-dev
+- Feat: Update Get Started page.
+  - https://docs.dorafactory.org/docs
+- CI: Add GitHub Actions workflow for production deployment.
+- Docs: Add the hero image into README.
+
+### Changed
+
+- Feat: Replace `<Tabs>` with `<Tab.Tabs>` to align to Nextra latest feature.
+- Build: Update deps to latest versions.
+- Build: Update devDeps to latest versions.
+- Build: Change `.env.production` into `.env`, and update `SITE_ROOT` in `.env`.
+- Docs: Update contact email for Code of Conduct.
+
+### Fixed
+
+- Fix: Theme config `docsRepositoryBase` URL.
+- Fix: SVGR config for Next.js.
+  - Reference: https://react-svgr.com/docs/next/#usage
+
 ## [0.1.0-alpha][0.1.0-alpha] · 2023-09-09
 
 ### Added
@@ -18,4 +45,5 @@
 - Doc: [Code of Conduct](CODE_OF_CONDUCT.md), based on [Contributor Covenant](https://www.contributor-covenant.org) v2.1.
 - Chore: Configure GitHub [Dependabot](.github/dependabot.yml).
 
+[0.1.0-beta]: https://github.com/DoraFactory/df-docs/compare/0.1.0-alpha...0.1.0-beta
 [0.1.0-alpha]: https://github.com/DoraFactory/df-docs/compare/eacf593...0.1.0-alpha
