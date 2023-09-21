@@ -1,0 +1,46 @@
+---
+title: 'Tally and Proof · Dora Vota Operator Manual'
+desc: 'Dora Vota is a special purpose blockchain for voting and decentralized community governance.'
+---
+
+import { Callout } from 'nextra/components'
+
+# Tally and Proof
+
+The tally and proof process for each MACI round begins after the end of the voting period.
+
+## Configure `secret.env` file
+
+<Callout type="warning">
+  Please ensure that the `secret.env` file remains confidential and DO NOT commit this file to your git repository.
+</Callout>
+
+Before starting the tally and proof operations, you need to properly configure the `secret.env` file. You can edit `secret.env` file with any text editor.
+
+- **Contract address**, which can be found and copied from the Dora Vota website.
+- **Operator’s private key**, which has been generated from the [previous step](/docs/vota/deploy#generating-keys-for-operator).
+- **Mnemonic of operator’s Keplr wallet**, which can found and copied from the Keplr wallet. For more help, check out the [Keplr’s official guide](https://help.keplr.app/articles/how-to-view-your-seed-phrase).
+
+```bash filename="credential.env"
+# Contract address of your MACI round
+CONTRACT_ADDRESS=dora1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklm
+
+# Operator's prviate key
+COORDINATOR_KEY=12345678901234567890123456789012345678901234567890123456789012345678901234567
+
+# Mnemonic of operator's Keplr wallet
+MNEMONIC='lorem ipsum dolor sit amet consectetur adipiscing elit donec scelerisque ante non'
+```
+
+## Automatic tally and proof
+
+For smooth and uninterrupted operations, ensure you have:
+
+- Stable internet connectivity.
+- Enough DORA tokens to cover gas fees.
+
+```bash npm2yarn
+npm run tally
+```
+
+The entire process will take some time, depending on the amount of signups and voting messages in your MACI round. Once the process successfully completes, your tally results will be automatically verified and published on the Dora Vota blockchain.

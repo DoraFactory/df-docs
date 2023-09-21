@@ -1,0 +1,138 @@
+import { Steps, Callout } from 'nextra/components'
+
+# Get Started with `dorad`
+
+After installing the `dorad` binary, you will be able to interact with the Dora Vota Mainnet via CLI.
+
+## Prerequisites
+
+Please make sure you have correctly installed [all the dependencies](/docs/vota-dev/dependencies) on your system.
+
+## Setup
+
+`dorad` is a command-line tool to interact with the [Dora Vota](https://vota-explorer.dorafactory.org/) blockchain.
+
+To install `dorad`, find the correct [version tag](https://github.com/DoraFactory/doravota/tags), and run the following commands:
+
+```ansi filename="Terminal"
+$ git clone https://github.com/DoraFactory/doravota.git
+$ cd doravota
+$ git checkout <version tag>
+$ make install
+$ sudo cp ~/go/bin/dorad /usr/local/bin
+```
+
+You can verify that dorad was installed properly by running:
+
+```ansi filename="Terminal"
+[0m$ dorad version
+[0;90m0.1.0
+```
+
+If you can see the version info, it means the installation was successful.
+
+`dorad` supports general Cosmos SDK and Tendermint commands. You can run the tool to see a list of commands with explanations of what they do with `dorad`
+
+```ansi filename="Terminal"
+[0m$ dorad
+[0;90mStart a Dora Vota node
+
+Usage:
+  dorad [command]
+
+Available Commands:
+  add-genesis-account Add a genesis account to genesis.json
+  collect-gentxs      Collect genesis txs and output a genesis.json file
+  config              Create or query an application CLI configuration file
+  debug               Tool for helping with debugging your application
+  export              Export state to JSON
+  genesis             Application's genesis-related subcommands
+  gentx               Generate a genesis tx carrying a self delegation
+  help                Help about any command
+  init                Initialize private validator, p2p, genesis, and application configuration files
+  keys                Manage your application's keys
+  migrate             Migrate genesis to a specified target version
+  query               Querying subcommands
+  rollback            rollback cosmos-sdk and tendermint state by one height
+  start               Run the full node
+  status              Query remote node for status
+  tendermint          Tendermint subcommands
+  tx                  Transactions subcommands
+  validate-genesis    validates the genesis file at the default location or at the location passed as an arg
+  version             Print the application binary version information
+
+Flags:
+  -h, --help                help for dorad
+      --home string         directory for config and data (default "/home/ubuntu/.dora")
+      --log_format string   The logging format (json|plain) (default "plain")
+      --log_level string    The logging level (trace|debug|info|warn|error|fatal|panic) (default "info")
+      --trace               print out full stack trace on errors
+
+Use "dorad [command] --help" for more information about a command.
+```
+
+## Create a Dora Vota account with `dorad`
+
+<Steps>
+### Add a named Vota account [#dorad-keys-add]
+
+During the following process, you will be asked to set a passphrase for your account. Once successfully created, the terminal will output a series of **mnemonic words**.
+
+```ansi {12} filename="Terminal"
+[0m$ dorad keys add <name of key>
+[0;90mEnter keyring passphrase (attempt 1/3):
+Re-enter keyring passphrase:
+- address: dora14wk0kv0cr59ml0xkww48gncd25ljtzfpjrpvx9
+  name: temp-account
+  pubkey: '{"@type":"/cosmos.crypto.secp256k1.PubKey","key":"AzBjp4HCkacaoSjvWLda9EuqDWQPjPVsIEZojURqgDFg"}'
+  type: local
+
+**Important** write this mnemonic phrase in a safe place.
+It is the only way to recover your account if you ever forget your password.
+
+organ carpet payment supply ladder kitten december couch depend success lawsuit beyond way rule illegal upper captain case shock hurdle once asthma whip drastic
+```
+
+<Callout type="warning">
+  Please make sure to keep these **mnemonic words** in a secure place, do not lose
+  it, and do not leak it, as they are crucial for recovering your account.
+</Callout>
+
+### Show account details [#dorad-keys-list]
+
+```ansi filename="Terminal"
+[0m$ dorad keys list
+[0;90mEnter keyring passphrase (attempt 1/3):
+- address: dora14wk0kv0cr59ml0xkww48gncd25ljtzfpjrpvx9
+  name: temp-account
+  pubkey: '{"@type":"/cosmos.crypto.secp256k1.PubKey","key":"AzBjp4HCkacaoSjvWLda9EuqDWQPjPVsIEZojURqgDFg"}'
+  type: local
+```
+
+</Steps>
+
+## Transfer and query using the `bank` module
+
+### Token in Dora Vota
+
+The denom of Dora Vota is `peaka`, and `1 DORA = 10^18 peaka`.
+
+### Transfer between addresses
+
+- `from_addr`: source address of this transfer transaction
+- `to_addr`: destination address of this transfer transaction
+- `amount`: you can use `peaka` or `DORA` which depends on the amount you’re transferring.
+
+Here is an example of token transfer on Dora Vota:
+
+```ansi filename="Terminal"
+$ dorad tx bank send <from_addr> <to_addr> <amount> --chain-id vota-ash --gas-prices=0.01peaka --gas=auto --gas-adjustment=1.3 --node https://vota-rpc.dorafactory.org:443
+```
+
+### Query the balance of account
+
+You can use this command to query the balance of a specific account address.
+
+```ansi filename="Terminal"
+$ dorad query bank balances <account_address> --node https://vota-rpc.dorafactory.org:443
+```

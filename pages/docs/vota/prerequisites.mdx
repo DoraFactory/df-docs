@@ -1,0 +1,74 @@
+---
+title: 'Prerequisites · Dora Vota Operator Manual'
+desc: 'Dora Vota is a special purpose blockchain for voting and decentralized community governance.'
+---
+
+import { Steps, Callout } from 'nextra/components'
+
+# Prerequisites
+
+## Set up a reliable environment
+
+For optimal performance and security, it is recommended to prepare an environment with:
+
+- **Stable internet**: Ensure reliable connectivity.
+- **Secure computing platform**: Maintain a safe and robust computer environment.
+- **UNIX-like OS with a terminal app/emulator**: macOS, Linux, or simimar systems are recommended for better compatibility with Node.js and CLI operations.
+
+## Install Node.js 18+ version
+
+Visit the Node.js official [download page](https://nodejs.org/en/download) to get the latest 18+ (currently LTS) version for your platform.
+
+The `npm` (Node Package Manager) CLI tool will be included in the Node.js installation.
+
+## Prepare a wallet for operation
+
+To facilitate safe and seamless operations, you can set up your wallet by following the steps below:
+
+<Steps>
+
+### Keplr wallet
+
+<Callout type="warning">
+  Please keep in mind that a Keplr wallet **with mnemonic phrase** is necessary
+  for Vota’s MACI operation. For more information, check out [Keplr’s official
+  guide](https://help.keplr.app/articles/four-ways-to-create-a-keplr-account).
+</Callout>
+
+- Get the Keplr browser extension from [the official channel](https://www.keplr.app/download).
+- Create a new account **via mnemonic phrase**, or import an existing one **via mnemonic phrase**.
+- A dedicated wallet account, used exclusively for MACI operations, is recommended.
+
+### Dora Vota Mainnet address
+
+- Add [Dora Vota Mainnet](https://vota-explorer.dorafactory.org/wallet/keplr) to your Keplr wallet.
+- Your Dora Vota Mainnet address will be generated automatically in your wallet.
+
+### Sufficient DORA tokens
+
+- Get sufficient DORA tokens for gas fees, which will be consumed in the operation process. To start with, we recommend you prepare 20 DORA.
+- You can buy DORA tokens from [[Some CEX/DEX]](https://example.com). Please keep in mind that you should acquire DORA tokens on the **Dora Vota Mainnet**.
+
+</Steps>
+
+## Build operation environment
+
+<Steps>
+
+### Download source code
+
+[Download](https://github.com/DoraFactory/vota-operator-scripts/archive/refs/heads/main.zip) and unzip source code for Vota operation, or clone it via Dora Factory’s official GitHub [repo](https://github.com/DoraFactory/vota-operator-scripts). Open your terminal, and navigate to the directory of the source code.
+
+### Install dependencies
+
+```bash npm2yarn
+npm install
+```
+
+### Build the environment
+
+```bash npm2yarn
+npm run build
+```
+
+</Steps>

@@ -1,0 +1,280 @@
+import { Callout, FileTree, Steps, Tabs } from 'nextra/components'
+
+# CosmWasm Contract
+
+## CosmWasm on Dora Vota
+
+[CosmWasm](https://cosmwasm.com/) is a library for writing Rust smart contracts. Dora Vota supports CosmWasm 1.0.0+ smart contracts.
+
+## Install dependencies
+
+Run the following command to download `rustup` and install Rust, then proceed by following the prompts:
+
+```ansi filename="Terminal"
+$ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+## Set up environment
+
+<Steps>
+### Set `stable` as the default toolchain channel
+
+```ansi filename="Terminal"
+$ rustup default stable
+```
+
+### Add WASM as the compilation target
+
+```ansi filename="Terminal"
+$ rustup target add wasm32-unknown-unknown
+```
+
+### Install `cargo-generate` and `cargo-run-script`
+
+```ansi filename="Terminal"
+$ cargo install cargo-generate --features vendored-openssl
+$ cargo install cargo-run-script
+```
+
+<Callout type="info">
+  For more instructions, check out the [CosmWasm Starter
+  Pack](https://github.com/DoraFactory/cw-template#readme).
+</Callout>
+
+</Steps>
+
+## Create a boilerplate smart contract
+
+<Steps>
+### Create a template repository
+Navigate to the folder where you want to create a boilerplate smart contract, then run:
+
+```ansi filename="Terminal"
+$ cargo generate --git https://github.com/DoraFactory/cw-template.git --name counter -d minimal=false
+```
+
+<FileTree>
+  <FileTree.File name="Cargo.toml" />
+  <FileTree.File name="Developing.md" />
+  <FileTree.File name="Importing.md" />
+  <FileTree.File name="LICENSE" />
+  <FileTree.File name="NOTICE" />
+  <FileTree.File name="Publishing.md" />
+  <FileTree.File name="README.md" />
+  <FileTree.Folder name="src" defaultOpen>
+    <FileTree.Folder name="bin" defaultOpen>
+      <FileTree.File name="schema.rs" />
+    </FileTree.Folder>
+    <FileTree.File name="contract.rs" />
+    <FileTree.File name="error.rs" />
+    <FileTree.File name="helpers.rs" />
+    <FileTree.File name="integration_tests.rs" />
+    <FileTree.File name="lib.rs" />
+    <FileTree.File name="msg.rs" />
+    <FileTree.File name="state.rs" />
+  </FileTree.Folder>
+</FileTree>
+
+A repository will be created with the structure above. It defines a simple counter app, which supports 4 basic functions:
+
+1. Instantiate the counter with a starting count.
+2. Increment the counter by 1.
+3. Reset the counter.
+4. Read the current count.
+
+### Run unit tests
+
+```ansi filename="Terminal"
+[0m$ cargo unit-test
+[0;90mrunning 4 tests
+test contract::tests::increment ... ok
+test contract::tests::reset ... ok
+test contract::tests::proper_initialization ... ok
+test integration_tests::tests::count::count ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+```
+
+</Steps>
+
+## Deploy the boilerplate smart contract
+
+<Steps>
+### Compile the contract
+
+<Callout type="info">
+  Before compile the contract, make sure you have met the prerequisites listed
+  in the [CosmWasm Developing
+  documentation](https://github.com/DoraFactory/cw-template/blob/main/Developing.md#prerequisites)
+</Callout>
+
+Run the following command to compile:
+
+```ansi filename="Terminal"
+$ cargo wasm
+```
+
+Before uploading, use the [`rust-optimizer`](https://github.com/CosmWasm/rust-optimizer) to minimize the size of the binary. Also, [pay attention](https://github.com/CosmWasm/rust-optimizer#notice) to your processor architecture:
+
+{/* prettier-ignore */}
+<Tabs items={['x86_64', 'ARM64']}>
+  <Tabs.Tab>
+    ```text
+    $ docker run --rm -v "$(pwd)":/code \
+      --mount type=volume,source="$(basename "$(pwd)")_cache",target=/code/target \
+      --mount type=volume,source=registry_cache,target=/usr/local/cargo/registry \
+      cosmwasm/rust-optimizer:0.12.11
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```text
+    $ docker run --rm -v "$(pwd)":/code \
+      --mount type=volume,source="$(basename "$(pwd)")_cache",target=/code/target \
+      --mount type=volume,source=registry_cache,target=/usr/local/cargo/registry \
+      cosmwasm/rust-optimizer-arm64:0.12.11
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+<FileTree>
+  <FileTree.File name="Cargo.lock" />
+  <FileTree.File name="Cargo.toml" />
+  <FileTree.File name="Developing.md" />
+  <FileTree.File name="Importing.md" />
+  <FileTree.File name="LICENSE" />
+  <FileTree.File name="NOTICE" />
+  <FileTree.File name="Publishing.md" />
+  <FileTree.File name="README.md" />
+
+{' '}
+<FileTree.Folder name="artifacts" defaultOpen>
+  <FileTree.File name="checksums.txt" />
+  <FileTree.File name="checksums_intermediate.txt" />
+  <FileTree.File name="counter.wasm" />
+</FileTree.Folder>
+
+  <FileTree.Folder name="src">
+    <FileTree.Folder name="bin">
+      <FileTree.File name="schema.rs" />
+    </FileTree.Folder>
+    <FileTree.File name="contract.rs" />
+    <FileTree.File name="error.rs" />
+    <FileTree.File name="helpers.rs" />
+    <FileTree.File name="integration_tests.rs" />
+    <FileTree.File name="lib.rs" />
+    <FileTree.File name="msg.rs" />
+    <FileTree.File name="state.rs" />
+  </FileTree.Folder>
+  <FileTree.Folder name="target">
+    <FileTree.File name="…" />
+  </FileTree.Folder>
+</FileTree>
+
+After compiling the project, the relevant `.wasm` and `checksums` files will be created in the `artifacts/` folder.
+
+### Create an account
+
+<Callout type="info">
+  Make sure that you have installed [`dorad`](/docs/vota-dev/dorad).
+</Callout>
+
+You can create a Dora Vota account via [`dorad keys add`](/docs/vota-dev/dorad#dorad-keys-add) and display the account details via [`dorad keys list`](/docs/vota-dev/dorad#dorad-keys-list). For example:
+
+```ansi filename="Terminal"
+[0m$ dorad keys add test1
+[0;90m- address: dora1wxxtzdhydas27rtt99qtkzu5hqunxhlceltc7m
+  name: test1
+  pubkey: '{"@type":"/cosmos.crypto.secp256k1.PubKey","key":"A42Z75qDlS4x/exB/dYc5AcVTUPzvoKYFsMc0lT7AFa5"}'
+  type: local
+
+**Important** write this mnemonic phrase in a safe place.
+It is the only way to recover your account if you ever forget your password.
+
+<mnemonic phrase>
+```
+
+```ansi filename="Terminal"
+[0m$ dorad keys list
+[0;90m- address: dora1wxxtzdhydas27rtt99qtkzu5hqunxhlceltc7m
+  name: test1
+  pubkey: '{"@type":"/cosmos.crypto.secp256k1.PubKey","key":"A42Z75qDlS4x/exB/dYc5AcVTUPzvoKYFsMc0lT7AFa5"}'
+  type: local
+```
+
+### Store on Testnet
+
+You can store the contract on either the Mainnet or the Testnet. In this example, we will demonstrate how to store on the Testnet:
+
+```ansi filename="Terminal"
+$ cd artifacts
+$ dorad tx wasm store counter.wasm  --from <unsafe-test-key-name> --chain-id=<chain-id> --gas-prices 0.1uDORA --gas auto --gas-adjustment 1.3 -b block -y
+```
+
+- `<unsafe-test-key-name>`: Replace it with the key name from your local keys.
+- `<chain-id>`: Replace it with `vote-ash` or `doravota-devnet`.
+
+You will find a `CODE_ID` from the output of the command above. Save it as a local variable like `CODE_ID=XX`.
+
+Instead, you can also run the following command to set the `CODE_ID` as a variable:
+
+```ansi filename="Terminal"
+$ TX=$(dorad tx wasm store counter.wasm  --from <unsafe-test-key-name> --chain-id=<chain-id> --gas-prices 0.1uDORA --gas auto --gas-adjustment 1.3 -b block --output json -y | jq -r '.txhash')
+$ CODE_ID=$(dorad query tx $TX --output json | jq -r '.logs[0].events[-1].attributes[0].value')
+$ echo "Your contract code_id is $CODE_ID"
+```
+
+Or, you can also look up the `code_id` on [Dora Vota Testnet Explorer](https://vota-testnet-explorer.dorafactory.org) by the store’s transaction.
+
+### Instantiate the contract
+
+```ansi filename="Terminal"
+$ INITIAL_STATE='{"count":100}'
+$ dorad tx wasm instantiate $CODE_ID $INITIAL_STATE --amount 50000uDORA  --label "Counter Contract" --from test1 --no-admin --fees 1uDORA --gas auto --gas-adjustment 1.3 --chain-id "doravota-devnet" --node https://vota-testnet-rpc.dorafactory.org:443
+```
+
+### Get the contract address
+
+```ansi filename="Terminal"
+$ CONTRACT_ADDR=$(dorad query wasm list-contract-by-code ${CODE_ID} --node https://vota-testnet-rpc.dorafactory.org:443 --output json | jq -r '.contracts[0]')
+```
+
+</Steps>
+
+## Execute the contract
+
+### Increment the count in contract
+
+```ansi filename="Terminal"
+$ INCREMENT_MSG='{"increment":{}}'
+$ dorad tx wasm execute $CONTRACT_ADDR "$INCREMENT_MSG" --from test1 --gas-prices 0.01uDORA --gas auto --gas-adjustment 1.3 --chain-id "doravota-devnet" --node https://vota-testnet-rpc.dorafactory.org:443 -y
+```
+
+### Reset the count in contract
+
+```ansi filename="Terminal"
+$ RESET_MSG='{"reset":{"count":0}}'
+$ dorad tx wasm execute $CONTRACT_ADDR "$RESET_MSG" --from test1  --gas-prices 0.01uDORA --gas auto --gas-adjustment 1.3 --chain-id "doravota-devnet" --node https://vota-testnet-rpc.dorafactory.org:443 -y
+```
+
+## Query the contract
+
+### Get the contract state
+
+```ansi filename="Terminal"
+$ GET_STATE_MSG='{"get_count":{}}'
+$ dorad query wasm contract-state smart  $CONTRACT_ADDR "$GET_STATE_MSG" --node https://vota-testnet-rpc.dorafactory.org:443
+```
+
+### Query the contract information
+
+```ansi filename="Terminal"
+$ dorad query wasm contract $CONTRACT_ADDR --node https://vota-testnet-rpc.dorafactory.org:443
+```
+
+## List all contracts on the blockchain
+
+```ansi filename="Terminal"
+$ dorad query wasm list-code --node https://vota-testnet-rpc.dorafactory.org:443
+```
+
+Good job! Now it’s time to learn how to actually develop contracts. You can now visit the [CosmWasm documentation](/docs/vota-dev/resources#cosmwasm-docs) to gain a better understanding of how to interact with the Dora Vota blockchain.

@@ -1,0 +1,41 @@
+import { Cards } from 'nextra/components'
+import {
+  IconChecklist,
+  IconCli,
+  IconCode,
+  IconHelp,
+  IconReference
+} from '@components/svgs'
+
+# Dora Vota Mainnet Developer Guide
+
+This beginner-friendly guide is intended to help you get started with Dora Vota and build on it.
+
+---
+
+<Cards num={2}>
+  <Cards.Card
+    icon={<IconChecklist />}
+    title="Install Dependencies"
+    href="/docs/vota-dev/dependencies"
+  />
+  <Cards.Card
+    icon={<IconCli />}
+    title={
+      <span>
+        Get Started with <code>dorad</code>
+      </span>
+    }
+    href="/docs/vota-dev/dorad"
+  />
+  <Cards.Card
+    icon={<IconCode />}
+    title="CosmWasm Contract"
+    href="/docs/vota-dev/cosmwasm"
+  />
+  <Cards.Card
+    icon={<IconReference />}
+    title="Public Resources"
+    href="/docs/vota-dev/resources"
+  />
+</Cards>
