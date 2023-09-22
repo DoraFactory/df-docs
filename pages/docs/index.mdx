@@ -24,11 +24,11 @@ export const CARD_COPY = [
     desc: 'This beginner-friendly guide is intended to help you get started with Dora Vota and build on it.',
     url: '/docs/vota-dev'
   },
-  {
-    title: 'Aptos APIs',
-    desc: 'Dora Factory offers a set of Aptos APIs for hackers, developers, and teams working on Aptos native applications. More APIs will be added over time.',
-    url: '/docs/aptos'
-  },
+  // {
+  //   title: 'Aptos APIs',
+  //   desc: 'Dora Factory offers a set of Aptos APIs for hackers, developers, and teams working on Aptos native applications. More APIs will be added over time.',
+  //   url: '/docs/aptos'
+  // },
   {
     title: 'QRNG Faucet',
     desc: 'Dora Factory offers a faucet of QRNG (quantum random number generation) for scientific research and product testing. You can request device-independent quantum random numbers for free.',
@@ -37,36 +37,14 @@ export const CARD_COPY = [
 ]
 
 <Cards num={2}>
-  <Cards.Card image arrow title={CARD_COPY[0].title} href={CARD_COPY[0].url}>
-    <>
-      <img
-        alt={CARD_COPY[0].title}
-        src={`${process.env.SITE_ROOT}/api/og?title=${CARD_COPY[0].title}&desc=${CARD_COPY[0].desc}`}
-      />
-    </>
-  </Cards.Card>
-  <Cards.Card image arrow title={CARD_COPY[1].title} href={CARD_COPY[1].url}>
-    <>
-      <img
-        alt={CARD_COPY[1].title}
-        src={`${process.env.SITE_ROOT}/api/og?title=${CARD_COPY[1].title}&desc=${CARD_COPY[1].desc}`}
-      />
-    </>
-  </Cards.Card>
-  <Cards.Card image arrow title={CARD_COPY[2].title} href={CARD_COPY[2].url}>
-    <>
-      <img
-        alt={CARD_COPY[2].title}
-        src={`${process.env.SITE_ROOT}/api/og?title=${CARD_COPY[2].title}&desc=${CARD_COPY[2].desc}`}
-      />
-    </>
-  </Cards.Card>
-  <Cards.Card image arrow title={CARD_COPY[3].title} href={CARD_COPY[3].url}>
-    <>
-      <img
-        alt={CARD_COPY[3].title}
-        src={`${process.env.SITE_ROOT}/api/og?title=${CARD_COPY[3].title}&desc=${CARD_COPY[3].desc}`}
-      />
-    </>
-  </Cards.Card>
+  {CARD_COPY.map((card, i) => (
+    <Cards.Card key={i} image arrow title={card.title} href={card.url}>
+      <>
+        <img
+          alt={card.title}
+          src={`${process.env.SITE_ROOT}/api/og?title=${card.title}&desc=${card.desc}`}
+        />
+      </>
+    </Cards.Card>
+  ))}
 </Cards>
