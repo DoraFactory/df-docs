@@ -22,23 +22,9 @@
         "href": "https://vota.dorafactory.org/",
         "newWindow": true
       },
-      "deardoge": {
-        "title": "Dear Doge",
-        "href": "https://deardoge.dorafactory.org/",
-        "newWindow": true
-      },
-      "aptos-api": {
-        "title": "Aptos API Service",
-        "href": "/aptos"
-      },
       "qrng-faucet": {
         "title": "QRNG Faucet",
         "href": "https://qrng.dorafactory.org/",
-        "newWindow": true
-      },
-      "dora-ksm": {
-        "title": "Dora-KSM Parachain",
-        "href": "https://core-pallet.dorafactory.org/",
         "newWindow": true
       }
     }
