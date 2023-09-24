@@ -1,6 +1,6 @@
 {
   "name": "df-docs",
-  "version": "0.1.0-beta",
+  "version": "0.1.0-beta.1",
   "private": true,
   "scripts": {
     "build": "next build",
@@ -11,19 +11,19 @@
     "start": "next start"
   },
   "dependencies": {
-    "@vercel/og": "^0.5.16",
+    "@vercel/og": "^0.5.17",
     "next": "^13.5.2",
-    "nextra": "^2.12.3",
-    "nextra-theme-docs": "^2.12.3",
+    "nextra": "^2.13.0",
+    "nextra-theme-docs": "^2.13.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",
-    "@types/node": "20.6.3",
+    "@types/node": "20.6.4",
     "@types/react": "^18.2.22",
     "autoprefixer": "^10.4.16",
-    "eslint": "8.49.0",
+    "eslint": "8.50.0",
     "eslint-config-next": "13.5.2",
     "postcss": "^8.4.30",
     "prettier": "3.0.3",
