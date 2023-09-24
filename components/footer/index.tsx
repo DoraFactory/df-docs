@@ -11,14 +11,14 @@ const links = [
     name: 'Dora Vota',
     link: 'https://vota.dorafactory.org/'
   },
-  {
-    name: 'Dear Doge',
-    link: 'https://deardoge.dorafactory.org/'
-  },
-  {
-    name: 'Aptos API Service',
-    link: '/docs/aptos'
-  },
+  // {
+  //   name: 'Dear Doge',
+  //   link: 'https://deardoge.dorafactory.org/'
+  // },
+  // {
+  //   name: 'Aptos API Service',
+  //   link: '/docs/aptos'
+  // },
   {
     name: 'QRNG Faucet',
     link: 'https://qrng.dorafactory.org/'
@@ -44,7 +44,10 @@ const links = [
 export function Footer(): ReactElement {
   return (
     <div className={styles.footer}>
-      <ul className={styles.nav}>
+      <ul
+        className={styles.nav}
+        style={{ '--footer-nav-row': '3' } as React.CSSProperties}
+      >
         {links.map((item, index) => (
           <li className={styles['nav-item']} key={index}>
             <Link href={item.link} target="_blank">
@@ -90,7 +93,7 @@ export function Footer(): ReactElement {
               Dora Factory
             </Link>
           </li>
-          <li className={styles['info-item']}>
+          {/*  <li className={styles['info-item']}>
             <Link href={`https://dorafactory.org/legal/terms/`} target="_blank">
               Terms
             </Link>
@@ -102,7 +105,7 @@ export function Footer(): ReactElement {
             >
               Privacy
             </Link>
-          </li>
+          </li> */}
         </ul>
       </div>
     </div>

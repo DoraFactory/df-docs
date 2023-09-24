@@ -98,12 +98,15 @@ export default async function handler(request: NextRequest) {
           >
             <div
               style={{
-                color: '#FFFFFF',
+                color: 'rgba(0, 0, 0, 0)',
                 fontFamily: '"Public Sans"',
                 fontSize: '54px',
                 fontWeight: 800,
-                lineHeight: '60px'
-                // textWrap: 'balance'
+                lineHeight: '60px',
+                // textWrap: 'wrap',
+                backgroundClip: 'text',
+                backgroundImage:
+                  'linear-gradient(72deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.98) 100%)'
               }}
             >
               {title}

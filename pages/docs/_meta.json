@@ -12,6 +12,9 @@
     "type": "separator",
     "title": "API References"
   },
-  "aptos": "Aptos APIs",
+  "aptos": {
+    "display": "hidden",
+    "title": "Aptos APIs"
+  },
   "qrng": "QRNG Faucet"
 }
