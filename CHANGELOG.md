@@ -1,5 +1,27 @@
 # CHANGELOG
 
+## [0.1.0-beta.1][0.1.0-beta.1] · 2023-09-23
+
+### Added
+
+- Feat: Gradient tint for auto-generated OG image title.
+
+### Changed
+
+- Feat: Remove/replace Testnet related information in Vota Dev Guide.
+- Feat: Remove (hide) Aptos API docs.
+- Feat: Update list of Products in nav.
+- Feat: Update footer.
+  - Remove legal files.
+  - Update link list.
+- Build: Update deps to latest versions.
+- Build: Update devDeps to latest versions.
+
+### Fixed
+
+- Fix: Change Node.js version from `18+` into `18.x`.
+- Fix: Attach `alt` attribution onto the image in Deploy MACI button for better a11y.
+
 ## [0.1.0-beta][0.1.0-beta] · 2023-09-21
 
 ### Added
@@ -45,5 +67,6 @@
 - Doc: [Code of Conduct](CODE_OF_CONDUCT.md), based on [Contributor Covenant](https://www.contributor-covenant.org) v2.1.
 - Chore: Configure GitHub [Dependabot](.github/dependabot.yml).
 
+[0.1.0-beta.1]: https://github.com/DoraFactory/df-docs/compare/0.1.0-beta...0.1.0-beta.1
 [0.1.0-beta]: https://github.com/DoraFactory/df-docs/compare/0.1.0-alpha...0.1.0-beta
 [0.1.0-alpha]: https://github.com/DoraFactory/df-docs/compare/eacf593...0.1.0-alpha
