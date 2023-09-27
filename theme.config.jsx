@@ -13,7 +13,7 @@ export default {
       title: 'The Digital Infrastructure of Global Hacker Movement',
       desc: 'Dora Factory creates protocols, toolings, and public good infrastructures that help open source communities and frontier tech builders to thrive.'
     }
-    const SITE_ROOT = process.env.SITE_ROOT
+    const SITE_ROOT = process.env.NEXT_PUBLIC_SITE_ROOT
     const asPath = router.asPath
 
     // Open Graph
