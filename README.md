@@ -5,8 +5,8 @@
 
 ## Links
 
-- Production (`main`)：<https://docs.dorafactory.org>
-- Preview (`develop`)：<https://df-docs.vercel.app>
+- Stable (`main`)：<https://docs.dorafactory.org>
+- Canary Preview (`develop`)：<https://df-docs.vercel.app>
 
 ## Conventions
 
@@ -62,19 +62,10 @@ pnpm prettier
 
 The Open Graph image generation API [`/api/og`](pages/api/og.tsx), which uses [`@vercel/og`](https://vercel.com/docs/functions/edge-functions/og-image-generation) library, is dependent on [Vercel Edge Functions](https://vercel.com/docs/functions/edge-functions).
 
-### Production
+### Stable
 
-The production branch is [`main`](https://github.com/github/renaming).
+The [Stable](https://docs.dorafactory.org) version of the documentation corresponds to the [`main`](https://github.com/DoraFactory/df-docs/tree/main) branch.
 
-### Preview
+### Canary Preview
 
-The preview site is deployed by [Vercel](https://vercel.com/).
-
-- Default preview branch: `develop`
-- Preview link: <https://df-docs.vercel.app>
-
-### Preview per commit/branch
-
-Vercel will automatically deploy every latest commit, and assign a unique preview URL.
-
-The same applies for every branch (`df-docs-git-[branch-name]-realfish.vercel.app`). As for the latest preview of a specific branch, e.g., `feature/landing-page`, the URL is <https://df-docs-git-feature-landing-page-realfish.vercel.app>.
+The [Canary Preview](https://df-docs.vercel.app) version corresponds to the [`develop`](https://github.com/DoraFactory/df-docs/tree/develop) branch, which is deployed via [Vercel](https://vercel.com/).
