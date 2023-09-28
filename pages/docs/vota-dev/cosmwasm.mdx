@@ -209,7 +209,7 @@ In this example, we will demonstrate how to store on the Mainnet:
 
 ```ansi filename="Terminal"
 $ cd artifacts
-$ dorad tx wasm store counter.wasm  --from <unsafe-test-key-name> --chain-id=<chain-id> --gas-prices 0.1uDORA --gas auto --gas-adjustment 1.3 -b block -y
+$ dorad tx wasm store counter.wasm  --from <unsafe-test-key-name> --chain-id=<chain-id> --gas-prices 100000000000peaka --gas auto --gas-adjustment 1.5 -b block -y
 ```
 
 - `<unsafe-test-key-name>`: Replace it with the key name from your local keys.
@@ -220,7 +220,7 @@ You will find a `CODE_ID` from the output of the command above. Save it as a loc
 Instead, you can also run the following command to set the `CODE_ID` as a variable:
 
 ```ansi filename="Terminal"
-$ TX=$(dorad tx wasm store counter.wasm  --from <unsafe-test-key-name> --chain-id=<chain-id> --gas-prices 0.1uDORA --gas auto --gas-adjustment 1.3 -b block --output json -y | jq -r '.txhash')
+$ TX=$(dorad tx wasm store counter.wasm  --from <unsafe-test-key-name> --chain-id=<chain-id> --gas-prices 100000000000peaka --gas auto --gas-adjustment 1.5 -b block --output json -y | jq -r '.txhash')
 $ CODE_ID=$(dorad query tx $TX --output json | jq -r '.logs[0].events[-1].attributes[0].value')
 $ echo "Your contract code_id is $CODE_ID"
 ```
@@ -248,14 +248,14 @@ $ CONTRACT_ADDR=$(dorad query wasm list-contract-by-code ${CODE_ID} --node https
 
 ```ansi filename="Terminal"
 $ INCREMENT_MSG='{"increment":{}}'
-$ dorad tx wasm execute $CONTRACT_ADDR "$INCREMENT_MSG" --from test1 --gas-prices 0.01uDORA --gas auto --gas-adjustment 1.3 --chain-id "doravota-devnet" --node https://vota-rpc.dorafactory.org:443 -y
+$ dorad tx wasm execute $CONTRACT_ADDR "$INCREMENT_MSG" --from test1 --gas-prices 100000000000peaka --gas auto --gas-adjustment 1.5 --chain-id "doravota-devnet" --node https://vota-rpc.dorafactory.org:443 -y
 ```
 
 ### Reset the count in contract
 
 ```ansi filename="Terminal"
 $ RESET_MSG='{"reset":{"count":0}}'
-$ dorad tx wasm execute $CONTRACT_ADDR "$RESET_MSG" --from test1  --gas-prices 0.01uDORA --gas auto --gas-adjustment 1.3 --chain-id "doravota-devnet" --node https://vota-rpc.dorafactory.org:443 -y
+$ dorad tx wasm execute $CONTRACT_ADDR "$RESET_MSG" --from test1 --gas-prices 100000000000peaka --gas auto --gas-adjustment 1.5 --chain-id "doravota-devnet" --node https://vota-rpc.dorafactory.org:443 -y
 ```
 
 ## Query the contract
