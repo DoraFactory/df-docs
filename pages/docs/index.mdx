@@ -41,8 +41,10 @@ export const CARD_COPY = [
     <Cards.Card key={i} image arrow title={card.title} href={card.url}>
       <>
         <img
+          with="1200"
+          height="628"
           alt={card.title}
-          src={`${process.env.SITE_ROOT}/api/og?title=${card.title}&desc=${card.desc}`}
+          src={`${process.env.NEXT_PUBLIC_SITE_ROOT}/api/og?title=${card.title}&desc=${card.desc}`}
         />
       </>
     </Cards.Card>

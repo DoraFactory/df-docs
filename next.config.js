@@ -12,10 +12,6 @@ module.exports = withNextra({
   reactStrictMode: true, // Recommended for the `pages` directory, default in `app`.
   output: 'standalone',
 
-  env: {
-    SITE_ROOT: process.env.SITE_ROOT
-  },
-
   webpack(config) {
     // Config for SVGR
     // const allowedSvgRegex = /\.svg$/i
