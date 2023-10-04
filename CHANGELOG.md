@@ -2,8 +2,6 @@
 
 ## [0.1.0-beta.2][0.1.0-beta.2] · 2023-10-04
 
-### Added
-
 ### Changed
 
 - Refactor: Prefix `SITE_ROOT` with `NEXT_PUBLIC_` to streamline environment variable configuration.
