@@ -1,0 +1,99 @@
+---
+title: 'Run a Validator · Dora Vota DevOps Guide'
+desc: 'This guide provides instructions on running a Dora Vota full node and setting up as a validator. It covers hardware requirements, port and chain configurations, and the process of starting a node and registering as a validator. Ensure your environment meets all requirements to operate Dora Vota nodes successfully.'
+---
+
+import { Steps, Callout } from 'nextra/components'
+
+# Run a Validator
+
+This guide describes how to set up a Dora Vota validator.
+
+## About validators
+
+Validators are responsible for committing new blocks to the blockchain through an automated voting process. Validator’s stake will be slashed if they become unavailable or sign more than one blocks at the same height.
+
+The following instructions assume you have already synchronized your node to the latest block height.
+
+- Validators run full nodes, participate in consensus by broadcasting votes, commit new blocks to the blockchain, and participate in the governance of the blockchain.
+- Validators can cast votes on behalf of their delegators. Validators’ voting power is weighted according to their total stake. Only validators in the Active Validator Set are the only validators that sign blocks and receive revenue.
+- Validators and their delegators earn the rewards—fees are added to each transaction to avoid spamming and pay for computing power. Validators set minimum gas prices and reject transactions that have implied gas prices below this threshold.
+
+<Callout type="info">
+  In the current Dora Vota network, there are **no mint rewards** because the
+  inflation rate is set to zero. Validators can set commissions on the fees they
+  receive as additional incentives.
+</Callout>
+
+For fees, the tokens are distributed in every block relative to the number of tokens that a validator has staked.
+
+<Callout type="error">
+  If validators engage in double signing, are frequently offline, or fail to
+  participate in governance, their staked DORA—along with the DORA staked by
+  users who delegated to them—can be slashed. The severity of penalties can vary
+  depending on the degree of the violation.
+</Callout>
+
+## Register a validator
+
+<Callout type="warning">
+  Make sure you back up `~/.dora/config/priv_validator.json`. It's the only way
+  to recover your validator if it's ever lost.
+</Callout>
+
+<Steps>
+### Create a wallet
+
+Create a wallet associated with your validator. This is also where any rewards will be distributed.
+
+```shell
+export ACCOUNT_NAME=<name of key>
+dorad keys add $ACCOUNT_NAME
+```
+
+<Callout type="warning">
+  Make sure that you save the output of the command. It’s the only method to
+  recover your wallet if you ever lose it.
+</Callout>
+
+### Create an account with an initial balance
+
+Creating an account on the chain requires an initial balance; the previous command just creates the wallet locally. You would need to first acquire the sufficient funds on the Dora Vota Mainnet.
+
+Use the following command to check the balance of your account. It should return a non-zero balance.
+
+```shell
+dorad query bank balances $ACCOUNT_ADDRESS
+```
+
+### Create a validator
+
+These flags are just the default settings. Feel free to adjust them as needed.
+
+Set your validator name and pubkey:
+
+```shell
+MONIKER = "YOUR_MONIKER_NAME"
+PUBKEY=$(dorad tendermint show-validator)
+```
+
+Stake to your validator and activate it:
+
+```shell
+dorad tx staking create-validator \
+    --amount=<amount. eg: 20000DORA> \
+    --pubkey=$PUBKEY \
+    --moniker=$MONIKER \
+    --chain-id=vota-ash \
+    --from=$ACCOUNT_NAME \
+    --commission-rate="0.1" \
+    --commission-max-rate="0.1" \
+    --commission-max-change-rate="0.2" \
+    --min-self-delegation="1" \
+    --gas-prices=100000000000peaka \
+    --gas=auto \
+    --gas-adjustment=1.5 \
+    --node https://vota-rpc.dorafactory.org:443
+```
+
+</Steps>
