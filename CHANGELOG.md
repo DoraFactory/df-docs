@@ -1,5 +1,29 @@
 # CHANGELOG
 
+## [0.1.0-beta.3][0.1.0-beta.3] · 2023-10-14
+
+### Added
+
+- Feat: Dora Vota DevOps Guide.
+
+### Changed
+
+- Feat: Refine title gradient color for auto-generated OG images.
+- Build: Update deps to latest versions.
+  - `nextra`: 2.13.2
+  - `nextra-theme-docs`: 2.13.2
+- Build: Update devDeps to latest versions.
+  - `@types/node`: 20.8.6
+  - `@types/react`: 18.2.28
+  - `eslint`: 8.51.0
+  - `sass`: 1.69.3
+  - `prettier-plugin-tailwindcss`: 0.5.6
+
+### Fixed
+
+- Fix: Fix a typo in Vota Operator Manual.
+- Fix: Fix a link in Vota Developer Guide.
+
 ## [0.1.0-beta.2][0.1.0-beta.2] · 2023-10-04
 
 ### Changed
@@ -92,6 +116,7 @@
 - Docs: [Code of Conduct](CODE_OF_CONDUCT.md), based on [Contributor Covenant](https://www.contributor-covenant.org) v2.1.
 - Chore: Configure GitHub [Dependabot](.github/dependabot.yml).
 
+[0.1.0-beta.3]: https://github.com/DoraFactory/df-docs/compare/0.1.0-beta.2...0.1.0-beta.3
 [0.1.0-beta.2]: https://github.com/DoraFactory/df-docs/compare/0.1.0-beta.1...0.1.0-beta.2
 [0.1.0-beta.1]: https://github.com/DoraFactory/df-docs/compare/0.1.0-beta...0.1.0-beta.1
 [0.1.0-beta]: https://github.com/DoraFactory/df-docs/compare/0.1.0-alpha...0.1.0-beta
