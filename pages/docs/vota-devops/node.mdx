@@ -1,0 +1,148 @@
+---
+title: 'Run a Full Node · Dora Vota DevOps Guide'
+desc: 'In this guide, we will walk you through the process of setting up and running a Dora Vota full node.'
+---
+
+import { Callout, FileTree, Steps, Tabs } from 'nextra/components'
+
+# Run a Full Node
+
+A Dora Vota full node consists of a local copy of the entire blockchain, including its block history and states. Running a full node is essential for participating in network operations like validating transactions, joining consensus, and broadcasting events to other network participants.
+
+In this guide, we will walk you through the process of setting up and running a Dora Vota full node.
+
+## Node configurations
+
+### Hardware requirements
+
+Below is the recommended hardware configuration for running a Dora Vota full node.
+
+| Chain ID | CPU     | RAM  | Disk     |
+| :------- | :------ | :--- | :------- |
+| vota-ash | 4 cores | 16GB | 1TB NVME |
+
+### Commonly used ports
+
+`dorad` uses the following TCP ports. Toggle their settings to match your environment.
+
+- `26656`: The default port for P2P. This port is used to communicate with other nodes and must be open to join a network. However, it does not have to be open to the public. For validator nodes, configuring persistent_peers and closing this port to the public are recommended.
+
+Additional ports:
+
+- `1317`: The default port for interacting with the `dorad` API server for HTTP RESTful requests. This allows applications and services to interact with the dorad instance through RPC.
+- `26660`: The default port for interacting with the Prometheus database, which can be used to monitor the environment. In the default configuration, this port is not open.
+- `26657`: The default port for RPC. Because this port is used for querying and sending transactions, it must be open to serve queries from `dorad`.
+
+These ports are all customizable in `~/.dora/config/config.toml` and `~/.dora/config/app/toml`.
+
+### Configure chain settings
+
+The following information describes the most important node configuration settings found in the `~/.dora/config/` directory. This is the structure if `~/.dora/config`:
+
+<FileTree>
+  <FileTree.Folder name="~/.dora/config" defaultOpen>
+    <FileTree.File name="app.toml" />
+    <FileTree.File name="client.toml" />
+    <FileTree.File name="config.toml" />
+    <FileTree.File name="genesis.json" />
+    <FileTree.File name="node_key.json" />
+    <FileTree.File name="priv_validator_key.json" />
+  </FileTree.Folder>
+</FileTree>
+
+- `app.toml`: Configuration of `dorad`
+- `client.toml`: Configurations for the cli wallet (ex dorad)
+- `config.toml`: Tendermint configuration file
+- `genesis.json`: Gensesis transactions
+- `node_key.json`: Private key used for node authentication in the p2p protocol (its corresponding public key is the nodeid)
+- `priv_validator_key.json`: Key used by the validator on the node to sign blocks
+
+## Start a node
+
+To instate a Dora Vota node, the first step is to [download and install `dorad`](/docs/vota-dev/dorad) on your machine. Make sure you check out and install the same version as the chain you want to join.
+
+<Callout type="info">
+  A moniker is the custom username of your node. It should be human-readable.
+  It’s set at the time of node setup and can be used to provide a more
+  descriptive and friendly name to identify the node, as opposed to using an IP
+  address or a public key hash which can be hard to remember or recognize.
+</Callout>
+
+### Init commands
+
+```shell
+export VERSION=0.2.0
+export CHAIN_ID="vota-ash"
+export MONIKER="replace-with-your-moniker-name"
+
+git clone https://github.com/DoraFactory/doravota.git
+cd doravota && git checkout $VERSION
+make install
+dorad init --chain-id "$CHAIN_ID" "$MONIKER"
+
+sed -i -e "s|^minimum-gas-prices *=.*|minimum-gas-prices = \"100000000000peaka\"|" $HOME/.dora/config/app.toml
+```
+
+### Repalce genesis file
+
+Replace the genesis file in `~/.dora/config` with the [Dora Vota Mainnet genesis file](https://github.com/DoraFactory/doravota/blob/main/config/mainnet/genesis.json).
+
+## Configure to sync chain data
+
+Now that we have set up some peers, you can add them into `config.toml` to sync Dora Vota chain data.
+
+```shell
+# Comma separated list of seed nodes to connect to
+seeds = "55a1d7354f783b0983cf6ff5d13ca98f9eb611e3@54.254.158.153:26656,6c77c0ef2822a439837ad994ee0dccf6661b841c@54.151.160.200:26656"
+
+# Comma separated list of nodes to keep persistent connections to
+persistent_peers = "55a1d7354f783b0983cf6ff5d13ca98f9eb611e3@54.254.158.153:26656,6c77c0ef2822a439837ad994ee0dccf6661b841c@54.151.160.200:26656"
+```
+
+## Running `dorad` node service
+
+<Steps>
+### Register `dorad` as a `systemd` service
+
+`dorad` should be running at all times. It’s recommended you register `dorad` as a `systemd` service so that it will automatically restart if your system reboots.
+
+### Create the definition file
+
+Create the definition file in `/etc/systemd/system/dorad.service`.
+
+```shell
+[Unit]
+Description=dora-mainnet-vota-ash
+After=network-online.target
+
+[Service]
+User=<USER>
+ExecStart=<PATH_TO_DORAD>/dorad start
+RestartSec=10
+Restart=on-failure
+LimitNOFILE=655350
+
+[Install]
+WantedBy=multi-user.target
+```
+
+- `<USER>`: Enter the user (likely your username or root, unless you created a user specifically for `dorad`).
+- `<PATH_TO_DORAD>`: Enter the path to the `dorad` executable, which is likely `/home/<YOUR_USER>/go/bin/dorad` or `/usr/go/bin`. Confirm this by checking the location of `dorad`.
+
+### Run the program upon startup
+
+After registering `dorad` as a system service, you can set the program to run upon startup.
+
+```shell
+systemctl daemon-reload
+systemctl enable dorad
+```
+
+### Start the service and check the log
+
+```shell
+sudo systemctl start dorad
+sudo journalctl -u dorad -f --no-hostname -o cat
+```
+
+</Steps>
