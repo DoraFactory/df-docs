@@ -88,9 +88,8 @@ export function Footer(): ReactElement {
         </ul>
         <ul className={styles.info}>
           <li className={styles['info-copyright']}>
-            © {new Date().getFullYear()}{' '}
             <Link href={`https://dorafactory.org/`} target="_blank">
-              Dora Factory
+              © {new Date().getFullYear()} Dora Factory
             </Link>
           </li>
           {/*  <li className={styles['info-item']}>
