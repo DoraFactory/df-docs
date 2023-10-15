@@ -23,10 +23,10 @@ const links = [
     name: 'QRNG Faucet',
     link: 'https://qrng.dorafactory.org/'
   },
-  {
-    name: 'Dora-KSM Parachain',
-    link: 'https://core-pallet.dorafactory.org/'
-  },
+  // {
+  //   name: 'Dora-KSM Parachain',
+  //   link: 'https://core-pallet.dorafactory.org/'
+  // },
   {
     name: 'Dora Research Blog',
     link: 'https://research.dorahacks.io/'
