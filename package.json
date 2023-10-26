@@ -30,7 +30,7 @@
     "prettier-plugin-pkg": "0.18.0",
     "prettier-plugin-tailwindcss": "0.5.6",
     "sass": "^1.69.3",
-    "tailwindcss": "^3.3.3",
+    "tailwindcss": "^3.3.5",
     "typescript": "5.2.2"
   }
 }
