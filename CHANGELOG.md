@@ -1,5 +1,35 @@
 # CHANGELOG
 
+## [0.1.0-beta.4][0.1.0-beta.4] · 2023-10-29
+
+### Added
+
+- Feat: Update Vota Dev Guide.
+  - Add testnet commands.
+  - Add testnet resources.
+  - Add gRPC endpoints and faucets.
+
+### Changed
+
+- Feat: Remove DORA token buying guide in Vota Operator Manual.
+- Feat: Remove Dora-KSM Parachain from footer.
+- Feat: Extend clickable area for Dora Factory official site link in footer.
+- Build: Update deps to latest versions.
+  - `@vercel/og`: 0.5.20
+  - `next`: 13.5.6
+- Build: Update devDeps to latest versions.
+  - `@types/node`: 20.8.9
+  - `@types/react`: 18.2.33
+  - `eslint`: 8.52.0
+  - `eslint-config-next`: 13.5.6
+  - `sass`: 1.69.5
+  - `tailwindcss`: 3.3.5
+
+### Fixed
+
+- Fix: Fix a typo in Vota DevOps Guide.
+- Fix: Fix punctuations for Vota Dev Guide.
+
 ## [0.1.0-beta.3][0.1.0-beta.3] · 2023-10-14
 
 ### Added
@@ -9,6 +39,8 @@
 ### Changed
 
 - Feat: Refine title gradient color for auto-generated OG images.
+- Feat: Update Get Started page.
+- Docs: Update contact email for Code of Conduct.
 - Build: Update deps to latest versions.
   - `nextra`: 2.13.2
   - `nextra-theme-docs`: 2.13.2
@@ -116,6 +148,7 @@
 - Docs: [Code of Conduct](CODE_OF_CONDUCT.md), based on [Contributor Covenant](https://www.contributor-covenant.org) v2.1.
 - Chore: Configure GitHub [Dependabot](.github/dependabot.yml).
 
+[0.1.0-beta.4]: https://github.com/DoraFactory/df-docs/compare/0.1.0-beta.3...0.1.0-beta.4
 [0.1.0-beta.3]: https://github.com/DoraFactory/df-docs/compare/0.1.0-beta.2...0.1.0-beta.3
 [0.1.0-beta.2]: https://github.com/DoraFactory/df-docs/compare/0.1.0-beta.1...0.1.0-beta.2
 [0.1.0-beta.1]: https://github.com/DoraFactory/df-docs/compare/0.1.0-beta...0.1.0-beta.1
