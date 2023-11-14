@@ -13,7 +13,8 @@
 
 - Feat: Streamline the “Public Resources” chapter of Vota Dev Guide.
 - Style: Format some SVG files (`components/**/*.svg`) with Prettier.
-- Chore: Update Prettier config for SVGs
+- Chore: Update Prettier config for SVGs.
+- Chore: Update Prettier-related pnpm scripts.
 - Build: Update devDeps to latest versions.
   - `@types/node`: 20.9.0
   - `@types/react`: 18.2.37
