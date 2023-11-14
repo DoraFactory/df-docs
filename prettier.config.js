@@ -12,7 +12,7 @@ module.exports = {
   ],
   overrides: [
     {
-      files: '*.svg',
+      files: 'components/**/*.svg',
       options: {
         parser: 'html'
       }
