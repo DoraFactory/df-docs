@@ -1,5 +1,30 @@
 # CHANGELOG
 
+## [0.1.0][0.1.0] · 2023-11-14
+
+### Added
+
+- Feat: Update Vota Op Guide.
+  - Add mainnet faucet.
+- Feat: Update Vota Dev Guide.
+  - Add mainnet faucet.
+
+### Changed
+
+- Feat: Streamline the “Public Resources” chapter of Vota Dev Guide.
+- Style: Format some SVG files (`components/**/*.svg`) with Prettier.
+- Chore: Update Prettier config for SVGs
+- Build: Update devDeps to latest versions.
+  - `@types/node`: 20.9.0
+  - `@types/react`: 18.2.37
+  - `eslint`: 8.53.0
+  - `prettier`: 3.1.0
+  - `prettier-plugin-tailwindcss`: 0.5.7
+
+### Fixed
+
+- Fix: Editorial fix of punctuations for Vota Dev Guide.
+
 ## [0.1.0-beta.4][0.1.0-beta.4] · 2023-10-29
 
 ### Added
@@ -148,6 +173,7 @@
 - Docs: [Code of Conduct](CODE_OF_CONDUCT.md), based on [Contributor Covenant](https://www.contributor-covenant.org) v2.1.
 - Chore: Configure GitHub [Dependabot](.github/dependabot.yml).
 
+[0.1.0]: https://github.com/DoraFactory/df-docs/compare/0.1.0-beta.4...0.1.0
 [0.1.0-beta.4]: https://github.com/DoraFactory/df-docs/compare/0.1.0-beta.3...0.1.0-beta.4
 [0.1.0-beta.3]: https://github.com/DoraFactory/df-docs/compare/0.1.0-beta.2...0.1.0-beta.3
 [0.1.0-beta.2]: https://github.com/DoraFactory/df-docs/compare/0.1.0-beta.1...0.1.0-beta.2
