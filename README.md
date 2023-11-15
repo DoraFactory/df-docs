@@ -48,12 +48,12 @@ pnpm lint
 
 ```bash
 # Check code style by Prettier
-pnpm prettier:check
+pnpm prettier
 ```
 
 ```bash
 # Format & overwrite code style by Prettier
-pnpm prettier
+pnpm prettier:write
 ```
 
 ## Deployment
