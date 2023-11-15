@@ -56,11 +56,11 @@ pnpm prettier
 pnpm prettier:write
 ```
 
-## Deployment
+## Deployments
 
 ### Dependencies
 
-The Open Graph image generation API [`/api/og`](pages/api/og.tsx), which uses [`@vercel/og`](https://vercel.com/docs/functions/edge-functions/og-image-generation) library, is dependent on [Vercel Edge Functions](https://vercel.com/docs/functions/edge-functions).
+The Open Graph image generation API [`/api/og`](pages/api/og.tsx), which uses [`@vercel/og`](https://vercel.com/docs/functions/edge-functions/og-image-generation) library, may be dependent on [Vercel Edge Functions](https://vercel.com/docs/functions/edge-functions).
 
 ### Stable
 
