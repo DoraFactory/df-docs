@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [0.1.1][0.1.1] · 2023-11-15
+
+### Changed
+
+- Docs: Update Prettier-related scripts for README.
+- Docs: Minor polish for README.
+
 ## [0.1.0][0.1.0] · 2023-11-14
 
 ### Added
@@ -174,6 +181,7 @@
 - Docs: [Code of Conduct](CODE_OF_CONDUCT.md), based on [Contributor Covenant](https://www.contributor-covenant.org) v2.1.
 - Chore: Configure GitHub [Dependabot](.github/dependabot.yml).
 
+[0.1.1]: https://github.com/DoraFactory/df-docs/compare/0.1.0...0.1.1
 [0.1.0]: https://github.com/DoraFactory/df-docs/compare/0.1.0-beta.4...0.1.0
 [0.1.0-beta.4]: https://github.com/DoraFactory/df-docs/compare/0.1.0-beta.3...0.1.0-beta.4
 [0.1.0-beta.3]: https://github.com/DoraFactory/df-docs/compare/0.1.0-beta.2...0.1.0-beta.3
