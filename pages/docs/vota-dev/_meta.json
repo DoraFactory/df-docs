@@ -2,5 +2,6 @@
   "dependencies": "Install Dependencies",
   "dorad": "Get Started with `dorad`",
   "cosmwasm": "CosmWasm Contract",
+  "governance": "Governance",
   "resources": "Public Resources"
 }
