@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## [0.2.0][0.2.0] · 2023-11-19
+
+### Added
+
+- Feat: Add the “Governance” chapter into Vota Dev Guide.
+- Feat: Add the `IconVote` SVG icon.
+
+### Changed
+
+- Feat: Update index of Vota Dev Guide.
+
 ## [0.1.1][0.1.1] · 2023-11-15
 
 ### Changed
@@ -181,6 +192,7 @@
 - Docs: [Code of Conduct](CODE_OF_CONDUCT.md), based on [Contributor Covenant](https://www.contributor-covenant.org) v2.1.
 - Chore: Configure GitHub [Dependabot](.github/dependabot.yml).
 
+[0.2.0]: https://github.com/DoraFactory/df-docs/compare/0.1.1...0.2.0
 [0.1.1]: https://github.com/DoraFactory/df-docs/compare/0.1.0...0.1.1
 [0.1.0]: https://github.com/DoraFactory/df-docs/compare/0.1.0-beta.4...0.1.0
 [0.1.0-beta.4]: https://github.com/DoraFactory/df-docs/compare/0.1.0-beta.3...0.1.0-beta.4
