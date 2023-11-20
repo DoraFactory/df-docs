@@ -131,7 +131,7 @@ $ dorad tx gov deposit {proposal_id} {deposit_amount} --from {your_key}
 
 ## Query for deposit status
 
-A user can query a deposit made by a specific address on a specific proposal. This can be used to see your current deposit amount or to see the amount another account deposited.
+A user can query for a deposit made by a specific address on a specific proposal. This can be used to see your current deposit amount or to see the amount another account deposited.
 
 ```ansi filename="Terminal"
 $ dorad query gov deposit {proposal_id} {depositor_addr}
@@ -158,7 +158,7 @@ You can vote with this command:
 $ dorad tx gov vote {proposal_id} {vote_option} --from {voter_key}
 ```
 
-## Query the status of a proposal
+## Query for proposal status
 
 Use the following command to return the current vote tally for a `proposal_id` provided:
 
