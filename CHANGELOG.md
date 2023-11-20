@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [0.2.1][0.2.1] · 2023-11-20
+
+### Fixed
+
+- Fix: Fix grammar for Governance chapter of Vota Dev Guide.
+
 ## [0.2.0][0.2.0] · 2023-11-19
 
 ### Added
@@ -192,6 +198,7 @@
 - Docs: [Code of Conduct](CODE_OF_CONDUCT.md), based on [Contributor Covenant](https://www.contributor-covenant.org) v2.1.
 - Chore: Configure GitHub [Dependabot](.github/dependabot.yml).
 
+[0.2.1]: https://github.com/DoraFactory/df-docs/compare/0.2.0...0.2.1
 [0.2.0]: https://github.com/DoraFactory/df-docs/compare/0.1.1...0.2.0
 [0.1.1]: https://github.com/DoraFactory/df-docs/compare/0.1.0...0.1.1
 [0.1.0]: https://github.com/DoraFactory/df-docs/compare/0.1.0-beta.4...0.1.0
