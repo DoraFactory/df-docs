@@ -17,6 +17,11 @@
     "type": "menu",
     "title": "Products",
     "items": {
+      "deardoge": {
+        "title": "Dear Doge",
+        "href": "https://deardoge.org/",
+        "newWindow": true
+      },
       "vota": {
         "title": "Dora Vota",
         "href": "https://vota.dorafactory.org/",
