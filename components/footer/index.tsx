@@ -8,13 +8,13 @@ import iconDiscord from '/public/assets/icon-discord.svg'
 
 const links = [
   {
+    name: 'Dear Doge',
+    link: 'https://deardoge.org/'
+  },
+  {
     name: 'Dora Vota',
     link: 'https://vota.dorafactory.org/'
   },
-  // {
-  //   name: 'Dear Doge',
-  //   link: 'https://deardoge.dorafactory.org/'
-  // },
   // {
   //   name: 'Aptos API Service',
   //   link: '/docs/aptos'
