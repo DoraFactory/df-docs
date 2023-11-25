@@ -1,7 +1,13 @@
 {
   "index": "Get Started",
 
-  "-- manuals": {
+  "-- deardoge": {
+    "type": "separator",
+    "title": "Dear Doge"
+  },
+  "deardoge-testnet": "Dear Doge Testnet",
+
+  "-- vota": {
     "type": "separator",
     "title": "Dora Vota"
   },
@@ -11,7 +17,7 @@
 
   "-- references": {
     "type": "separator",
-    "title": "API References"
+    "title": "References"
   },
   "aptos": {
     "display": "hidden",
