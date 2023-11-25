@@ -8,25 +8,17 @@ import iconDiscord from '/public/assets/icon-discord.svg'
 
 const links = [
   {
+    name: 'Dear Doge',
+    link: 'https://deardoge.org/'
+  },
+  {
     name: 'Dora Vota',
     link: 'https://vota.dorafactory.org/'
   },
-  // {
-  //   name: 'Dear Doge',
-  //   link: 'https://deardoge.dorafactory.org/'
-  // },
-  // {
-  //   name: 'Aptos API Service',
-  //   link: '/docs/aptos'
-  // },
   {
     name: 'QRNG Faucet',
     link: 'https://qrng.dorafactory.org/'
   },
-  // {
-  //   name: 'Dora-KSM Parachain',
-  //   link: 'https://core-pallet.dorafactory.org/'
-  // },
   {
     name: 'Dora Research Blog',
     link: 'https://research.dorahacks.io/'

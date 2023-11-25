@@ -1,0 +1,56 @@
+---
+title: 'Install Dependencies · Dear Doge Testnet Developer Documentation'
+desc: 'This documentation introduces how to use Dear Doge Flatsat Testnet to deploy and simulate applications running in space orbit.'
+---
+
+# Install Dependencies
+
+Before installing the client, we need to make sure you have necessary dependencies installed locally. We recommend using Unix-like operating systems (macOS, Linux, etc.) for installation and operation.
+
+## Dependencies
+
+| Dependency | Version | Description                                             |
+| :--------- | :------ | :------------------------------------------------------ |
+| Go         | 1.20+   | Default programming language for Cosmos SDK             |
+| jq         | Latest  | Lightweight and flexible command-line JSON processor    |
+| Git        | Latest  | Distributed version control system                      |
+| CMake      | Latest  | Cross-platform build system                             |
+| GCC        | Latest  | GNU compiler collection for C, C++, and other languages |
+| GNU Make   | Latest  | Build automation tool                                   |
+
+## macOS
+
+### Install Homebrew
+
+Homebrew is a package manager for macOS that simplifies the installation of software. If you haven't installed Homebrew on your Mac, follow the instructions at https://brew.sh.
+
+### Install dependencies
+
+Open a terminal and run the following command:
+
+```ansi filename="Terminal"
+$ brew install go jq git cmake gcc make
+```
+
+## Linux (General)/Ubuntu
+
+### Install dependencies
+
+Open a terminal and run the following commands:
+
+```ansi filename="Terminal"
+$ sudo apt update
+$ sudo apt install golang jq git cmake gcc make
+```
+
+## CentOS/RHEL/Fedora
+
+These instructions cover CentOS, RHEL, and Fedora, which use the yum or dnf package managers.
+
+### Install dependencies
+
+Open a terminal and run the following command:
+
+```ansi filename="Terminal"
+$ sudo yum install golang jq git cmake gcc make
+```

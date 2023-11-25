@@ -1,0 +1,50 @@
+---
+title: 'Architecture · Dear Doge Testnet Developer Documentation'
+desc: 'This documentation introduces how to use Dear Doge Flatsat Testnet to deploy and simulate applications running in space orbit.'
+---
+
+import { Steps, Callout } from 'nextra/components'
+
+# Architecture
+
+The testnet is mimicking operation in space, it actually runs on a set of ground hardware called flatsat. You are able to compile executable files locally and send transactions to the provided valid ports. Here is the architecture of Dear Doge Testnet:
+
+```mermaid
+graph LR
+  client(("Client user"))
+  awsserver("AWS server<br>(ground station)")
+  transmission("Transmission<br>machine")
+  crypto0("Crypto engine 0")
+  crypto1("Crypto engine 1")
+  crypto2("Crypto engine 2")
+  crypto3("Crypto engine 3")
+
+  dot[ ]:::empty
+  classDef empty width:0px,height:0px;
+
+  subgraph env["Space environment"]
+    direction LR
+    transmission
+    servers
+  end
+  style env fill:transparent;
+
+  subgraph servers["Blockchain RPC servers"]
+    direction TB
+    dot
+    crypto0
+    crypto1
+    crypto2
+    crypto3
+  end
+  style servers fill:transparent;
+
+  client --"RPC request<br>(Internet)"--> awsserver
+  awsserver -- "RPC request" --> transmission -- "RPC request" --- dot
+  dot --> crypto0
+  dot --> crypto1
+  dot --> crypto2
+  dot --> crypto3
+```
+
+Before interacting with the Dear Doge Testnet, you need to install the `dogd` client. Next, we will demonstrate how to install this client.
