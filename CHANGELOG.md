@@ -1,5 +1,31 @@
 # CHANGELOG
 
+## [0.3.0][0.3.0] · 2023-11-27
+
+### Added
+
+- Feat: Add Dear Doge Testnet Developer Documentation (Dear Doge Testnet).
+- Feat: Add Dear Doge into the nav list of Products.
+- Feat: Add Dear Doge into footer link list.
+- Feat: Add the index card of Dear Doge into the Get Started page.
+- Feat: Add the `IconSchema` SVG icon.
+
+### Changed
+
+- Build: Update devDeps to latest versions.
+  - `@types/node`: 20.10.0
+  - `@types/react`: 18.2.38
+  - `eslint`: 8.54.0
+  - `typescript`: 5.3.2
+- Build: Dedupe `pnpm-lock.yaml`.
+
+### Fixed
+
+- Fix: Fix some typos for Vota Dev Guide.
+- Fix: Fix the link to “Troubleshoot” page for Vota Operator Manual.
+- Fix: Fix a typo of index card `desc` for Vota Operator Manual.
+- Fix: Rollback and lock `@vercel/og` version to 0.5.13 to fix the failure image generation for AWS.
+
 ## [0.2.1][0.2.1] · 2023-11-20
 
 ### Fixed
@@ -28,7 +54,7 @@
 
 ### Added
 
-- Feat: Update Vota Op Guide.
+- Feat: Update Vota Operator Manual.
   - Add mainnet faucet.
 - Feat: Update Vota Dev Guide.
   - Add mainnet faucet.
@@ -198,6 +224,7 @@
 - Docs: [Code of Conduct](CODE_OF_CONDUCT.md), based on [Contributor Covenant](https://www.contributor-covenant.org) v2.1.
 - Chore: Configure GitHub [Dependabot](.github/dependabot.yml).
 
+[0.3.0]: https://github.com/DoraFactory/df-docs/compare/0.2.1...0.3.0
 [0.2.1]: https://github.com/DoraFactory/df-docs/compare/0.2.0...0.2.1
 [0.2.0]: https://github.com/DoraFactory/df-docs/compare/0.1.1...0.2.0
 [0.1.1]: https://github.com/DoraFactory/df-docs/compare/0.1.0...0.1.1

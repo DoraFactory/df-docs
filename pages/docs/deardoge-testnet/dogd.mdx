@@ -1,0 +1,128 @@
+---
+title: 'Get Started with `dogd` · Dear Doge Testnet'
+desc: 'This documentation introduces how to use Dear Doge Flatsat Testnet to deploy and simulate applications running in space orbit.'
+---
+
+import { Steps, Callout } from 'nextra/components'
+
+# Get started with `dogd`
+
+## Setup
+
+`dogd` is a command-line tool to interact with the [Dear Doge Testnet](https://deardoge-testnet-explorer.dorafactory.org/deardoge)
+
+To install `dogd`, find the [correct Git branch](https://github.com/DoraFactory/Doge-SDK/tree/main), and run the following commands:
+
+```ansi filename="Terminal"
+$ git clone https://github.com/DoraFactory/Doge-SDK.git
+$ cd Doge-SDK
+$ git checkout main
+$ make install
+$ sudo cp ~/go/bin/dogd /usr/local/bin
+```
+
+`dogd` supports general CosmosSDK and Tendermint commands. You can run the tool to see a list of commands with explanations of what they do with `dogd`:
+
+```ansi filename="Terminal"
+[0m$ dogd
+[0;90mStart Dear Doge node
+
+Usage:
+  dogd [command]
+
+Available Commands:
+  add-genesis-account Add a genesis account to genesis.json
+  collect-gentxs      Collect genesis txs and output a genesis.json file
+  config              Create or query an application CLI configuration file
+  debug               Tool for helping with debugging your application
+  export              Export state to JSON
+  genesis             Application's genesis-related subcommands
+  gentx               Generate a genesis tx carrying a self delegation
+  help                Help about any command
+  init                Initialize private validator, p2p, genesis, and application configuration files
+  keys                Manage your application's keys
+  migrate             Migrate genesis to a specified target version
+  query               Querying subcommands
+  rollback            rollback cosmos-sdk and tendermint state by one height
+  start               Run the full node
+  status              Query remote node for status
+  tendermint          Tendermint subcommands
+  tx                  Transactions subcommands
+  validate-genesis    validates the genesis file at the default location or at the location passed as an arg
+  version             Print the application binary version information
+  version             Print the application binary version information
+
+Flags:
+  -h, --help                help for dogd
+      --home string         directory for config and data (default "/Users/bun/.dog")
+      --log_format string   The logging format (json|plain) (default "plain")
+      --log_level string    The logging level (trace|debug|info|warn|error|fatal|panic) (default "info")
+      --trace               print out full stack trace on errors
+
+Use "dogd [command] --help" for more information about a command.
+```
+
+If you can see the above info, it means the installation was successful.
+
+## Create a Dear Doge address with `dogd`
+
+<Steps>
+### Add a named Dear Doge account
+
+During the following process, you will be asked to set a passphrase for your account. Once successfully created, the terminal will output a series of mnemonic words.
+
+```ansi filename="Terminal"
+[0m$ dogd keys add <name of key>
+[0;90m- address: deardoge10lqthwsz3v54r6ys89v49hy0pgh09ksdlajkuq
+  name: aaa
+  pubkey: '{"@type":"/cosmos.crypto.secp256k1.PubKey","key":"A/0ut8HT+hVO+Z1o/jIxWpvR6iVootcaW+Gjkv8zDfF7"}'
+  type: local
+
+**Important** write this mnemonic phrase in a safe place.
+It is the only way to recover your account if you ever forget your password.
+
+**faculty will pioneer budget monkey hill despair like prevent hunt spot apart confirm cave physical swap mixture cube fantasy find frequent key sudden flush**
+```
+
+<Callout type="warning">
+  Please make sure to keep these **mnemonic words** in a secure place, do not
+  lose it, and do not leak it, as they are crucial for recovering your account.
+</Callout>
+
+### Show account details
+
+```ansi filename="Terminal"
+[0m$ dogd keys list
+[0;90m- address: deardoge10lqthwsz3v54r6ys89v49hy0pgh09ksdlajkuq
+  name: temp-account
+  pubkey: '{"@type":"/cosmos.crypto.secp256k1.PubKey","key":"A/0ut8HT+hVO+Z1o/jIxWpvR6iVootcaW+Gjkv8zDfF7"}'
+  type: local
+```
+
+</Steps>
+
+## Transfer and query using the `bank` module
+
+### Token of Dear Doge testnet
+
+The denom of Dear Doge testnet is `dear`, and `1 dear = 10^6 udear`.
+
+### Transfer between addresses
+
+- `from_addr`: source address of this transfer transaction.
+- `to_addr`: destination address of this transfer transaction.
+- `amount`: you can use `udear` or `dear` which depends on the amount you’re transferring.
+
+Here is an example of token transfer on Dear Doge:
+
+```ansi filename="Terminal"
+$ dogd tx bank send <from_addr> <to_addr> <amount> --chain-id deardoge-testnet --gas-prices=0.25udear --gas=auto --gas-adjustment=1.5 --node https://testnet-rpc.deardoge.org:443
+```
+
+### Query the balance of account
+
+You can use this command to query the balance of a specific account address.
+
+```ansi filename="Terminal"
+$ dogd query bank balances <account_address> --node https://testnet-rpc.deardoge.org:443
+```

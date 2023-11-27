@@ -1,0 +1,50 @@
+---
+title: 'Dear Doge Testnet Developer Documentation'
+desc: 'This documentation introduces how to use Dear Doge Flatsat Testnet to deploy and simulate applications running in space orbit.'
+---
+
+import { Cards } from 'nextra/components'
+import {
+  IconChecklist,
+  IconCli,
+  IconCode,
+  IconHelp,
+  IconReference,
+  IconSchema,
+  IconVote
+} from '@components/svgs'
+
+# Dear Doge Testnet Developer Documentation
+
+This documentation introduces how to use Dear Doge Flatsat Testnet to deploy and simulate applications running in space orbit.
+
+The network’s consensus protocol can be changed on the flatsat, so that different constellations can be tested. The default protocol is the CometBFT protocol used by Cosmos SDK. However, the [Doge SDK](https://github.com/DoraFactory/Doge-SDK) can change consensus protocols of a Cosmos appchain, which allows you to test various consensus protocols for Dear Doge. For example, a class of asynchronous consensus is of our interest, such as Honey Badger BFT, Dumbo, and more.
+
+---
+
+<Cards num={2}>
+  <Cards.Card
+    icon={<IconSchema />}
+    title="Architecture"
+    href="/docs/deardoge-testnet/architecture"
+  />
+  <Cards.Card
+    icon={<IconChecklist />}
+    title="Install Dependencies"
+    href="/docs/deardoge-testnet/dependencies"
+  />
+  <Cards.Card
+    icon={<IconCli />}
+    title={
+      <span>
+        Get Started with <code>dogd</code>
+      </span>
+    }
+    href="/docs/deardoge-testnet/dogd"
+  />
+  <Cards.Card
+    icon={<IconReference />}
+    title="Resources"
+    href="/docs/deardoge-testnet/resources"
+  />
+</Cards>
