@@ -116,7 +116,7 @@ The denom of Dear Doge testnet is `dear`, and `1 dear = 10^6 udear`.
 Here is an example of token transfer on Dear Doge:
 
 ```ansi filename="Terminal"
-$ dogd tx bank send <from_addr> <to_addr> <amount> --chain-id deardoge-testnet --gas-prices=0.25udear --gas=auto --gas-adjustment=1.5 --node https://doge-testnet-rpc.dorafactory.org:443
+$ dogd tx bank send <from_addr> <to_addr> <amount> --chain-id deardoge-testnet --gas-prices=0.25udear --gas=auto --gas-adjustment=1.5 --node https://testnet-rpc.deardoge.org:443
 ```
 
 ### Query the balance of account
@@ -124,5 +124,5 @@ $ dogd tx bank send <from_addr> <to_addr> <amount> --chain-id deardoge-testnet -
 You can use this command to query the balance of a specific account address.
 
 ```ansi filename="Terminal"
-$ dogd query bank balances <account_address> --node https://doge-testnet-rpc.dorafactory.org:443
+$ dogd query bank balances <account_address> --node https://testnet-rpc.deardoge.org:443
 ```
