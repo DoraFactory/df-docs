@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## [0.3.1][0.3.1] · 2023-12-01
+
+### Added
+
+- Feat: Add the full node setup guide into the intro for chapter of Vota DevOps Guide.
+
+### Fixed
+
+- Fix: Fix a capitalization typo for Dear Doge Testnet.
+
 ## [0.3.0][0.3.0] · 2023-11-27
 
 ### Added
@@ -224,6 +234,7 @@
 - Docs: [Code of Conduct](CODE_OF_CONDUCT.md), based on [Contributor Covenant](https://www.contributor-covenant.org) v2.1.
 - Chore: Configure GitHub [Dependabot](.github/dependabot.yml).
 
+[0.3.1]: https://github.com/DoraFactory/df-docs/compare/0.3.0...0.3.1
 [0.3.0]: https://github.com/DoraFactory/df-docs/compare/0.2.1...0.3.0
 [0.2.1]: https://github.com/DoraFactory/df-docs/compare/0.2.0...0.2.1
 [0.2.0]: https://github.com/DoraFactory/df-docs/compare/0.1.1...0.2.0
