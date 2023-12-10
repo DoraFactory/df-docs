@@ -21,6 +21,12 @@ Below is the recommended hardware configuration for running a Dora Vota full nod
 | :------- | :------ | :--- | :------- |
 | vota-ash | 4 cores | 16GB | 1TB NVME |
 
+## Recommended Validator Configuration
+
+- If you use an **AWS cloud server** to deploy a validator node, you can use the following recommended configuration: [`t2.xlarge`](https://instances.vantage.sh/aws/ec2/t2.2xlarge)
+- If you use a **GCP cloud server** to deploy a validator node, you can use the following recommended configuration: [`n2-standard-8
+`](https://cloud.google.com/compute/docs/general-purpose-machines#n2_series)
+
 ### Commonly used ports
 
 `dorad` uses the following TCP ports. Toggle their settings to match your environment.
@@ -146,3 +152,52 @@ sudo journalctl -u dorad -f --no-hostname -o cat
 ```
 
 </Steps>
+
+## Use `dorad` docker image to start node
+
+As an alternative, you can also use [Docker](https://docs.docker.com/get-docker/) (make sure to install it).
+
+<Callout type="info">
+  For Linux users, it’s recommended to run the Docker daemon in [Rootless
+  Mode](https://docs.docker.com/engine/security/rootless).
+</Callout>
+
+### Pull Docker image
+
+You can pull the Docker image from the following repositories image: [dorafactory/doravota](https://hub.docker.com/r/dorafactory/doravota)
+
+For example, to connect to the Dora Vota Mainnet, use the following command:
+
+```shell
+docker pull dorafactory/doravota
+```
+
+### Set up path
+
+By default, the Docker image runs the `dorad` binary, so you should specify the arguments for `dorad` after the image name. For better usage, mount an external volume at `/root/.dora` to persist the daemon home path across different runs. For example, if you want to add a key:
+
+```shell
+docker run --rm -it -v ~/.dora:/root/.dora dorafactory/doravota keys add test-key
+```
+
+And then list all keys:
+
+```shell
+docker run --rm -it -v ~/.dora:/root/.dora dorafactory/doravota keys list
+```
+
+It’s also important to note that, when running a node in a network, you’ll need to expose the container ports for external connectivity. The image exposes the following ports:
+
+- `1317`: Rest server
+- `26656`: Tendermint P2P
+- `26657`: Tendermint RPC
+
+<Callout>
+To simplify using the Docker container, you can set an alias with the home path and the proper image tag, like:
+
+```shell
+alias dorad="docker run --rm -it -v ~/.dora:/root/.dora dorafactory/doravota"
+```
+</Callout>
+
+After setting the alias with the above tip, you can use other `dorad` commands without typing the verbose Docker run command. For the sake of comprehensive documentation, the full Docker command is shown. Just remember that by setting the alias you can simply use `dorad` instead of the Docker command.
