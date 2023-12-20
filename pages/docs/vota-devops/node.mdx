@@ -24,7 +24,7 @@ Below is the recommended hardware configuration for running a Dora Vota full nod
 
 ## Recommended validator configuration
 
-- If you use an **AWS cloud server** to deploy a validator node, you can use the following recommended configuration: [`t2.xlarge`](https://instances.vantage.sh/aws/ec2/t2.2xlarge)
+- If you use an **AWS cloud server** to deploy a validator node, you can use the following recommended configuration: [`t2.2xlarge`](https://instances.vantage.sh/aws/ec2/t2.2xlarge)
 - If you use a **GCP cloud server** to deploy a validator node, you can use the following recommended configuration: [`n2-standard-8
 `](https://cloud.google.com/compute/docs/general-purpose-machines#n2_series)
 
@@ -77,34 +77,68 @@ To instate a Dora Vota node, the first step is to [download and install `dorad`]
 
 ### Init commands
 
-```shell
-export VERSION=0.2.0
-export CHAIN_ID="vota-ash"
-export MONIKER="replace-with-your-moniker-name"
-
-git clone https://github.com/DoraFactory/doravota.git
-cd doravota && git checkout $VERSION
-make install
-dorad init --chain-id "$CHAIN_ID" "$MONIKER"
-
-sed -i -e "s|^minimum-gas-prices *=.*|minimum-gas-prices = \"100000000000peaka\"|" $HOME/.dora/config/app.toml
-```
+{/* prettier-ignore */}
+<Tabs items={['Mainnet', 'Incentivized Testnet']}>
+  <Tabs.Tab>
+  ```shell
+  export VERSION=0.2.0
+  export CHAIN_ID="vota-ash"
+  export MONIKER="replace-with-your-moniker-name"
+  
+  git clone https://github.com/DoraFactory/doravota.git
+  cd doravota && git checkout $VERSION
+  make install
+  dorad init --chain-id "$CHAIN_ID" "$MONIKER"
+  
+  sed -i -e "s|^minimum-gas-prices *=.*|minimum-gas-prices = \"100000000000peaka\"|" $HOME/.dora/config/app.toml
+  ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+  ```shell
+  export VERSION=0.2.0
+  export CHAIN_ID="vota-vk"
+  export MONIKER="replace-with-your-moniker-name"
+  
+  git clone https://github.com/DoraFactory/doravota.git
+  cd doravota && git checkout $VERSION
+  make install
+  dorad init --chain-id "$CHAIN_ID" "$MONIKER"
+  
+  sed -i -e "s|^minimum-gas-prices *=.*|minimum-gas-prices = \"100000000000peaka\"|" $HOME/.dora/config/app.toml
+  ```
+  </Tabs.Tab>
+</Tabs>
 
 ### Repalce genesis file
 
-Replace the genesis file in `~/.dora/config` with the [Dora Vota Mainnet genesis file](https://github.com/DoraFactory/doravota/blob/main/config/mainnet/genesis.json).
+- Mainnet: Replace the genesis file in `~/.dora/config` with the [Dora Vota Mainnet genesis file](https://github.com/DoraFactory/doravota/blob/main/config/mainnet/genesis.json).
+- Incentivized Testnet: Replace the genesis file in `~/.dora/config` with the [Dora Vota Incentivized genesis file](https://github.com/DoraFactory/doravota/blob/main/config/incentivized/genesis.json).
 
 ## Configure to sync chain data
 
 Now that we have set up some peers, you can add them into `config.toml` to sync Dora Vota chain data.
 
-```shell
-# Comma separated list of seed nodes to connect to
-seeds = "55a1d7354f783b0983cf6ff5d13ca98f9eb611e3@54.254.158.153:26656,6c77c0ef2822a439837ad994ee0dccf6661b841c@54.151.160.200:26656"
-
-# Comma separated list of nodes to keep persistent connections to
-persistent_peers = "55a1d7354f783b0983cf6ff5d13ca98f9eb611e3@54.254.158.153:26656,6c77c0ef2822a439837ad994ee0dccf6661b841c@54.151.160.200:26656"
-```
+{/* prettier-ignore */}
+<Tabs items={['Mainnet', 'Incentivized Testnet']}>
+  <Tabs.Tab>
+  ```shell
+  # Comma separated list of seed nodes to connect to
+  seeds = "55a1d7354f783b0983cf6ff5d13ca98f9eb611e3@54.254.158.153:26656,6c77c0ef2822a439837ad994ee0dccf6661b841c@54.151.160.200:26656"
+  
+  # Comma separated list of nodes to keep persistent connections to
+  persistent_peers = "55a1d7354f783b0983cf6ff5d13ca98f9eb611e3@54.254.158.153:26656,6c77c0ef2822a439837ad994ee0dccf6661b841c@54.151.160.200:26656"
+  ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+  ```shell
+  # Comma separated list of seed nodes to connect to
+  seeds = "43544871409922af8fbf80723aa1c9cbfba26c25@18.143.75.85:26656, f185cdfe3345535cccb6af40069abd94f98b4b38@13.213.30.203:26656"
+  
+  # Comma separated list of nodes to keep persistent connections to
+  persistent_peers = "43544871409922af8fbf80723aa1c9cbfba26c25@18.143.75.85:26656, f185cdfe3345535cccb6af40069abd94f98b4b38@13.213.30.203:26656"
+  ```
+  </Tabs.Tab>
+</Tabs>
 
 ## Running `dorad` node service
 
