@@ -3,7 +3,7 @@ title: 'Run a Validator · Dora Vota DevOps Guide'
 desc: 'This guide provides instructions on running a Dora Vota full node and setting up as a validator. It covers hardware requirements, port and chain configurations, and the process of starting a node and registering as a validator. Ensure your environment meets all requirements to operate Dora Vota nodes successfully.'
 ---
 
-import { Steps, Callout } from 'nextra/components'
+import { Steps, Callout, Tabs } from 'nextra/components'
 
 # Run a Validator
 
@@ -79,21 +79,44 @@ PUBKEY=$(dorad tendermint show-validator)
 
 Stake to your validator and activate it:
 
-```shell
-dorad tx staking create-validator \
-    --amount=<amount. eg: 20000DORA> \
-    --pubkey=$PUBKEY \
-    --moniker=$MONIKER \
-    --chain-id=vota-ash \
-    --from=$ACCOUNT_NAME \
-    --commission-rate="0.1" \
-    --commission-max-rate="0.1" \
-    --commission-max-change-rate="0.2" \
-    --min-self-delegation="1" \
-    --gas-prices=100000000000peaka \
-    --gas=auto \
-    --gas-adjustment=1.5 \
-    --node https://vota-rpc.dorafactory.org:443
-```
+{/* prettier-ignore */}
+<Tabs items={['Mainnet', 'Incentivized Testnet']}>
+  <Tabs.Tab>
+  ```shell
+  dorad tx staking create-validator \
+      --amount=<amount. eg: 20000DORA> \
+      --pubkey=$PUBKEY \
+      --moniker=$MONIKER \
+      --chain-id=vota-ash \
+      --from=$ACCOUNT_NAME \
+      --commission-rate="0.1" \
+      --commission-max-rate="0.1" \
+      --commission-max-change-rate="0.2" \
+      --min-self-delegation="1" \
+      --gas-prices=100000000000peaka \
+      --gas=auto \
+      --gas-adjustment=1.5 \
+      --node https://vota-rpc.dorafactory.org:443
+  ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+  ```shell
+  dorad tx staking create-validator \
+      --amount=<amount. eg: 20000DORA> \
+      --pubkey=$PUBKEY \
+      --moniker=$MONIKER \
+      --chain-id=vota-vk \
+      --from=$ACCOUNT_NAME \
+      --commission-rate="0.1" \
+      --commission-max-rate="0.1" \
+      --commission-max-change-rate="0.2" \
+      --min-self-delegation="1" \
+      --gas-prices=100000000000peaka \
+      --gas=auto \
+      --gas-adjustment=1.5 \
+      --node https://vota-vk-rpc.dorafactory.org:443
+  ```
+  </Tabs.Tab>
+</Tabs>
 
 </Steps>
