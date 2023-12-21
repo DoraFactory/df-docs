@@ -22,7 +22,7 @@ New validators will be able to stake their own DORA tokens, or obtain Dora Facto
   form](https://docs.google.com/forms/d/e/1FAIpQLScKYDuJxUEx9j-huj1-yqIu5sK3W6X2jbMEO30VIMCHNmtZIw/viewform)**.
 </Callout>
 
-## Join Vota Delegation Program
+## Join Vota delegation program
 
 The delegation program will invite interested parties to run validator nodes for `vota-vk` network. You’ll validate blocks for `vota-vk`, vote for governance proposals, and get gas distributions.
 
@@ -35,24 +35,11 @@ December 11, 2023 – December 18, 2023.
 
 ### Run `vota-vk` testnet validators
 
-December 24, 2023 – TBD.
+December 24, 2023.
 
-<Callout>
-  If you have already been invited to our Telegram channel, you can immediately
-  start to run your node and sync block data. Please submit your address you
-  wish to receive testnet tokens. We will airdrop `vota-vk` tokens so that you
-  can create your validator and join the incentivized testnet.
-</Callout>
-
-<Callout type="info">
-  For instructions on launching the incentivized testnet, please refer to this
-  [document](/docs/vota-devops/validator). It is important to pay special
-  attention to several parameters of the incentivized testnet that are different
-  from `vota-ash` network, such as chain ID, RPC, and so on. Please also note
-  that we use the `dorad` binary file with version 0.2.0 in the incentivized
-  testnet. Relevant network configurations can be found in [public
-  resources](/docs/vota-dev/resources).
-</Callout>
+1. If you have already been invited to our Telegram channel, you can immediately start to run your node and sync block data. For instructions on launching the incentivized testnet, please refer to [“Run a Validator”](/docs/vota-devops/validator). It is important to pay special attention to several parameters of the incentivized testnet that are different from vota-ash network, such as **chain ID**, **RPC**, and so on. Please also note that we use the `dorad` binary file with version **0.2.0** in the incentivized testnet. Relevant network configurations can be found in [“Public Resources”](/docs/vota-dev/resources).
+2. Fill the form in the notice of Telegram channel.
+3. Once your validator is up, add a firewall rule to allow `34.127.117.186` to access port `26660` of your server. Enable prometheus metrics in config.toml. Send your **moniker name** and **public IP** to us.
 
 ### Create validators on `vota-ash` network
 
