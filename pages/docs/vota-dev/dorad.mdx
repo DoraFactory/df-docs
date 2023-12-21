@@ -3,7 +3,7 @@ title: 'Get Started with `dorad` · Dora Vota Developer Guide'
 desc: 'This beginner-friendly guide is intended to help you get started with Dora Vota and build on it.'
 ---
 
-import { Steps, Callout } from 'nextra/components'
+import { Steps, Callout, Tabs } from 'nextra/components'
 
 # Get Started with `dorad`
 
@@ -130,14 +130,34 @@ The denom of Dora Vota is `peaka`, and `1 DORA = 10^18 peaka`.
 
 Here is an example of token transfer on Dora Vota:
 
-```ansi filename="Terminal"
-$ dorad tx bank send <from_addr> <to_addr> <amount> --chain-id vota-ash --gas-prices=100000000000peaka --gas=auto --gas-adjustment=1.5 --node https://vota-rpc.dorafactory.org:443
-```
+{/* prettier-ignore */}
+<Tabs items={['Mainnet', 'Incentivized Testnet']}>
+  <Tabs.Tab>
+  ```ansi filename="Terminal"
+  $ dorad tx bank send <from_addr> <to_addr> <amount> --chain-id vota-ash --gas-prices=100000000000peaka --gas=auto --gas-adjustment=1.5 --node https://vota-rpc.dorafactory.org:443
+  ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+  ```ansi filename="Terminal"
+  $ dorad tx bank send <from_addr> <to_addr> <amount> --chain-id vota-vk --gas-prices=100000000000peaka --gas=auto --gas-adjustment=1.5 --node https://vota-vk-rpc.dorafactory.org:443
+  ```
+  </Tabs.Tab>
+</Tabs>
 
 ### Query the balance of account
 
 You can use this command to query the balance of a specific account address.
 
-```ansi filename="Terminal"
-$ dorad query bank balances <account_address> --node https://vota-rpc.dorafactory.org:443
-```
+{/* prettier-ignore */}
+<Tabs items={['Mainnet', 'Incentivized Testnet']}>
+  <Tabs.Tab>
+  ```ansi filename="Terminal"
+  $ dorad query bank balances <account_address> --node https://vota-rpc.dorafactory.org:443
+  ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+  ```ansi filename="Terminal"
+  $ dorad query bank balances <account_address> --node https://vota-vk-rpc.dorafactory.org:443
+  ```
+  </Tabs.Tab>
+</Tabs>
