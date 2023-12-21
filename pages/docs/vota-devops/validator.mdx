@@ -20,7 +20,7 @@ The following instructions assume you have already synchronized your node to the
 - Validators and their delegators earn the rewards—fees are added to each transaction to avoid spamming and pay for computing power. Validators set minimum gas prices and reject transactions that have implied gas prices below this threshold.
 
 <Callout type="info">
-  In the current Dora Vota network, there are **no mint rewards** because the
+  In the current Dora Vota Mainnet, there are **no mint rewards** because the
   inflation rate is set to zero. Validators can set commissions on the fees they
   receive as additional incentives.
 </Callout>
@@ -62,9 +62,19 @@ Creating an account on the chain requires an initial balance; the previous comma
 
 Use the following command to check the balance of your account. It should return a non-zero balance.
 
-```shell
-dorad query bank balances $ACCOUNT_ADDRESS
-```
+{/* prettier-ignore */}
+<Tabs items={['Mainnet', 'Incentivized Testnet']}>
+  <Tabs.Tab>
+  ```shell
+  dorad query bank balances <account_address> --node https://vota-rpc.dorafactory.org:443
+  ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+  ```shell
+  dorad query bank balances <account_address> --node https://vota-vk-rpc.dorafactory.org:443
+  ```
+  </Tabs.Tab>
+</Tabs>
 
 ### Create a validator
 
@@ -84,7 +94,7 @@ Stake to your validator and activate it:
   <Tabs.Tab>
   ```shell
   dorad tx staking create-validator \
-      --amount=<amount. eg: 20000DORA> \
+      --amount=1DORA \
       --pubkey=$PUBKEY \
       --moniker=$MONIKER \
       --chain-id=vota-ash \
