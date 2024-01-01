@@ -14,17 +14,18 @@ export default {
       desc: 'Dora Factory creates protocols, toolings, and public good infrastructures that help open source communities and frontier tech builders to thrive.'
     }
     const SITE_ROOT = process.env.NEXT_PUBLIC_SITE_ROOT
+    const OG_API_ROOT = process.env.NEXT_PUBLIC_OG_API_ROOT
     const asPath = router.asPath
 
     // Open Graph
     let ogTitle = frontMatter.title || COPY_FALLBACK.title
     let ogDesc = frontMatter.desc || COPY_FALLBACK.desc
     let ogUrl = asPath === '/' ? SITE_ROOT : `${SITE_ROOT}${router.asPath}`
-    let ogImg = `${SITE_ROOT}/api/og`
+    let ogImg = `${OG_API_ROOT}/api/og`
     if (asPath !== '/') {
       const encTitle = encodeURIComponent(ogTitle)
       const encDesc = encodeURIComponent(ogDesc)
-      ogImg = `${SITE_ROOT}/api/og?title=${encTitle}&desc=${encDesc}`
+      ogImg = `${OG_API_ROOT}/api/og?title=${encTitle}&desc=${encDesc}`
     }
 
     // Apple touch icons
