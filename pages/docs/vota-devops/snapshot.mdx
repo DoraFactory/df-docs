@@ -5,7 +5,7 @@ desc: 'This guide provides instructions on running a Dora Vota full node and set
 
 import { Callout, FileTree, Steps, Tabs } from 'nextra/components'
 
-# Vota Mainnet Snapshot
+# Vota Mainnet Snapshot and Unjail
 
 ## How to use Vota Mainnet snapshot
 
@@ -22,6 +22,26 @@ sudo snap install lz4
 
 ```shell
 sudo systemctl stop dorad
+```
+
+### Download the latest `doravota` and compile `dorad`
+
+You should check that you have deleted your local `doravota` source code and download the latest version.
+
+```shell
+rm -rf doravota
+git clone https://github.com/DoraFactory/doravota.git
+cd doravota && git checkout 0.3.1
+```
+
+<Callout type="warning">
+  The repo commit hash is
+  [`231861b`](https://github.com/DoraFactory/doravota/commit/231861b). Please
+  check it before you build the source code.
+</Callout>
+
+```shell
+make install
 ```
 
 ### Clean your local environment
@@ -43,7 +63,7 @@ PEERS="d49defb23a75ff08c924622e3a2f69280983fed7@13.215.46.25:26656,d6e42c70316e3
 ### Download and decompress the snapshot
 
 ```shell
-curl https://df-node-dump.s3.ap-southeast-1.amazonaws.com/dora_2595628.tar.lz | lz4 -dc - | tar -xf - -C $HOME/.dora
+curl https://df-node-dump.s3.ap-southeast-1.amazonaws.com/dora_2786145.tar.lz4 | lz4 -dc - | tar -xf - -C $HOME/.dora
 ```
 
 ### Restart your node
@@ -53,4 +73,5 @@ Double check everything you have done.
 ```shell
 sudo systemctl restart dorad && sudo journalctl -u dorad -f
 ```
+
 </Steps>
