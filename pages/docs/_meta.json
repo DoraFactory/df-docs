@@ -14,6 +14,10 @@
   "vota": "Vota Operator Manual",
   "vota-dev": "Vota Developer Guide",
   "vota-devops": "Vota DevOps Guide",
+  "vota-vk": {
+    "title": "Vota Incentivized Testnet",
+    "display": "hidden"
+  },
 
   "-- references": {
     "type": "separator",
