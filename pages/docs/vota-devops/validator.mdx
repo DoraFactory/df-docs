@@ -63,15 +63,10 @@ Creating an account on the chain requires an initial balance; the previous comma
 Use the following command to check the balance of your account. It should return a non-zero balance.
 
 {/* prettier-ignore */}
-<Tabs items={['Mainnet', 'Incentivized Testnet', 'Testnet']}>
+<Tabs items={['Mainnet', 'Testnet']}>
   <Tabs.Tab>
   ```shell
   dorad query bank balances <account_address> --node https://vota-rpc.dorafactory.org:443
-  ```
-  </Tabs.Tab>
-  <Tabs.Tab>
-  ```shell
-  dorad query bank balances <account_address> --node https://vota-vk-rpc.dorafactory.org:443
   ```
   </Tabs.Tab>
   <Tabs.Tab>
