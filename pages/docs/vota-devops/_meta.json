@@ -1,5 +1,5 @@
 {
   "node": "Run a Full Node",
   "validator": "Run a Validator",
-  "snapshot": "Mainnet Snapshot"
+  "snapshot": "Snapshot"
 }
