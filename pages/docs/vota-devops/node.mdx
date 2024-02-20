@@ -17,16 +17,25 @@ In this guide, we will walk you through the process of setting up and running a 
 
 Below is the recommended hardware configuration for running a Dora Vota full node.
 
-| Chain ID | CPU     | RAM  | Disk       |
-| :------- | :------ | :--- | :--------- |
-| vota-ash | 8 cores | 32GB | 1TB NVME   |
-| vota-vk  | 8 cores | 32GB | 500GB NVME |
+| Chain ID     | CPU     | RAM  | Disk       |
+| :----------- | :------ | :--- | :--------- |
+| vota-ash     | 8 cores | 32GB | 1TB NVME   |
+| vota-vk      | 8 cores | 32GB | 500GB NVME |
+| vota-testnet | 4 cores | 16GB | 500GB NVME |
 
 ## Recommended validator configuration
 
-- If you use an **AWS cloud server** to deploy a validator node, you can use the following recommended configuration: [`t2.2xlarge`](https://instances.vantage.sh/aws/ec2/t2.2xlarge)
-- If you use a **GCP cloud server** to deploy a validator node, you can use the following recommended configuration: [`n2-standard-8
-`](https://cloud.google.com/compute/docs/general-purpose-machines#n2_series)
+{/* prettier-ignore */}
+<Tabs items={['Mainnet', 'Testnet']}>
+  <Tabs.Tab>
+    - If you use an **AWS cloud server** to deploy a validator node, you can use the following recommended configuration: [`t2.2xlarge`](https://instances.vantage.sh/aws/ec2/t2.2xlarge)
+    - If you use a **GCP cloud server** to deploy a validator node, you can use the following recommended configuration: [`n2-standard-8`](https://cloud.google.com/compute/docs/general-purpose-machines#n2_series)
+  </Tabs.Tab>
+  <Tabs.Tab>
+    - If you use an **AWS cloud server** to deploy a validator node, you can use the following recommended configuration: [`t2.xlarge`](https://instances.vantage.sh/aws/ec2/t2.xlarge)
+    - If you use a **GCP cloud server** to deploy a validator node, you can use the following recommended configuration: [`n2-standard-4`](https://cloud.google.com/compute/docs/general-purpose-machines#n2_machine_types)
+  </Tabs.Tab>
+</Tabs>
 
 ### Commonly used ports
 
@@ -78,7 +87,7 @@ To instate a Dora Vota node, the first step is to [download and install `dorad`]
 ### Init commands
 
 {/* prettier-ignore */}
-<Tabs items={['Mainnet', 'Incentivized Testnet']}>
+<Tabs items={['Mainnet', 'Incentivized Testnet', 'Testnet']}>
   <Tabs.Tab>
   ```shell
   export VERSION=0.2.0
@@ -107,19 +116,32 @@ To instate a Dora Vota node, the first step is to [download and install `dorad`]
   sed -i -e "s|^minimum-gas-prices *=.*|minimum-gas-prices = \"100000000000peaka\"|" $HOME/.dora/config/app.toml
   ```
   </Tabs.Tab>
+  <Tabs.Tab>
+  ```shell
+  export VERSION=0.3.1
+  export CHAIN_ID="vota-testnet"
+  export MONIKER="replace-with-your-moniker-name"
+  
+  git clone https://github.com/DoraFactory/doravota.git
+  cd doravota && git checkout $VERSION
+  make install
+  dorad init --chain-id "$CHAIN_ID" "$MONIKER"
+  ```
+  </Tabs.Tab>
 </Tabs>
 
 ### Repalce genesis file
 
 - Mainnet: Replace the genesis file in `~/.dora/config` with the [Dora Vota Mainnet genesis file](https://github.com/DoraFactory/doravota/blob/main/config/mainnet/genesis.json).
 - Incentivized Testnet: Replace the genesis file in `~/.dora/config` with the [Dora Vota Incentivized genesis file](https://github.com/DoraFactory/doravota/blob/main/config/incentivized/genesis.json).
+- Testnet: Replace the genesis file in `~/.dora/config` with the [Dora Vota Testnet genesis file](https://github.com/DoraFactory/doravota/blob/main/config/testnet/genesis.json).
 
 ## Configure to sync chain data
 
 Now that we have set up some peers, you can add them into `config.toml` to sync Dora Vota chain data.
 
 {/* prettier-ignore */}
-<Tabs items={['Mainnet', 'Incentivized Testnet']}>
+<Tabs items={['Mainnet', 'Incentivized Testnet', 'Testnet']}>
   <Tabs.Tab>
   ```shell
   # Comma separated list of seed nodes to connect to
@@ -136,6 +158,15 @@ Now that we have set up some peers, you can add them into `config.toml` to sync 
   
   # Comma separated list of nodes to keep persistent connections to
   persistent_peers = "43544871409922af8fbf80723aa1c9cbfba26c25@18.143.75.85:26656, f185cdfe3345535cccb6af40069abd94f98b4b38@13.213.30.203:26656"
+  ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+  ```shell
+  # Comma separated list of seed nodes to connect to
+  seeds = "1c070c5b38c716370af9b0d344209821cceeceb3@18.142.245.25:26656"
+  
+  # Comma separated list of nodes to keep persistent connections to
+  persistent_peers = "1c070c5b38c716370af9b0d344209821cceeceb3@18.142.245.25:26656"
   ```
   </Tabs.Tab>
 </Tabs>
