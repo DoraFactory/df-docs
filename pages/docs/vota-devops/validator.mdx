@@ -90,7 +90,7 @@ PUBKEY=$(dorad tendermint show-validator)
 Stake to your validator and activate it:
 
 {/* prettier-ignore */}
-<Tabs items={['Mainnet', 'Incentivized Testnet', 'Testnet']}>
+<Tabs items={['Mainnet', 'Testnet']}>
   <Tabs.Tab>
   ```shell
   dorad tx staking create-validator \
@@ -107,24 +107,6 @@ Stake to your validator and activate it:
       --gas=auto \
       --gas-adjustment=1.5 \
       --node https://vota-rpc.dorafactory.org:443
-  ```
-  </Tabs.Tab>
-  <Tabs.Tab>
-  ```shell
-  dorad tx staking create-validator \
-      --amount=1DORA \
-      --pubkey=$PUBKEY \
-      --moniker=$MONIKER \
-      --chain-id=vota-vk \
-      --from=$ACCOUNT_NAME \
-      --commission-rate="0.1" \
-      --commission-max-rate="0.1" \
-      --commission-max-change-rate="0.2" \
-      --min-self-delegation="1" \
-      --gas-prices=100000000000peaka \
-      --gas=auto \
-      --gas-adjustment=1.5 \
-      --node https://vota-vk-rpc.dorafactory.org:443
   ```
   </Tabs.Tab>
   <Tabs.Tab>
