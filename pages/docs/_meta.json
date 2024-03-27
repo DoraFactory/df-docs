@@ -3,9 +3,13 @@
 
   "-- deardoge": {
     "type": "separator",
-    "title": "Dear Doge"
+    "title": "Dear Doge",
+    "display": "hidden"
   },
-  "deardoge-testnet": "Dear Doge Testnet",
+  "deardoge-testnet": {
+    "title": "Dear Doge Testnet",
+    "display": "hidden"
+  },
 
   "-- vota": {
     "type": "separator",
