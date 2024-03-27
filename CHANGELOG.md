@@ -1,5 +1,25 @@
 # CHANGELOG
 
+## [0.4.0][0.4.0] · 2024-03-27
+
+### Added
+
+- Feat: Add Incentivized Testnet Guide.
+- Feat: Add new env `NEXT_PUBLIC_OG_API_ROOT` to configure `/api/og` root.
+
+### Changed
+
+- Feat: Update Vota Operator Manual.
+- Feat: Update Vota Dev Guide.
+- Feat: Update Vota DevOps Guide.
+- Feat: Hide Incentivized Testnet Guide.
+- Feat: Hide Dear Doge Testnet Developer Documentation entry.
+- Feat: Change `/api/og` API server from DF custom server to Vercel (shared with DF Docs Testbench).
+
+### Fixed
+
+- Fix: Prettier some MDX files.
+
 ## [0.3.1][0.3.1] · 2023-12-01
 
 ### Added
@@ -234,6 +254,7 @@
 - Docs: [Code of Conduct](CODE_OF_CONDUCT.md), based on [Contributor Covenant](https://www.contributor-covenant.org) v2.1.
 - Chore: Configure GitHub [Dependabot](.github/dependabot.yml).
 
+[0.4.0]: https://github.com/DoraFactory/df-docs/compare/0.3.1...0.4.0
 [0.3.1]: https://github.com/DoraFactory/df-docs/compare/0.3.0...0.3.1
 [0.3.0]: https://github.com/DoraFactory/df-docs/compare/0.2.1...0.3.0
 [0.2.1]: https://github.com/DoraFactory/df-docs/compare/0.2.0...0.2.1
