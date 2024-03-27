@@ -59,14 +59,14 @@ Due to the restart of a new P2P network environment, you also need to remove the
   <Tabs.Tab>
   ```shell
   rm ~/.dora/config/addrbook.json
-
+  
   PEERS="d49defb23a75ff08c924622e3a2f69280983fed7@13.215.46.25:26656,d6e42c70316e354dcb44fd3a86e97b64fa99fc5e@54.179.177.80:26656,220204926f8da0e197572d458e205608306f1ed1@54.251.131.190:26656" && sed -i 's|^seeds *=.*|seeds = "'$PEERS'"|' $HOME/.dora/config/config.toml && sed -i 's|^persistent_peers *=.*|persistent_peers = "'$PEERS'"|' $HOME/.dora/config/config.toml
   ```
   </Tabs.Tab>
   <Tabs.Tab>
   ```shell
   rm ~/.dora/config/addrbook.json
- 
+  
   PEERS="1c070c5b38c716370af9b0d344209821cceeceb3@18.142.245.25:26656" && sed -i 's|^seeds *=.*|seeds = "'$PEERS'"|' $HOME/.dora/config/config.toml && sed -i 's|^persistent_peers *=.*|persistent_peers = "'$PEERS'"|' $HOME/.dora/config/config.toml
   ```
   </Tabs.Tab>
