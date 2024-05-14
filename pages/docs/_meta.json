@@ -18,6 +18,9 @@
   "vota": "Vota Operator Manual",
   "vota-dev": "Vota Developer Guide",
   "vota-devops": "Vota DevOps Guide",
+  "vota-sf": {
+    "title": "Vota Incentivized Testnet"
+  },
   "vota-vk": {
     "title": "Vota Incentivized Testnet",
     "display": "hidden"

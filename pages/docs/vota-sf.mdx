@@ -1,0 +1,50 @@
+---
+title: 'Incentivized Testnet Guide (vota-sf)'
+desc: 'This document is to provide a guide for participants of Dora Vota’s second incentivized testnet (vota-sf, a.k.a. Scottish Fold).'
+---
+
+import { Steps, Callout } from 'nextra/components'
+import Image from 'next/image'
+
+# Incentivized Testnet Guide (`vota-sf`)
+
+This document is to provide a guide for participants of Dora Vota’s second incentivized testnet (`vota-sf`, a.k.a. [Scottish Fold](https://en.wikipedia.org/wiki/Scottish_Fold)).
+
+[<Image src="/images/scottish-fold.jpg" alt="Scottish Fold" width={512} height={512}/>](https://en.wikipedia.org/wiki/File:Adult_Scottish_Fold.jpg)
+
+The purpose of `vota-sf` is to prepare for an expansion of `vota-ash` network’s validator set which currently has 11 validators. There is no specific quota for this round, the goal of this round is to engage network validators that understand Dora Vota's mission and products. Other than validating the appchain itself, our validators will be required to support our applications (such as aMACI) and provide important infrastructure support.
+
+New validators will be able to stake their own DORA tokens, or obtain Dora Factory foundation’s delegation. In order for any validator provider to obtain delegation, it has to go through the Delegation Program, run a validator for the incentivized testnet `vota-sf`, and demonstrate good performance.
+
+<Callout>
+  To register as a `vota-sf` incentivized testnet validator, **please fill out
+  the [application
+  form](https://docs.google.com/forms/d/e/1FAIpQLScKYDuJxUEx9j-huj1-yqIu5sK3W6X2jbMEO30VIMCHNmtZIw/viewform)**.
+</Callout>
+
+## Join Vota delegation program
+
+The delegation program will invite interested parties to run validator nodes for `vota-sf` network. You’ll validate blocks for `vota-sf`, vote for governance proposals, and get gas distributions.
+
+This program includes 3 steps:
+
+<Steps>
+### [Application form](https://forms.gle/UxNg7D4Q8M9CoBBH8) submission
+
+May 14, 2024 – May 24, 2024.
+
+### Run `vota-sf` testnet validators
+
+May 27, 2024.
+
+1. If you have already been invited to our Telegram channel, you can immediately start to run your node and sync block data. For instructions on launching the incentivized testnet, please refer to [“Run a Validator”](/docs/vota-devops/validator). It is important to pay special attention to several parameters of the incentivized testnet that are different from `vota-ash` network, such as **chain ID**, **RPC**, and so on. Please also note that we use the `dorad` binary file with version **0.2.0** in the incentivized testnet. Relevant network configurations can be found in [“Public Resources”](/docs/vota-dev/resources).
+2. Ask for airdrop to activate your validator in our Telegram channel.
+3. Once your validator is up, add a firewall rule to allow `34.127.117.186` to access port `26660` of your server. Enable prometheus metrics in config.toml. Send your **moniker name** and **public IP** to us.
+
+### Create validators on `vota-sf` network
+
+TBD.
+
+</Steps>
+
+Please note that if you are selected into the delegation program and start to run `vota-ash` network validators, you will be expected to spin up additional services to support the appchain's applications.
