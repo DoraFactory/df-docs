@@ -21,11 +21,12 @@ Below is the recommended hardware configuration for running a Dora Vota full nod
 | :----------- | :------ | :--- | :--------- |
 | vota-ash     | 8 cores | 32GB | 1TB NVME   |
 | vota-testnet | 4 cores | 16GB | 500GB NVME |
+| vota-sf      | 8 cores | 32GB | 500GB NVME |
 
 ## Recommended validator configuration
 
 {/* prettier-ignore */}
-<Tabs items={['Mainnet', 'Testnet']}>
+<Tabs items={['Mainnet', 'Testnet', 'Incentivized Testnet']}>
   <Tabs.Tab>
     - If you use an **AWS cloud server** to deploy a validator node, you can use the following recommended configuration: [`t2.2xlarge`](https://instances.vantage.sh/aws/ec2/t2.2xlarge)
     - If you use a **GCP cloud server** to deploy a validator node, you can use the following recommended configuration: [`n2-standard-8`](https://cloud.google.com/compute/docs/general-purpose-machines#n2_series)
@@ -33,6 +34,10 @@ Below is the recommended hardware configuration for running a Dora Vota full nod
   <Tabs.Tab>
     - If you use an **AWS cloud server** to deploy a validator node, you can use the following recommended configuration: [`t2.xlarge`](https://instances.vantage.sh/aws/ec2/t2.xlarge)
     - If you use a **GCP cloud server** to deploy a validator node, you can use the following recommended configuration: [`n2-standard-4`](https://cloud.google.com/compute/docs/general-purpose-machines#n2_machine_types)
+  </Tabs.Tab>
+  <Tabs.Tab>
+    - If you use an **AWS cloud server** to deploy a validator node, you can use the following recommended configuration: [`t2.2xlarge`](https://instances.vantage.sh/aws/ec2/t2.2xlarge)
+    - If you use a **GCP cloud server** to deploy a validator node, you can use the following recommended configuration: [`n2-standard-8`](https://cloud.google.com/compute/docs/general-purpose-machines#n2_series)
   </Tabs.Tab>
 </Tabs>
 
@@ -86,7 +91,7 @@ To instate a Dora Vota node, the first step is to [download and install `dorad`]
 ### Init commands
 
 {/* prettier-ignore */}
-<Tabs items={['Mainnet', 'Testnet']}>
+<Tabs items={['Mainnet', 'Testnet', Incentivized Testnet]}>
   <Tabs.Tab>
   ```shell
   export VERSION=0.3.1
@@ -111,19 +116,32 @@ To instate a Dora Vota node, the first step is to [download and install `dorad`]
   dorad init --chain-id "$CHAIN_ID" "$MONIKER"
   ```
   </Tabs.Tab>
+  <Tabs.Tab>
+  ```shell
+  export VERSION=0.3.1
+  export CHAIN_ID="vota-sf"
+  export MONIKER="replace-with-your-moniker-name"
+  
+  git clone https://github.com/DoraFactory/doravota.git
+  cd doravota && git checkout $VERSION
+  make install
+  dorad init --chain-id "$CHAIN_ID" "$MONIKER"
+  ```
+  </Tabs.Tab>
 </Tabs>
 
 ### Repalce genesis file
 
 - Mainnet: Replace the genesis file in `~/.dora/config` with the [Dora Vota Mainnet genesis file](https://github.com/DoraFactory/doravota/blob/main/config/mainnet/genesis.json).
 - Testnet: Replace the genesis file in `~/.dora/config` with the [Dora Vota Testnet genesis file](https://github.com/DoraFactory/doravota/blob/main/config/testnet/genesis.json).
+- Incentivized Testnet: Replace the genesis file in `~/.dora/config` with the [Dora Vota Testnet genesis file](https://df-node-dump.s3.ap-southeast-1.amazonaws.com/vota-sf-genesis.json).
 
 ## Configure to sync chain data
 
 Now that we have set up some peers, you can add them into `config.toml` to sync Dora Vota chain data.
 
 {/* prettier-ignore */}
-<Tabs items={['Mainnet', 'Testnet']}>
+<Tabs items={['Mainnet', 'Testnet', 'Incentivized Testnet']}>
   <Tabs.Tab>
   ```shell
   # Comma separated list of seed nodes to connect to
@@ -140,6 +158,15 @@ Now that we have set up some peers, you can add them into `config.toml` to sync 
   
   # Comma separated list of nodes to keep persistent connections to
   persistent_peers = "1c070c5b38c716370af9b0d344209821cceeceb3@18.142.245.25:26656"
+  ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+  ```shell
+  # Comma separated list of seed nodes to connect to
+  seeds = "059e1ec595989c8c4ef3fd3552070f5f93888547@3.79.184.10:26656"
+  
+  # Comma separated list of nodes to keep persistent connections to
+  persistent_peers = "059e1ec595989c8c4ef3fd3552070f5f93888547@3.79.184.10:26656"
   ```
   </Tabs.Tab>
 </Tabs>
