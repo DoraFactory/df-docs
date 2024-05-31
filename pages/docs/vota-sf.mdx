@@ -30,20 +30,34 @@ This program includes 3 steps:
 <Steps>
 ### [Application form](https://forms.gle/8TkCpqKokwkcKyCZ7) submission
 
-May 14, 2024 – May 24, 2024.
+**May 14–24, 2024.**
 
 ### Run `vota-sf` testnet validators
 
-May 27, 2024.
+**Before June 2, 2024.**
 
 1. If you have already been invited to our Telegram channel, you can immediately start to run your node and sync block data. For instructions on launching the incentivized testnet, please refer to [“Run a Validator”](/docs/vota-devops/validator). It is important to pay special attention to several parameters of the incentivized testnet that are different from `vota-ash` network, such as **chain ID**, **RPC**, and so on. Please also note that we use the `dorad` binary file with version **0.2.0** in the incentivized testnet. Relevant network configurations can be found in [“Public Resources”](/docs/vota-dev/resources).
 2. Ask for airdrop to activate your validator in our Telegram channel.
 3. Once your validator is up, add a firewall rule to allow `34.127.117.186` to access port `26660` of your server. Enable prometheus metrics in config.toml. Send your **moniker name** and **public IP** to us.
 
-### Create validators on `vota-sf` network
+### Performance evaluation phase
 
-TBD.
+**June 3–17, 2024.**
+
+During this phase, you will be responsible for running a reliable `vota-sf` testnet validator under various performance tests from the Dora Vota DevOps team. Some of these tests will be notified in advance, others will not.
+
+### MACI and aMACI operator service testing phase
+
+**June 20 – July 5, 2024** (We might extend the period depending on the actual progress and feedback from validator set).
+
+During this phase, you will maintain your validators while starting to run MACI and aMACI related services. You will receive details if you pass the validator performance test phase.
+
+### Onboarding `vota-ash` network
+
+Based on your performance from the previous two phases, together with additional services and value you are able to add to Dora Vota, we will make a final decision on a list of validators that could join the second delegation program of the vota-ash network.
+
+Please note that you will also be required to run a validator on Dora Vota’s long-term testnet if you are selected into the second delegation program.
 
 </Steps>
 
-Please note that if you are selected into the delegation program and start to run `vota-ash` network validators, you will be expected to spin up additional services to support the appchain's applications.
+Please note that if you are selected into the delegation program and start to run `vota-ash` network validators, you will be expected to spin up additional services to support the appchain’s applications.
