@@ -91,7 +91,7 @@ To instate a Dora Vota node, the first step is to [download and install `dorad`]
 ### Init commands
 
 {/* prettier-ignore */}
-<Tabs items={['Mainnet', 'Testnet', Incentivized Testnet]}>
+<Tabs items={['Mainnet', 'Testnet', 'Incentivized Testnet']}>
   <Tabs.Tab>
   ```shell
   export VERSION=0.3.1
@@ -134,7 +134,7 @@ To instate a Dora Vota node, the first step is to [download and install `dorad`]
 
 - Mainnet: Replace the genesis file in `~/.dora/config` with the [Dora Vota Mainnet genesis file](https://github.com/DoraFactory/doravota/blob/main/config/mainnet/genesis.json).
 - Testnet: Replace the genesis file in `~/.dora/config` with the [Dora Vota Testnet genesis file](https://github.com/DoraFactory/doravota/blob/main/config/testnet/genesis.json).
-- Incentivized Testnet: Replace the genesis file in `~/.dora/config` with the [Dora Vota Testnet genesis file](https://df-node-dump.s3.ap-southeast-1.amazonaws.com/vota-sf-genesis.json).
+- Incentivized Testnet: Replace the genesis file in `~/.dora/config` with the [Dora Vota Incentivized Testnet genesis file](https://df-node-dump.s3.ap-southeast-1.amazonaws.com/vota-sf-genesis.json).
 
 ## Configure to sync chain data
 
@@ -171,7 +171,7 @@ Now that we have set up some peers, you can add them into `config.toml` to sync 
   </Tabs.Tab>
 </Tabs>
 
-The configuration above is mainly used for P2P node discovery. Before starting the node, you can synchronize it to a specified block height using the [snapshot](https://df-docs.vercel.app/docs/vota-devops/snapshot) service. Then, you can synchronize to the latest block using the P2P nodes configured above, which reduces the synchronization time.
+The configuration above is mainly used for P2P node discovery. Before starting the node, you can synchronize it to a specified block height using the [snapshot](/docs/vota-devops/snapshot) service. Then, you can synchronize to the latest block using the P2P nodes configured above, which reduces the synchronization time.
 
 ## Running `dorad` node service
 
