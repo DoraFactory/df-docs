@@ -63,7 +63,7 @@ Creating an account on the chain requires an initial balance; the previous comma
 Use the following command to check the balance of your account. It should return a non-zero balance.
 
 {/* prettier-ignore */}
-<Tabs items={['Mainnet', 'Testnet']}>
+<Tabs items={['Mainnet', 'Testnet', 'Incentivized Testnet']}>
   <Tabs.Tab>
   ```shell
   dorad query bank balances <account_address> --node https://vota-rpc.dorafactory.org:443
@@ -72,6 +72,11 @@ Use the following command to check the balance of your account. It should return
   <Tabs.Tab>
   ```shell
   dorad query bank balances <account_address> --node https://vota-testnet-rpc.dorafactory.org:443
+  ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+  ```shell
+  dorad query bank balances <account_address> --node https://vota-sf-rpc.dorafactory.org:443
   ```
   </Tabs.Tab>
 </Tabs>
@@ -90,7 +95,7 @@ PUBKEY=$(dorad tendermint show-validator)
 Stake to your validator and activate it:
 
 {/* prettier-ignore */}
-<Tabs items={['Mainnet', 'Testnet']}>
+<Tabs items={['Mainnet', 'Testnet', Incentivized Testnet]}>
   <Tabs.Tab>
   ```shell
   dorad tx staking create-validator \
@@ -125,6 +130,24 @@ Stake to your validator and activate it:
       --gas=auto \
       --gas-adjustment=1.5 \
       --node https://vota-testnet-rpc.dorafactory.org:443
+  ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+  ```shell
+  dorad tx staking create-validator \
+      --amount=<amount. eg: 20000DORA> \
+      --pubkey=$PUBKEY \
+      --moniker=$MONIKER \
+      --chain-id=vota-sf \
+      --from=$ACCOUNT_NAME \
+      --commission-rate="0.1" \
+      --commission-max-rate="0.1" \
+      --commission-max-change-rate="0.2" \
+      --min-self-delegation="1" \
+      --gas-prices=100000000000peaka \
+      --gas=auto \
+      --gas-adjustment=1.5 \
+      --node https://vota-sf-rpc.dorafactory.org:443
   ```
   </Tabs.Tab>
 </Tabs>

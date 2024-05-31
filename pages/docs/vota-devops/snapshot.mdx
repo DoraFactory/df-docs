@@ -55,7 +55,7 @@ rm -rf $HOME/.dora/data $HOME/.dora/wasm
 Due to the restart of a new P2P network environment, you also need to remove the old `addrbook.json` and add new peer nodes to you `~/.dorad/config/config.toml` to ensure smooth data synchronization.
 
 {/* prettier-ignore */}
-<Tabs items={['Mainnet', 'Testnet']}>
+<Tabs items={['Mainnet', 'Testnet', Incentivized Testnet]}>
   <Tabs.Tab>
   ```shell
   rm ~/.dora/config/addrbook.json
@@ -70,12 +70,19 @@ Due to the restart of a new P2P network environment, you also need to remove the
   PEERS="1c070c5b38c716370af9b0d344209821cceeceb3@18.142.245.25:26656" && sed -i 's|^seeds *=.*|seeds = "'$PEERS'"|' $HOME/.dora/config/config.toml && sed -i 's|^persistent_peers *=.*|persistent_peers = "'$PEERS'"|' $HOME/.dora/config/config.toml
   ```
   </Tabs.Tab>
+  <Tabs.Tab>
+  ```shell
+  rm ~/.dora/config/addrbook.json
+  
+  PEERS="059e1ec595989c8c4ef3fd3552070f5f93888547@3.79.184.10:26656" && sed -i 's|^seeds *=.*|seeds = "'$PEERS'"|' $HOME/.dora/config/config.toml && sed -i 's|^persistent_peers *=.*|persistent_peers = "'$PEERS'"|' $HOME/.dora/config/config.toml
+  ```
+  </Tabs.Tab>
 </Tabs>
 
 ### Download and decompress the snapshot
 
 {/* prettier-ignore */}
-<Tabs items={['Mainnet', 'Testnet']}>
+<Tabs items={['Mainnet', 'Testnet', 'Incentivized Testnet']}>
   <Tabs.Tab>
   ```shell
   curl https://df-node-dump.s3.ap-southeast-1.amazonaws.com/dora_2786145.tar.lz4 | lz4 -dc - | tar -xf - -C $HOME/.dora
@@ -84,6 +91,12 @@ Due to the restart of a new P2P network environment, you also need to remove the
   <Tabs.Tab>
    ```shell
   curl https://df-node-dump.s3.ap-southeast-1.amazonaws.com/dora_testnet_264610.tar.lz4 | lz4 -dc - | tar -xf - -C $HOME/.dora
+  ```
+  </Tabs.Tab>
+  curl https://df-node-dump.s3.ap-southeast-1.amazonaws.com/dora_sf_18222.tar.lz4 | lz4 -dc - | tar -xf - -C $HOME/.dora
+  <Tabs.Tab>
+   ```shell
+  
   ```
   </Tabs.Tab>
 </Tabs>
