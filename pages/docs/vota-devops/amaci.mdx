@@ -1,0 +1,182 @@
+---
+title: 'Run A-MACI Operator Service on `vota-sf` Testnet · Dora Vota DevOps Guide'
+desc: 'This guide provides instructions on running a Dora Vota full node and setting up as a validator. It covers hardware requirements, port and chain configurations, and the process of starting a node and registering as a validator. Ensure your environment meets all requirements to operate Dora Vota nodes successfully.'
+---
+
+import { Steps, Callout, Tabs } from 'nextra/components'
+
+# How to Run A-MACI Operator Service on `vota-sf` Testnet
+
+## Requirements
+
+### Hardware requirements
+
+- CPU: 8 cores
+- Memory: 16 GB
+- Disk: 100 GB
+
+### Software requirements
+
+- [Node.js](https://nodejs.org/) version: >= 20
+- [`dorad`](https://docs.dorafactory.org/docs/vota-dev/dorad) version: 0.4.0
+
+## Create an A-MACI operator account
+
+<Callout type="warning">
+  Make sure you have backed up the **MNEMONIC** of this account which is the
+  only method to recover your wallet. Also, it will be used when **initiating
+  A-MACI operator service**.
+</Callout>
+
+This account will be used later to register as an A-MACI operator.
+
+```sh
+export ACCOUNT_NAME=maci-operator
+dorad keys add $ACCOUNT_NAME
+```
+
+## Register an A-MACI operator on `vota-sf`
+
+<Steps>
+### Stake 20 DORA to register as A-MACI operator with your A-MACI operator account:
+
+```sh
+dorad tx wasm execute dora17p9rzwnnfxcjp32un9ug7yhhzgtkhvl9jfksztgw5uh69wac2pgsnah3h8 '{"register": {} }' \
+--from maci-operator  \
+--amount "20000000000000000000peaka" \
+--chain-id "vota-sf" \
+--gas-prices 100000000000peaka \
+--gas auto \
+--gas-adjustment 1.5 \
+--node https://vota-sf-rpc.dorafactory.org:443 \
+-y
+```
+
+### Query whether your A-MACI operator has been created successfully
+
+```sh
+dorad query wasm contract-state smart dora17p9rzwnnfxcjp32un9ug7yhhzgtkhvl9jfksztgw5uh69wac2pgsnah3h8  '{ "is_maci_operator": { "address": <your_account_address> } }' --node https://vota-sf-rpc.dorafactory.org:443
+```
+
+If terminal shows `true`, it means the A-MACI operator creation is successful.
+
+```sh
+data: true
+```
+
+</Steps>
+
+## Build A-MACI operator service
+
+```sh
+git clone https://github.com/DoraFactory/maci-operator && cd maci-operator
+
+npm install
+
+npm run build
+```
+
+## Initiate A-MACI operator service
+
+<Callout type="info">
+  Before configuring environment variables, please make sure you have navigated
+  to the `/maci-operator` directory.
+</Callout>
+
+<Steps>
+### Create your own environment variables file
+
+```sh
+cp .env.template .env
+```
+
+### Generate your coordinator public and private key
+
+<Callout type="warning">
+  Please back up the generated public and private keys.
+</Callout>
+
+```sh
+node dist/gen-key.js
+```
+
+Next, enter the public key into our [coordinator public key collection form](https://docs.google.com/spreadsheets/d/1hNlK5qBGrqgZ6UDaLVThjfuvMlX4CsznzWmWCm0QRl0/edit?usp=sharing). For example, the format of the public key:
+
+```sh
+X: 16429304017412205675820866000313944904446810339972042319485432996531286181952
+Y: 5572999208344294573488778747734990567557173306854827005273539480127951622273
+```
+
+### Config your MNEMONIC and coordinator private key
+
+- Enter the mnemonic of the previously generated **A-MACI operator account** into the `MNEMONIC` field in your `.env` file.
+- Enter the **coordinator private key** generated in the previous step into the `COORDINATOR_PRI_KEY` field in your `.env` file.
+
+### Initiate A-MACI operator service
+
+```sh
+npm run init
+```
+
+</Steps>
+
+## Setup A-MACI operator service
+
+<Steps>
+### Create the definition file
+
+Create the definition file in `/etc/systemd/system/amaci.service`.
+
+```sh
+[Unit]
+Description=A-MACI-operator-service
+After=network-online.target
+
+[Service]
+User=<USER>
+WorkingDirectory=<PATH_TO_maci-operator>
+EnvironmentFile=<PATH_TO_maci-operator>/.env
+ExecStart=/usr/bin/node dist/index.js
+RestartSec=10
+Restart=on-failure
+LimitNOFILE=655350
+
+[Install]
+WantedBy=multi-user.target
+```
+
+- `<USER>`: Enter the user (likely your username or root, unless you created a user specifically for A-MACI operator service).
+- `<PATH_TO_maci-operator>`: Enter the path to the `maci-operator` directory, which is likely `/home/ubuntu/maci-operator`.
+
+### Run the program upon startup
+
+After registering amaci as a system service, you can set the program to run upon startup.
+
+```sh
+systemctl daemon-reload
+systemctl enable amaci
+```
+
+### Start the service and check the log
+
+```sh
+sudo systemctl start amaci
+sudo journalctl -u amaci -f --no-hostname -o cat
+```
+
+If it started successfully, you will see many similar logs like this：
+
+```sh
+[DO]: inspect
+[TASK inspect] find rounds count: 0/0
+[DO]: inspect
+[TASK inspect] find rounds count: 0/0
+[DO]: inspect
+```
+
+</Steps>
+
+## What is the A-MACI operator service doing?
+
+- The A-MACI operator service periodically checks A-MACI rounds that need to be processed on the `vota-sf` testnet.
+- The A-MACI operator service logs processed A-MACI round information and other data in the `/maci-operator/work` directory.
