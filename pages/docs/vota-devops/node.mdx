@@ -21,11 +21,12 @@ Below is the recommended hardware configuration for running a Dora Vota full nod
 | :----------- | :------ | :--- | :--------- |
 | vota-ash     | 8 cores | 32GB | 1TB NVME   |
 | vota-testnet | 4 cores | 16GB | 500GB NVME |
+| vota-sf      | 16 cores | 32GB | 500GB NVME |
 
 ## Recommended validator configuration
 
 {/* prettier-ignore */}
-<Tabs items={['Mainnet', 'Testnet']}>
+<Tabs items={['Mainnet', 'Testnet', 'Incentivized Testnet']}>
   <Tabs.Tab>
     - If you use an **AWS cloud server** to deploy a validator node, you can use the following recommended configuration: [`t2.2xlarge`](https://instances.vantage.sh/aws/ec2/t2.2xlarge)
     - If you use a **GCP cloud server** to deploy a validator node, you can use the following recommended configuration: [`n2-standard-8`](https://cloud.google.com/compute/docs/general-purpose-machines#n2_series)
@@ -33,6 +34,10 @@ Below is the recommended hardware configuration for running a Dora Vota full nod
   <Tabs.Tab>
     - If you use an **AWS cloud server** to deploy a validator node, you can use the following recommended configuration: [`t2.xlarge`](https://instances.vantage.sh/aws/ec2/t2.xlarge)
     - If you use a **GCP cloud server** to deploy a validator node, you can use the following recommended configuration: [`n2-standard-4`](https://cloud.google.com/compute/docs/general-purpose-machines#n2_machine_types)
+  </Tabs.Tab>
+  <Tabs.Tab>
+    - If you use an **AWS cloud server** to deploy a validator node, you can use the following recommended configuration: [`c5a.4xlarge`](https://instances.vantage.sh/aws/ec2/c5a.4xlarge)
+    - If you use a **GCP cloud server** to deploy a validator node, you can use the following recommended configuration: [`c2-standard-16	`](https://cloud.google.com/compute/docs/compute-optimized-machines#c2_machine_types)
   </Tabs.Tab>
 </Tabs>
 
@@ -86,7 +91,7 @@ To instate a Dora Vota node, the first step is to [download and install `dorad`]
 ### Init commands
 
 {/* prettier-ignore */}
-<Tabs items={['Mainnet', 'Testnet']}>
+<Tabs items={['Mainnet', 'Testnet', 'Incentivized Testnet']}>
   <Tabs.Tab>
   ```shell
   export VERSION=0.3.1
@@ -111,26 +116,39 @@ To instate a Dora Vota node, the first step is to [download and install `dorad`]
   dorad init --chain-id "$CHAIN_ID" "$MONIKER"
   ```
   </Tabs.Tab>
+  <Tabs.Tab>
+  ```shell
+  export VERSION=0.3.1
+  export CHAIN_ID="vota-sf"
+  export MONIKER="replace-with-your-moniker-name"
+  
+  git clone https://github.com/DoraFactory/doravota.git
+  cd doravota && git checkout $VERSION
+  make install
+  dorad init --chain-id "$CHAIN_ID" "$MONIKER"
+  ```
+  </Tabs.Tab>
 </Tabs>
 
 ### Repalce genesis file
 
 - Mainnet: Replace the genesis file in `~/.dora/config` with the [Dora Vota Mainnet genesis file](https://github.com/DoraFactory/doravota/blob/main/config/mainnet/genesis.json).
 - Testnet: Replace the genesis file in `~/.dora/config` with the [Dora Vota Testnet genesis file](https://github.com/DoraFactory/doravota/blob/main/config/testnet/genesis.json).
+- Incentivized Testnet: Replace the genesis file in `~/.dora/config` with the [Dora Vota Incentivized Testnet genesis file](https://df-node-dump.s3.ap-southeast-1.amazonaws.com/vota-sf-genesis.json).
 
 ## Configure to sync chain data
 
 Now that we have set up some peers, you can add them into `config.toml` to sync Dora Vota chain data.
 
 {/* prettier-ignore */}
-<Tabs items={['Mainnet', 'Testnet']}>
+<Tabs items={['Mainnet', 'Testnet', 'Incentivized Testnet']}>
   <Tabs.Tab>
   ```shell
   # Comma separated list of seed nodes to connect to
-  seeds = "d49defb23a75ff08c924622e3a2f69280983fed7@13.215.46.25:26656,d6e42c70316e354dcb44fd3a86e97b64fa99fc5e@54.179.177.80:26656,220204926f8da0e197572d458e205608306f1ed1@54.251.131.190:26656"
+  seeds = "s0db68229c58e9b5a488b2dfaf0f593d161bb94d4@47.128.207.247:26656,660773dfb97e197e4b300c4cbdb2dff203f78d47@54.151.160.200:26656"
   
   # Comma separated list of nodes to keep persistent connections to
-  persistent_peers = "d49defb23a75ff08c924622e3a2f69280983fed7@13.215.46.25:26656,d6e42c70316e354dcb44fd3a86e97b64fa99fc5e@54.179.177.80:26656,220204926f8da0e197572d458e205608306f1ed1@54.251.131.190:26656"
+  persistent_peers = "s0db68229c58e9b5a488b2dfaf0f593d161bb94d4@47.128.207.247:26656,660773dfb97e197e4b300c4cbdb2dff203f78d47@54.151.160.200:26656"
   ```
   </Tabs.Tab>
   <Tabs.Tab>
@@ -142,9 +160,18 @@ Now that we have set up some peers, you can add them into `config.toml` to sync 
   persistent_peers = "1c070c5b38c716370af9b0d344209821cceeceb3@18.142.245.25:26656"
   ```
   </Tabs.Tab>
+  <Tabs.Tab>
+  ```shell
+  # Comma separated list of seed nodes to connect to
+  seeds = "ceae16d973e8fd77cce67b946a9b6bfdf444f316@3.122.237.115:26656,059e1ec595989c8c4ef3fd3552070f5f93888547@52.59.113.160:26656"
+  
+  # Comma separated list of nodes to keep persistent connections to
+  persistent_peers = "ceae16d973e8fd77cce67b946a9b6bfdf444f316@3.122.237.115:26656,059e1ec595989c8c4ef3fd3552070f5f93888547@52.59.113.160:26656"
+  ```
+  </Tabs.Tab>
 </Tabs>
 
-The configuration above is mainly used for P2P node discovery. Before starting the node, you can synchronize it to a specified block height using the [snapshot](https://df-docs.vercel.app/docs/vota-devops/snapshot) service. Then, you can synchronize to the latest block using the P2P nodes configured above, which reduces the synchronization time.
+The configuration above is mainly used for P2P node discovery. Before starting the node, you can synchronize it to a specified block height using the [snapshot](/docs/vota-devops/snapshot) service. Then, you can synchronize to the latest block using the P2P nodes configured above, which reduces the synchronization time.
 
 ## Running `dorad` node service
 
