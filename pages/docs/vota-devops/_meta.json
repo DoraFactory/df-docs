@@ -2,5 +2,5 @@
   "node": "Run a Full Node",
   "validator": "Run a Validator",
   "snapshot": "Snapshot",
-  "amaci": "Run A-MACI Operator Service"
+  "amaci": "Run aMACI Operator Service"
 }
