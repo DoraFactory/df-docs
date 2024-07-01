@@ -1,11 +1,11 @@
 ---
-title: 'Run A-MACI Operator Service on `vota-sf` Testnet · Dora Vota DevOps Guide'
+title: 'Run aMACI Operator Service on `vota-sf` Testnet · Dora Vota DevOps Guide'
 desc: 'This guide provides instructions on running a Dora Vota full node and setting up as a validator. It covers hardware requirements, port and chain configurations, and the process of starting a node and registering as a validator. Ensure your environment meets all requirements to operate Dora Vota nodes successfully.'
 ---
 
 import { Steps, Callout, Tabs } from 'nextra/components'
 
-# How to Run A-MACI Operator Service on `vota-sf` Testnet
+# How to Run aMACI Operator Service on `vota-sf` Testnet
 
 ## Requirements
 
@@ -20,25 +20,25 @@ import { Steps, Callout, Tabs } from 'nextra/components'
 - [Node.js](https://nodejs.org/) version: >= 20
 - [`dorad`](/docs/vota-dev/dorad) version: 0.4.0
 
-## Create an A-MACI operator account
+## Create an aMACI operator account
 
 <Callout type="warning">
   Make sure you have backed up the **MNEMONIC** of this account which is the
   only method to recover your wallet. Also, it will be used when **initiating
-  A-MACI operator service**.
+  aMACI operator service**.
 </Callout>
 
-This account will be used later to register as an A-MACI operator.
+This account will be used later to register as an aMACI operator.
 
 ```sh
 export ACCOUNT_NAME=maci-operator
 dorad keys add $ACCOUNT_NAME
 ```
 
-## Register an A-MACI operator on `vota-sf`
+## Register an aMACI operator on `vota-sf`
 
 <Steps>
-### Stake 20 DORA to register as A-MACI operator with your A-MACI operator account:
+### Stake 20 DORA to register as aMACI operator with your aMACI operator account:
 
 ```sh
 dorad tx wasm execute dora17p9rzwnnfxcjp32un9ug7yhhzgtkhvl9jfksztgw5uh69wac2pgsnah3h8 '{"register": {} }' \
@@ -52,13 +52,13 @@ dorad tx wasm execute dora17p9rzwnnfxcjp32un9ug7yhhzgtkhvl9jfksztgw5uh69wac2pgsn
 -y
 ```
 
-### Query whether your A-MACI operator has been created successfully
+### Query whether your aMACI operator has been created successfully
 
 ```sh
 dorad query wasm contract-state smart dora17p9rzwnnfxcjp32un9ug7yhhzgtkhvl9jfksztgw5uh69wac2pgsnah3h8  '{ "is_maci_operator": { "address": <your_account_address> } }' --node https://vota-sf-rpc.dorafactory.org:443
 ```
 
-If terminal shows `true`, it means the A-MACI operator creation is successful.
+If terminal shows `true`, it means the aMACI operator creation is successful.
 
 ```sh
 data: true
@@ -66,7 +66,7 @@ data: true
 
 </Steps>
 
-## Build A-MACI operator service
+## Build aMACI operator service
 
 ```sh
 git clone https://github.com/DoraFactory/maci-operator && cd maci-operator
@@ -76,7 +76,7 @@ npm install
 npm run build
 ```
 
-## Initiate A-MACI operator service
+## Initiate aMACI operator service
 
 <Callout type="info">
   Before configuring environment variables, please make sure you have navigated
@@ -109,10 +109,10 @@ Y: 5572999208344294573488778747734990567557173306854827005273539480127951622273
 
 ### Config your MNEMONIC and coordinator private key
 
-- Enter the mnemonic of the previously generated **A-MACI operator account** into the `MNEMONIC` field in your `.env` file.
+- Enter the mnemonic of the previously generated **aMACI operator account** into the `MNEMONIC` field in your `.env` file.
 - Enter the **coordinator private key** generated in the previous step into the `COORDINATOR_PRI_KEY` field in your `.env` file.
 
-### Initiate A-MACI operator service
+### Initiate aMACI operator service
 
 ```sh
 npm run init
@@ -120,7 +120,7 @@ npm run init
 
 </Steps>
 
-## Setup A-MACI operator service
+## Setup aMACI operator service
 
 <Steps>
 ### Create the definition file
@@ -176,7 +176,7 @@ If it started successfully, you will see many similar logs like this：
 
 </Steps>
 
-## What is the A-MACI operator service doing?
+## What is the aMACI operator service doing?
 
-- The A-MACI operator service periodically checks A-MACI rounds that need to be processed on the `vota-sf` testnet.
-- The A-MACI operator service logs processed A-MACI round information and other data in the `/maci-operator/work` directory.
+- The aMACI operator service periodically checks aMACI rounds that need to be processed on the `vota-sf` testnet.
+- The aMACI operator service logs processed aMACI round information and other data in the `/maci-operator/work` directory.
