@@ -19,7 +19,7 @@ Below is the recommended hardware configuration for running a Dora Vota full nod
 
 | Chain ID     | CPU      | RAM  | Disk       |
 | :----------- | :------- | :--- | :--------- |
-| vota-ash     | 8 cores  | 32GB | 1TB NVME   |
+| vota-ash     | 16 cores  | 32GB | 1TB NVME   |
 | vota-testnet | 4 cores  | 16GB | 500GB NVME |
 | vota-sf      | 16 cores | 32GB | 500GB NVME |
 
@@ -28,8 +28,8 @@ Below is the recommended hardware configuration for running a Dora Vota full nod
 {/* prettier-ignore */}
 <Tabs items={['Mainnet', 'Testnet', 'Incentivized Testnet']}>
   <Tabs.Tab>
-    - If you use an **AWS cloud server** to deploy a validator node, you can use the following recommended configuration: [`t2.2xlarge`](https://instances.vantage.sh/aws/ec2/t2.2xlarge)
-    - If you use a **GCP cloud server** to deploy a validator node, you can use the following recommended configuration: [`n2-standard-8`](https://cloud.google.com/compute/docs/general-purpose-machines#n2_series)
+    - If you use an **AWS cloud server** to deploy a validator node, you can use the following recommended configuration: [`c5a.4xlarge`](https://instances.vantage.sh/aws/ec2/c5a.4xlarge)
+    - If you use a **GCP cloud server** to deploy a validator node, you can use the following recommended configuration: [`c2-standard-16`](https://cloud.google.com/compute/docs/compute-optimized-machines#c2_machine_types)
   </Tabs.Tab>
   <Tabs.Tab>
     - If you use an **AWS cloud server** to deploy a validator node, you can use the following recommended configuration: [`t2.xlarge`](https://instances.vantage.sh/aws/ec2/t2.xlarge)
@@ -145,10 +145,10 @@ Now that we have set up some peers, you can add them into `config.toml` to sync 
   <Tabs.Tab>
   ```shell
   # Comma separated list of seed nodes to connect to
-  seeds = "s0db68229c58e9b5a488b2dfaf0f593d161bb94d4@47.128.207.247:26656,660773dfb97e197e4b300c4cbdb2dff203f78d47@54.151.160.200:26656"
+  seeds = "0db68229c58e9b5a488b2dfaf0f593d161bb94d4@47.128.207.247:26656,660773dfb97e197e4b300c4cbdb2dff203f78d47@54.151.160.200:26656"
   
   # Comma separated list of nodes to keep persistent connections to
-  persistent_peers = "s0db68229c58e9b5a488b2dfaf0f593d161bb94d4@47.128.207.247:26656,660773dfb97e197e4b300c4cbdb2dff203f78d47@54.151.160.200:26656"
+  persistent_peers = "0db68229c58e9b5a488b2dfaf0f593d161bb94d4@47.128.207.247:26656,660773dfb97e197e4b300c4cbdb2dff203f78d47@54.151.160.200:26656"
   ```
   </Tabs.Tab>
   <Tabs.Tab>
