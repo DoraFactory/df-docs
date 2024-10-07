@@ -1,0 +1,34 @@
+---
+title: 'Deploy Round · Dora Vota aMACI Admin Manual'
+desc: 'By leveraging aMACI operator service, Dora Vota aMACI allows anyone to deploy and manage aMACI voting rounds with ease.'
+---
+
+import { Callout } from 'nextra/components'
+
+# Deploy Round
+
+## Deploy a voting round on Dora Vota
+
+You can easily deploy a new round via the GUI on the Dora Vota website:
+
+<a
+  className="mt-3 block"
+  target="_blank"
+  href="https://vota.dorafactory.org/?action=deploy-amaci"
+>
+  ![Deploy aMACI](/assets/button-deploy-round.svg)
+</a>
+
+### Create and deploy a round
+
+1. Follow the steps on the GUI to fill the required information.
+2. Send the transaction to deploy through the Keplr wallet extension. Make sure you have **sufficient DORA tokens** in your wallet account as gas fee.
+3. After waiting a few seconds for successful deployment, you can find your round on the website.
+
+### aMACI signup allowlist
+
+You can [download the template](/download/amaci-allowlist.csv) of the aMACI signup allowlist. An allowlist is a CSV file with each line containing a valid Dora Vota Mainnet address.
+
+```csv filename="amaci-allowlist.csv"
+dora1234567890abcdefghijklmnopqrstuvwxyz123
+```

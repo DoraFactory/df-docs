@@ -1,0 +1,49 @@
+---
+title: 'Round Admin · Dora Vota aMACI Admin Manual'
+desc: 'By leveraging aMACI operator service, Dora Vota aMACI allows anyone to deploy and manage aMACI voting rounds with ease.'
+---
+
+import { Callout } from 'nextra/components'
+
+# Round Admin
+
+By clicking the ⚙️ button on the page of round details, you can find the entries to round admin.
+
+<Callout type="info">
+  The aMACI **round creator** is the sole administrator of the round. Both the
+  GUI and on-chain smart contract will verify the creator’s wallet address for
+  any administrative actions.
+</Callout>
+
+## Round information
+
+You can update the description and related website link at any time.
+
+## Voting options
+
+<Callout type="warning">
+  To avoid confusing voters, voting option names can be changed **only before**
+  the round starts.
+</Callout>
+
+It is recommended to assign semantic names to the voting options, which will be displayed to voters.
+
+## Gas station
+
+<Callout type="warning">
+  Currently, the gas station admin is available **only after** the round starts.
+</Callout>
+
+By enabling the gas station, you can cover the gas fees for allowlist voters for signup and voting. Voters in the allowlist will **equally share the total balance** for gas fees. Calculate the total amount you need to fund accordingly.
+
+You can disable the gas station and withdraw the remaining balance at any time.
+
+## Tally and proof
+
+<Callout type="default">
+  **No action is required** from the round creator/admin for tally and proof.
+</Callout>
+
+The aMACI operator assigned during round deployment will automatically complete these tasks. The tally and proof process for each aMACI round begins after the voting period ends.
+
+The entire process will take some time, depending on the number of signups and voting messages in the round. Once completed successfully, the tally results will be automatically verified and published on the Dora Vota blockchain.

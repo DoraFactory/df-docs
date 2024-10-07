@@ -1,0 +1,41 @@
+---
+title: 'Dora Vota aMACI Admin Manual'
+desc: 'By leveraging aMACI operator service, Dora Vota aMACI allows anyone to deploy and manage aMACI voting rounds with ease.'
+---
+
+import { Cards } from 'nextra/components'
+import {
+  IconChecklist,
+  IconCli,
+  IconGui,
+  IconHelp,
+  IconSettings
+} from '@components/svgs'
+
+# Dora Vota aMACI Admin Manual
+
+[aMACI](https://research.dorahacks.io/2024/04/11/amaci-adoption/) (Anonymous Minimal Anti-collusion Infrastructure) eliminates the need for trust in MACI’s operator and enables anyone to become an operator for an aMACI round.
+
+By leveraging [aMACI operator service](https://research.dorahacks.io/2024/09/19/aMACI-token-economics/), Dora Vota aMACI allows anyone to deploy and manage aMACI voting rounds with ease. Dora Factory has developed a user-friendly [GUI](https://vota.dorafactory.org) for aMACI round deployment and administration.
+
+If you’re also interested in the classic MACI round operation, you can explore further by reading [Dora Vota MACI Operator Manual](/docs/vota).
+
+---
+
+<Cards num={2}>
+  <Cards.Card
+    icon={<IconChecklist />}
+    title="Prerequisites"
+    href="/docs/vota-amaci/prerequisites"
+  />
+  <Cards.Card
+    icon={<IconGui />}
+    title="Deploy Round"
+    href="/docs/vota-amaci/deploy"
+  />
+  <Cards.Card
+    icon={<IconSettings />}
+    title="Round Admin"
+    href="/docs/vota-amaci/admin"
+  />
+</Cards>

@@ -16,7 +16,8 @@
     "title": "Dora Vota"
   },
   "mainnet-migration": "Mainnet Migration",
-  "vota": "Vota Operator Manual",
+  "vota-amaci": "aMACI Admin Manual",
+  "vota": "MACI Operator Manual",
   "vota-dev": "Vota Developer Guide",
   "vota-devops": "Vota DevOps Guide",
   "vota-sf": {
