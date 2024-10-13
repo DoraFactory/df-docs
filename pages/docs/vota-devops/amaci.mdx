@@ -1,96 +1,104 @@
 ---
-title: 'Run aMACI Operator Service on `vota-sf` Testnet · Dora Vota DevOps Guide'
-desc: 'This guide provides instructions on running a Dora Vota full node and setting up as a validator. It covers hardware requirements, port and chain configurations, and the process of starting a node and registering as a validator. Ensure your environment meets all requirements to operate Dora Vota nodes successfully.'
+title: 'Run aMACI Operator Service on Dora Vota Mainnet (`vota-ash`) · Dora Vota DevOps Guide'
+desc: 'The aMACI operator service is a unique feature offered by the Dora Factory Anonymous MACI protocol (aMACI). Running an aMACI operator means that you will run and tally an aMACI round for a community, and validate the round with zero-knowledge proofs.'
 ---
 
 import { Steps, Callout, Tabs } from 'nextra/components'
 
-# How to Run aMACI Operator Service on `vota-sf` Testnet
+# How to Run aMACI Operator Service on Dora Vota Mainnet (`vota-ash`)
+
+The aMACI operator service is a unique feature offered by the Dora Factory Anonymous MACI protocol (aMACI). Running an aMACI operator means that you will run and tally an aMACI round for a community, and validate the round with zero-knowledge proofs.
+
+The first batch of aMACI opearators will be Dora Vota mainnet validators. From the protocol’s [frontend](https://vota.dorafactory.org/), users will be able to create aMACI rounds and select an aMACI operator.
 
 ## Requirements
 
 ### Hardware requirements
 
+#### Basic configuration
+
+- CPU: 4 cores
+- Memory: 8 GB
+- Disk: 256 GB
+
+#### Better configuration
+
 - CPU: 8 cores
 - Memory: 16 GB
-- Disk: 100 GB
+- Disk: 512 GB
 
 ### Software requirements
 
-- [Node.js](https://nodejs.org/) version: >= 20
-- [`dorad`](/docs/vota-dev/dorad) version: 0.4.0
+- [Node.js](https://nodejs.org/) version >= 20
+- [`dorad`](https://docs.dorafactory.org/docs/vota-dev/dorad) version = 0.4.0
 
 ## Create an aMACI operator account
 
 <Callout type="warning">
-  Make sure you have backed up the **MNEMONIC** of this account which is the
-  only method to recover your wallet. Also, it will be used when **initiating
-  aMACI operator service**.
+  We strongly recommend you create a new account which will be used later to
+  register as an aMACI operator. It is prohibited to use the validator’s owner
+  address as the aMACI operator address, because it may cause the aMACI operator
+  to fail to process transactions.
 </Callout>
 
-This account will be used later to register as an aMACI operator.
-
 ```sh
-export ACCOUNT_NAME=maci-operator
-dorad keys add $ACCOUNT_NAME
+export AMACI_OPERATOR=amaci-operator
+dorad keys add $AMACI_OPERATOR
 ```
+
+To initiate the operator, please prepare **1,000 DORA** for your operator account to support the service, and monitor the balance of the account in a timely manner. Insufficient balance may affect the operation of the aMACI operator service.
+
+<Callout type="warning">
+  Please make sure you have backed up the **MNEMONIC** of this account which is
+  the only method to recover it. Also, it will be used when **initiating aMACI
+  operator service**.
+</Callout>
 
 ## Register an aMACI operator on `vota-sf`
 
-<Steps>
-### Stake 20 DORA to register as aMACI operator with your aMACI operator account:
+Set up your operator with the owner address of your validator on the `vota-ash` network.
+
+- The owner address is the address starting with `dora` prefix used to create your validator. Taking the [DoraFactory validator](https://doravota.explorers.guru/validator/doravaloper1gerunjnh6umehq6zm0gphrc87u37veuv5y9dkw) as an example, its owner address is `dora1gerunjnh6umehq6zm0gphrc87u37veuv8jqmq3`. Please use your validator owner address here to set up your aMACI operator.
+- This is the address of the aMACI mainnet contract: `dora1smg5qp5trjdkcekdjssqpjehdjf6n4cjss0clyvqcud3t3u3948s8rmgg4`.
 
 ```sh
-dorad tx wasm execute dora17p9rzwnnfxcjp32un9ug7yhhzgtkhvl9jfksztgw5uh69wac2pgsnah3h8 '{"register": {} }' \
---from maci-operator  \
+dorad tx wasm execute dora1smg5qp5trjdkcekdjssqpjehdjf6n4cjss0clyvqcud3t3u3948s8rmgg4 '{"set_maci_operator": { "operator": "<your_operator_address>" } }' \
+--from "<your_validator_owner_address>" \
 --amount "20000000000000000000peaka" \
---chain-id "vota-sf" \
+--chain-id "vota-ash" \
 --gas-prices 100000000000peaka \
 --gas auto \
 --gas-adjustment 1.5 \
---node https://vota-sf-rpc.dorafactory.org:443 \
+--node https://vota-rpc.dorafactory.org:443 \
 -y
 ```
 
-### Query whether your aMACI operator has been created successfully
+## Build aMACI operator
 
 ```sh
-dorad query wasm contract-state smart dora17p9rzwnnfxcjp32un9ug7yhhzgtkhvl9jfksztgw5uh69wac2pgsnah3h8  '{ "is_maci_operator": { "address": <your_account_address> } }' --node https://vota-sf-rpc.dorafactory.org:443
-```
-
-If terminal shows `true`, it means the aMACI operator creation is successful.
-
-```sh
-data: true
-```
-
-</Steps>
-
-## Build aMACI operator service
-
-```sh
-git clone https://github.com/DoraFactory/maci-operator && cd maci-operator
+git clone https://github.com/DoraFactory/amaci-operator.git && cd amaci-operator
 
 npm install
 
 npm run build
 ```
 
-## Initiate aMACI operator service
-
-<Callout type="info">
-  Before configuring environment variables, please make sure you have navigated
-  to the `/maci-operator` directory.
-</Callout>
+## Configure aMACI operator service
 
 <Steps>
-### Create your own environment variables file
+### Configure environment variables
+
+<Callout type="info">
+  Please make sure you have navigated to the `/amaci-operator` directory.
+</Callout>
+
+#### Step 1: Create your own environment variables file
 
 ```sh
 cp .env.template .env
 ```
 
-### Generate your coordinator public and private key
+#### Step 2: Generate your coordinator public and private key
 
 <Callout type="warning">
   Please back up the generated public and private keys.
@@ -100,17 +108,54 @@ cp .env.template .env
 node dist/gen-key.js
 ```
 
-Next, enter the public key into our [coordinator public key collection form](https://docs.google.com/spreadsheets/d/1hNlK5qBGrqgZ6UDaLVThjfuvMlX4CsznzWmWCm0QRl0/edit?usp=sharing). For example, the format of the public key:
+For example, the format of the public key:
 
 ```sh
 X: 16429304017412205675820866000313944904446810339972042319485432996531286181952
 Y: 5572999208344294573488778747734990567557173306854827005273539480127951622273
 ```
 
-### Config your MNEMONIC and coordinator private key
+#### Step 3: Configure your MNEMONIC and coordinator private key of aMACI operator
 
-- Enter the mnemonic of the previously generated **aMACI operator account** into the `MNEMONIC` field in your `.env` file.
+- Enter the **mnemonic** of the previously generated `aMACI operator account` into the `MNEMONIC` field in your `.env` file.
 - Enter the **coordinator private key** generated in the previous step into the `COORDINATOR_PRI_KEY` field in your `.env` file.
+- Enter the `rpc url`(It ensures that you can use a stable and continuous RPC services, it is recommended that you use your validator RPC or stable full node RPC) into the `RPC_ENDPOINT` field in your `.env` file.
+
+### Set your aMACI operator information
+
+#### Step 1: Set your operator identity by your operator address
+
+<Callout type="info">
+  We will use the **Keybase ID** as your operator `identity` here. The Keybase
+  ID is a 16-digit string that is generated with a
+  [keybase.io](https://keybase.io/) account. It’s a cryptographically secure
+  method of verifying your identity across multiple online networks. The Keybase
+  API allows us to retrieve your Keybase avatar and other public info.
+</Callout>
+
+```sh
+dorad tx wasm execute  dora1smg5qp5trjdkcekdjssqpjehdjf6n4cjss0clyvqcud3t3u3948s8rmgg4 '{"set_maci_operator_identity": { "identity": "<your_identity_id>" } }' \
+--from $AMACI_OPERATOR \
+--chain-id "vota-ash" \
+--gas-prices 100000000000peaka \
+--gas auto \
+--gas-adjustment 1.5 \
+--node https://vota-rpc.dorafactory.org:443 \
+-y
+```
+
+#### Step 2: Set your operator public key by your operator address
+
+```sh
+dorad tx wasm execute dora1smg5qp5trjdkcekdjssqpjehdjf6n4cjss0clyvqcud3t3u3948s8rmgg4 '{"set_maci_operator_pubkey": { "pubkey": { "x": "<your_pubkey_x>", "y": "<your_pubkey_y>"  }} }' \
+--from $AMACI_OPERATOR \
+--chain-id "vota-ash" \
+--gas-prices 100000000000peaka \
+--gas auto \
+--gas-adjustment 1.5 \
+--node https://vota-rpc.dorafactory.org:443 \
+-y
+```
 
 ### Initiate aMACI operator service
 
@@ -129,13 +174,13 @@ Create the definition file in `/etc/systemd/system/amaci.service`.
 
 ```sh
 [Unit]
-Description=A-MACI-operator-service
+Description=aMACI-operator-service
 After=network-online.target
 
 [Service]
 User=<USER>
-WorkingDirectory=<PATH_TO_maci-operator>
-EnvironmentFile=<PATH_TO_maci-operator>/.env
+WorkingDirectory=<PATH_TO_amaci-operator>
+EnvironmentFile=<PATH_TO_amaci-operator>/.env
 ExecStart=/usr/bin/node dist/index.js
 RestartSec=10
 Restart=on-failure
@@ -145,12 +190,12 @@ LimitNOFILE=655350
 WantedBy=multi-user.target
 ```
 
-- `<USER>`: Enter the user (likely your username or root, unless you created a user specifically for A-MACI operator service).
-- `<PATH_TO_maci-operator>`: Enter the path to the `maci-operator` directory, which is likely `/home/ubuntu/maci-operator`.
+- `<USER>`: Enter the user (likely your username or root, unless you created a user specifically for aMACI operator service).
+- `<PATH_TO_amaci-operator>`: Enter the path to the `amaci-operator` directory, which is likely `/home/ubuntu/amaci-operator`.
 
 ### Run the program upon startup
 
-After registering amaci as a system service, you can set the program to run upon startup.
+After registering `amaci` as a system service, you can set the program to run upon startup.
 
 ```sh
 systemctl daemon-reload
@@ -164,19 +209,36 @@ sudo systemctl start amaci
 sudo journalctl -u amaci -f --no-hostname -o cat
 ```
 
-If it started successfully, you will see many similar logs like this：
+If the service started successfully, the log will output your aMACI operator’s information and download some necessary zkey files. Like this:
 
 ```sh
+Started A-MACI-operator-service.
+Init
+Coordinator public key:
+X: 11043362857411207101295473092701542792077153813505230615881421921648274746246
+Y: 3431336307758495332528815819065155244352578928861293932308944643929528727389
+Vota address:
+dora1nddnr2fjcupt3eher59mrp0cmwn52e4c98y4k5
+Start to download zkey:
+download zkey: 2-1-1-5_v2
+https://vota-zkey.s3.ap-southeast-1.amazonaws.com/amaci_2-1-1-5_v2_zkeys.tar.gz
+download zkey: 4-2-2-25_v2
+https://vota-zkey.s3.ap-southeast-1.amazonaws.com/amaci_4-2-2-25_v2_zkeys.tar.gz
 [DO]: inspect
+===========
+["93"]
+[
+  '11043362857411207101295473092701542792077153813505230615881421921648274746246',
+  '3431336307758495332528815819065155244352578928861293932308944643929528727389'
+]
+[]
+===========
 [TASK inspect] find rounds count: 0/0
-[DO]: inspect
-[TASK inspect] find rounds count: 0/0
-[DO]: inspect
 ```
 
 </Steps>
 
 ## What is the aMACI operator service doing?
 
-- The aMACI operator service periodically checks aMACI rounds that need to be processed on the `vota-sf` testnet.
-- The aMACI operator service logs processed aMACI round information and other data in the `/maci-operator/work` directory.
+- The aMACI operator service periodically checks aMACI rounds that need to be processed on the `vota-ash` mainnet.
+- The aMACI operator service logs processed aMACI round information and other data in the `/amaci-operator/work` directory.
