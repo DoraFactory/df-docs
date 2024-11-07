@@ -1,16 +1,6 @@
 {
   "index": "Get Started",
 
-  "-- deardoge": {
-    "type": "separator",
-    "title": "Dear Doge",
-    "display": "hidden"
-  },
-  "deardoge-testnet": {
-    "title": "Dear Doge Testnet",
-    "display": "hidden"
-  },
-
   "-- vota": {
     "type": "separator",
     "title": "Dora Vota"
