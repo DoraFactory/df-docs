@@ -1,0 +1,48 @@
+---
+title: 'Pricing and Refund · Dora Vota aMACI Admin Manual'
+desc: 'By leveraging aMACI operator service, Dora Vota aMACI allows anyone to deploy and manage aMACI voting rounds with ease.'
+---
+
+# Pricing and Refund
+
+## About operator service
+
+The [aMACI operator service](https://research.dorahacks.io/2024/09/19/aMACI-token-economics/) is one of the key infrastructures for automating aMACI rounds and is a part of the Dora Vota tokenomics.
+
+For each aMACI round, an operator service provider is assigned during deployment. Once the round begins, the operator service will automatically processes aMACI key update requests for voters and will be responsible for tallying after the round ends.
+
+## Pricing
+
+The operator service fee consists of two components:
+
+- **90%** for covering the computational resources of the operator service provider.
+- **10%** for maintaining the infrastructure of the Dora Vota appchain.
+
+The service fee is determined by the scale of the round (specifically, the zkey used in each round). Currently, two scales of aMACI round deployment are supported:
+
+|                        | Small Scale     | Medium Scale     |
+| ---------------------- | :-------------- | :--------------- |
+| **Zkey**               | `power-2-1-1-5` | `power-4-2-2-25` |
+| **Max Voters**         | 25              | 625              |
+| **Max Voting Options** | 5               | 25               |
+| **Price (DORA)**       | **50**          | **100**          |
+
+## Refund policy [#refund-policy]
+
+If the operator service encounters incidents or significant delays during operation, the service fee paid to the operator service provider will be partially or fully refunded based on the following rules:
+
+- **5% of the total service fee** will be refunded for **_each miss_**.
+- **90% of the total service fee** (i.e., the entire operator service provider fee) will be refunded if the tally is not completed within 72 hours after the round ends.
+
+A **_miss_** is defined as any of the following conditions:
+
+- A request to update an aMACI key (specifically, a voter’s deactivate key request) is delayed by more than **3 minutes**.
+- After the round ends, the tally process is delayed by more than **30 minutes**.
+
+## Refund process
+
+- Normal process (automatically return):
+  - Refunds are automatically sent to the **round creator’s wallet** after tally completion.
+- Exceptional cases (manually claim):
+  - For example, the operator service remains unavailable for **over 72 hours** after the round ends.
+  - A **claim refund button** will be available on the **round details page**.
