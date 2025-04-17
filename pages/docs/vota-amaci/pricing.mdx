@@ -20,29 +20,32 @@ The operator service fee consists of two components:
 
 The service fee is determined by the scale of the round (specifically, the zkey used in each round). Currently, two scales of aMACI round deployment are supported:
 
-|                        | Small Scale     | Medium Scale     |
+|                        | Small scale     | Medium scale     |
 | ---------------------- | :-------------- | :--------------- |
 | **Zkey**               | `power-2-1-1-5` | `power-4-2-2-25` |
-| **Max Voters**         | 25              | 625              |
-| **Max Voting Options** | 5               | 25               |
-| **Price (DORA)**       | **50**          | **100**          |
+| **Max voters**         | 25              | 625              |
+| **Max voting options** | 5               | 25               |
+| **Price (DORA)**       | **20**          | **750**          |
 
 ## Refund policy [#refund-policy]
 
 If the operator service encounters incidents or significant delays during operation, the service fee paid to the operator service provider will be partially or fully refunded based on the following rules:
 
-- **5% of the total service fee** will be refunded for **each miss**.
+- **5% of the total service fee** will be refunded for each **deactivation miss**.
+- **50% of the total service fee** will be refunded for the **tally miss**.
 - **90% of the total service fee** (i.e., the entire operator service provider fee) will be refunded if the tally is not completed within 72 hours after the round ends.
 
-A **miss** is defined as any of the following conditions:
+### Miss definitions
 
-- A request to update an aMACI key (specifically, a voter’s deactivate key request) is delayed by more than **3 minutes**.
-- After the round ends, the tally process is delayed by more than **30 minutes**.
+- A deactivation miss occurs when a request to update an aMACI key (specifically, a voter’s deactivate key request) is delayed by more than **10 minutes**.
+- A tally miss occurs when the tally process is delayed by
+  - more than **1 hour** for **small scale** round (`power-2-1-1-5`);
+  - more than **48 hours** for **medium scale** round (`power-4-2-2-25`).
 
 ## Refund process
 
 - Normal process (automatically return):
   - Refunds are automatically sent to the **round creator’s wallet** after tally completion.
 - Exceptional cases (manually claim):
-  - For example, the operator service remains unavailable for **over 72 hours** after the round ends.
+  - For example, the operator service remains unavailable for **over 96 hours** after the round ends.
   - A **claim refund button** will be available on the **round details page**.
