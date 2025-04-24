@@ -15,8 +15,12 @@
   "vota": "MACI Operator Manual",
   "vota-dev": "Vota Developer Guide",
   "vota-devops": "Vota DevOps Guide",
-  "vota-sf": {
+  "vota-bobtail": {
     "title": "Vota Incentivized Testnet"
+  },
+  "vota-sf": {
+    "title": "Vota Incentivized Testnet",
+    "display": "hidden"
   },
   "vota-vk": {
     "title": "Vota Incentivized Testnet",

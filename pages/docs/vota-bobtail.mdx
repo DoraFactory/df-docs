@@ -1,0 +1,61 @@
+---
+title: 'Incentivized Testnet Guide (vota-bobtail)'
+desc: 'This document is to provide a guide for participants of Dora Vota’s second incentivized testnet (vota-bobtail, a.k.a. Scottish Fold).'
+---
+
+import { Steps, Callout } from 'nextra/components'
+import Image from 'next/image'
+
+# Incentivized Testnet Guide (`vota-bobtail`)
+
+This document is to provide a guide for participants of Dora Vota’s third incentivized testnet (`vota-bobtail`, a.k.a. Japanese Bobtail).
+
+[<Image src="/images/japanese-bobtail.png" alt="Japanese Bobtail" width={512} height={512}/>](https://www.purina.no/node/3921)
+
+The purpose of `vota-bobtail` is to prepare for an expansion of `vota-ash` network’s validator set which currently has 14 validators. There is no specific quota for this round, the goal of this round is to engage network validators that understand Dora Vota's mission and products. Other than validating the appchain itself, our validators will be required to support our applications (such as aMACI operator) and provide important infrastructure support.
+
+New validators will be able to stake their own DORA tokens, or obtain Dora Factory foundation’s delegation. In order for any validator provider to obtain delegation, it has to go through the Delegation Program, run a validator for the incentivized testnet `vota-bobtail`, and demonstrate good performance.
+
+<Callout>
+  To register as a `vota-bobtail` incentivized testnet validator, **please fill
+  out the [application form](https://forms.gle/Kxstj4PQQJVsuayz6)**.
+</Callout>
+
+## Join Vota delegation program
+
+The delegation program will invite interested parties to run validator nodes for `vota-bobtail` network. You’ll validate blocks for `vota-bobtail`, vote for governance proposals, and get gas distributions.
+
+This program includes 3 steps:
+
+<Steps>
+### [Application form](https://forms.gle/Kxstj4PQQJVsuayz6) submission
+
+**April 24 - May 8, 2025.**
+
+### Run `vota-bobtail` testnet validators and aMACI operator services
+
+**May 9 - June 9, 2025.**
+
+1. If you have already been invited to our Telegram channel, you can immediately start to run your node and sync block data. For instructions on launching the incentivized testnet, please refer to [“Run a Validator”](/docs/vota-devops/validator). It is important to pay special attention to several parameters of the incentivized testnet that are different from `vota-ash` network, such as **chain ID**, **RPC**, and so on. Please also note that we use the `dorad` binary file with version **0.4.2** in the incentivized testnet. Relevant network configurations can be found in [“Public Resources”](/docs/vota-dev/resources).
+2. Ask for airdrop to activate your validator in our Telegram channel.
+3. Once your validator is up, add a firewall rule to allow our monitor server to access port `26660` of your server. Enable prometheus metrics in config.toml. Send your **moniker name** and **public IP** to us.
+
+### Performance evaluation phase
+
+<Callout>
+  This evaluation will include the validator and amaci operator service.
+</Callout>
+
+**June 10–25, 2025.**
+
+During this phase, you will be responsible for running a reliable `vota-bobtail` testnet validator under various performance tests from the Dora Vota DevOps team. Some of these tests will be notified in advance, others will not.
+
+### Onboarding `vota-ash` network
+
+Based on your performance from the previous phase, together with additional services and value you are able to add to Dora Vota, we will make a final decision on a list of validators that could join the third delegation program of the vota-ash network.
+
+Please note that you will also be required to run a validator on Dora Vota’s long-term testnet if you are selected into the third delegation program.
+
+</Steps>
+
+Please note that if you are selected into the delegation program and start to run `vota-ash` network validators, you will be expected to spin up additional services to support the appchain’s applications.
