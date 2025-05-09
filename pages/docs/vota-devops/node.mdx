@@ -94,7 +94,7 @@ To instate a Dora Vota node, the first step is to [download and install `dorad`]
 <Tabs items={['Mainnet', 'Testnet', 'Incentivized Testnet']}>
   <Tabs.Tab>
   ```shell
-  export VERSION=0.4.1
+  export VERSION=0.4.2
   export CHAIN_ID="vota-ash"
   export MONIKER="replace-with-your-moniker-name"
   
@@ -106,7 +106,7 @@ To instate a Dora Vota node, the first step is to [download and install `dorad`]
   </Tabs.Tab>
   <Tabs.Tab>
   ```shell
-  export VERSION=0.4.1
+  export VERSION=0.4.2
   export CHAIN_ID="vota-testnet"
   export MONIKER="replace-with-your-moniker-name"
   
@@ -118,8 +118,8 @@ To instate a Dora Vota node, the first step is to [download and install `dorad`]
   </Tabs.Tab>
   <Tabs.Tab>
   ```shell
-  export VERSION=0.3.1
-  export CHAIN_ID="vota-sf"
+  export VERSION=0.4.2
+  export CHAIN_ID="vota-bobtail"
   export MONIKER="replace-with-your-moniker-name"
   
   git clone https://github.com/DoraFactory/doravota.git
@@ -134,7 +134,7 @@ To instate a Dora Vota node, the first step is to [download and install `dorad`]
 
 - Mainnet: Replace the genesis file in `~/.dora/config` with the [Dora Vota Mainnet genesis file](https://github.com/DoraFactory/doravota/blob/main/config/mainnet/genesis.json).
 - Testnet: Replace the genesis file in `~/.dora/config` with the [Dora Vota Testnet genesis file](https://github.com/DoraFactory/doravota/blob/main/config/testnet/genesis.json).
-- Incentivized Testnet: Replace the genesis file in `~/.dora/config` with the [Dora Vota Incentivized Testnet genesis file](https://df-node-dump.s3.ap-southeast-1.amazonaws.com/vota-sf-genesis.json).
+- Incentivized Testnet: Replace the genesis file in `~/.dora/config` with the [Dora Vota Incentivized Testnet genesis file](https://df-node-dump.s3.ap-southeast-1.amazonaws.com/vota-bobtail-genesis.json).
 
 ## Configure to sync chain data
 
@@ -163,10 +163,10 @@ Now that we have set up some peers, you can add them into `config.toml` to sync 
   <Tabs.Tab>
   ```shell
   # Comma separated list of seed nodes to connect to
-  seeds = "ceae16d973e8fd77cce67b946a9b6bfdf444f316@3.122.237.115:26656,059e1ec595989c8c4ef3fd3552070f5f93888547@52.59.113.160:26656"
+  seeds = "7dc00ce0358fb4c56ee7001377fd636d9bc64457@18.141.204.195:26656,6ac2713480c066c9146b4a310250926f3eeae4b6@3.0.51.24:26656"
   
   # Comma separated list of nodes to keep persistent connections to
-  persistent_peers = "ceae16d973e8fd77cce67b946a9b6bfdf444f316@3.122.237.115:26656,059e1ec595989c8c4ef3fd3552070f5f93888547@52.59.113.160:26656"
+  persistent_peers = "7dc00ce0358fb4c56ee7001377fd636d9bc64457@18.141.204.195:26656,6ac2713480c066c9146b4a310250926f3eeae4b6@3.0.51.24:26656"
   ```
   </Tabs.Tab>
 </Tabs>

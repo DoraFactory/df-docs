@@ -31,12 +31,12 @@ You should check that you have deleted your local `doravota` source code and dow
 ```shell
 rm -rf doravota
 git clone https://github.com/DoraFactory/doravota.git
-cd doravota && git checkout 0.3.1
+cd doravota && git checkout 0.4.2
 ```
 
 <Callout type="warning">
   The repo commit hash is
-  [`231861b`](https://github.com/DoraFactory/doravota/commit/231861b). Please
+  [`d5a7bfb`](https://github.com/DoraFactory/doravota/commit/d5a7bfb). Please
   check it before you build the source code.
 </Callout>
 
@@ -74,7 +74,7 @@ Due to the restart of a new P2P network environment, you also need to remove the
   ```shell
   rm ~/.dora/config/addrbook.json
   
-  PEERS="059e1ec595989c8c4ef3fd3552070f5f93888547@3.79.184.10:26656" && sed -i 's|^seeds *=.*|seeds = "'$PEERS'"|' $HOME/.dora/config/config.toml && sed -i 's|^persistent_peers *=.*|persistent_peers = "'$PEERS'"|' $HOME/.dora/config/config.toml
+  PEERS="7dc00ce0358fb4c56ee7001377fd636d9bc64457@18.141.204.195:26656,6ac2713480c066c9146b4a310250926f3eeae4b6@3.0.51.24:26656" && sed -i 's|^seeds *=.*|seeds = "'$PEERS'"|' $HOME/.dora/config/config.toml && sed -i 's|^persistent_peers *=.*|persistent_peers = "'$PEERS'"|' $HOME/.dora/config/config.toml
   ```
   </Tabs.Tab>
 </Tabs>
