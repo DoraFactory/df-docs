@@ -76,7 +76,7 @@ dorad tx wasm execute dora1smg5qp5trjdkcekdjssqpjehdjf6n4cjss0clyvqcud3t3u3948s8
 ## Build aMACI operator
 
 ```sh
-git clone https://github.com/DoraFactory/amaci-operator.git && cd amaci-operator
+git clone https://github.com/DoraFactory/amaci-operator.git && cd amaci-operator && git checkout v1.3.0
 
 npm install
 
@@ -105,7 +105,7 @@ cp .env.template .env
 </Callout>
 
 ```sh
-node dist/gen-key.js
+npm run new-key
 ```
 
 For example, the format of the public key:
@@ -117,9 +117,13 @@ Y: 5572999208344294573488778747734990567557173306854827005273539480127951622273
 
 #### Step 3: Configure your MNEMONIC and coordinator private key of aMACI operator
 
+- Enter the **Coordinator private key** generated in the previous step into the `COORDINATOR_PRI_KEY` field in your `.env` file.
 - Enter the **mnemonic** of the previously generated `aMACI operator account` into the `MNEMONIC` field in your `.env` file.
-- Enter the **coordinator private key** generated in the previous step into the `COORDINATOR_PRI_KEY` field in your `.env` file.
-- Enter the `rpc url`(It ensures that you can use a stable and continuous RPC services, it is recommended that you use your validator RPC or stable full node RPC) into the `RPC_ENDPOINT` field in your `.env` file.
+- Enter the rpc url (It ensures that you can use a stable and continuous RPC services, it is recommended that you use your validator RPC or stable full node RPC) into the `RPC_ENDPOINT` field in your .env file.
+- Enter the indexer url with `https://vota-api.dorafactory.org` into the `IND_ENDPOINT` field in your `.env` file.
+- Enter the **contract address** with `dora1smg5qp5trjdkcekdjssqpjehdjf6n4cjss0clyvqcud3t3u3948s8rmgg4` into the `DEACTIVATE_RECORDER` field in your `.env` file.
+- Enter the code id with `["93","95","103","118","121","123"]` into the `CODE_IDS` field in your `.env` file.
+
 
 ### Set your aMACI operator information
 
@@ -212,28 +216,16 @@ sudo journalctl -u amaci -f --no-hostname -o cat
 If the service started successfully, the log will output your aMACI operator’s information and download some necessary zkey files. Like this:
 
 ```sh
-Started A-MACI-operator-service.
-Init
-Coordinator public key:
-X: 11043362857411207101295473092701542792077153813505230615881421921648274746246
-Y: 3431336307758495332528815819065155244352578928861293932308944643929528727389
-Vota address:
-dora1nddnr2fjcupt3eher59mrp0cmwn52e4c98y4k5
-Start to download zkey:
-download zkey: 2-1-1-5_v2
-https://vota-zkey.s3.ap-southeast-1.amazonaws.com/amaci_2-1-1-5_v2_zkeys.tar.gz
-download zkey: 4-2-2-25_v2
-https://vota-zkey.s3.ap-southeast-1.amazonaws.com/amaci_4-2-2-25_v2_zkeys.tar.gz
-[DO]: inspect
-===========
-["93"]
-[
-  '11043362857411207101295473092701542792077153813505230615881421921648274746246',
-  '3431336307758495332528815819065155244352578928861293932308944643929528727389'
-]
-[]
-===========
-[TASK inspect] find rounds count: 0/0
+[2025-05-16 17:17:54.940] [INFO] [INIT]  Init your coordinator info
+.......
+.......
+.......
+[2025-05-16 17:17:55.000] [INFO] [INIT]  code id list: ["93","95","103","118","121","123"]
+[2025-05-16 17:17:55.000] [INFO] [INIT]  Check your required zkey files🧐🧐🧐🧐
+[2025-05-16 17:17:55.004] [INFO] [METRICS]  Metrics server started on port 3001
+.......
+.......
+.......
 ```
 
 </Steps>
