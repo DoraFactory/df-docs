@@ -2,7 +2,7 @@ name: DF Docs CICD
 
 on:
   push:
-    branches: [main]
+    branches: [_pause]
 
 jobs:
   build:
