@@ -5,8 +5,9 @@
 
 ## Links
 
+- Vercel project: <https://vercel.com/dora-factory/df-docs>
 - Stable (`main`)：<https://docs.dorafactory.org>
-- Canary Preview (`develop`)：<https://df-docs.vercel.app>
+- Canary Preview (`develop`)：<https://df-docs-preview.vercel.app>
 
 ## Conventions
 
