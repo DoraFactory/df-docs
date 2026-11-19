@@ -30,6 +30,8 @@
     "display": "hidden"
   },
 
+  "pqc-auth": "PQC Auth",
+
   "-- references": {
     "type": "separator",
     "title": "References"
