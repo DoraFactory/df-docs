@@ -1,0 +1,13 @@
+# Post-Quantum Cryptography on Dora Vota
+
+Dora Vota uses ML-DSA-65 signatures for three distinct purposes.
+
+| Use | Who signs | What the signature authorizes |
+| --- | --- | --- |
+| Validator consensus | A validator using its ML-DSA consensus key | The validator’s consensus votes |
+| Native ML-DSA account | An account holder using an ML-DSA account key | Transactions sent by that account |
+| PQC Auth | An existing account holder using the original account key and an additional ML-DSA signing key | Direct transactions covered by the account’s protection policy |
+
+The [Post-Quantum Consensus Benchmark](/docs/pqc/consensus/benchmark) compares transfers from conventional and native ML-DSA accounts on the long-running testnet after validators adopted ML-DSA consensus keys.
+
+To protect an existing account while keeping its address, read [How PQC Auth Works](/docs/pqc/auth/how-it-works). The [CLI Guide](/docs/pqc/auth/cli-guide) walks through registration, activation, and a protected transfer.

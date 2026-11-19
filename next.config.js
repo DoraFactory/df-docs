@@ -12,6 +12,14 @@ module.exports = withNextra({
   reactStrictMode: true, // Recommended for the `pages` directory, default in `app`.
   output: 'standalone',
 
+  async redirects() {
+    return [{
+      source: '/docs/pqc-auth/benchmark',
+      destination: '/docs/pqc/consensus/benchmark',
+      permanent: true
+    }]
+  },
+
   webpack(config) {
     // Config for SVGR
     // const allowedSvgRegex = /\.svg$/i

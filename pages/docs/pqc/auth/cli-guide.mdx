@@ -1,0 +1,148 @@
+# PQC Auth CLI Guide
+
+Register two ML-DSA keys for your existing account, check when protection takes effect, and send your first protected transfer. For an explanation of the signing and recovery keys, see [How PQC Auth Works](/docs/pqc/auth/how-it-works).
+
+
+The commands below use the mainnet RPC and chain ID. The registration and protected-transfer workflow has passed an end-to-end test on the long-running testnet using these commands with testnet settings. **It has not been validated end to end on mainnet.** Use `dorad v1.1.0`, the `file` keyring backend, and `jq`, with an existing secp256k1 account funded for the transfer and transaction fees. Check the target node’s required gas price.
+
+Mainnet PQC-auth parameter queries are available through the RPC below and the [public REST endpoint](https://vota-rest.dorafactory.org/doravota/pqcauth/v1/params). To practice on testnet, set `RPC="https://vota-testnet-rpc.dorafactory.org"` and `CHAIN_ID="vota-testnet"` in Step 1, then query that network’s `NETWORK_ID`; do not reuse the mainnet value.
+
+### Step 1: Query Chain Information on the Online Wallet Machine
+
+```bash
+RPC="https://vota-rpc.dorafactory.org"
+CHAIN_ID="vota-ash"
+OWNER_KEY=alice          # Name of an existing classical account in your wallet
+GAS_PRICE=100000000000peaka   # Example only; set this to the target node's required price
+
+OWNER=$(dorad keys show "$OWNER_KEY" --address --keyring-backend file)
+dorad query pqcauth params --node "$RPC" --output json > params.json &&
+  NETWORK_ID=$(jq -er '.params.network_id | select(type == "string" and length > 0)' params.json)
+dorad query pqcauth account "$OWNER" --node "$RPC" --output json
+```
+
+Continue only if the `params` query succeeds and returns a nonempty `NETWORK_ID`. Stop on `unknown query path`, `Not Implemented`, or network errors, and check the node and deployment status. Only `PQC account policy not found` from the `account` query means the account is not registered. Do not interpret other errors as an unregistered account.
+
+Copy the values of `OWNER`, `CHAIN_ID`, and `NETWORK_ID` to the two devices used below.
+
+### Step 2: Generate the Signing Key and Proof on the Signing Device
+
+```bash
+dorad keys add pqc-signing --key-type ml_dsa_65 --keyring-backend file
+
+dorad tx pqcauth create-key-proof pqc-signing "$OWNER" 1 signing register-signing \
+  --network-id-base64 "$NETWORK_ID" --chain-id "$CHAIN_ID" \
+  --policy-version 0 --keyring-backend file > signing-proof.json
+```
+
+### Step 3: Generate the Recovery Key and Proof on the Offline Recovery Device
+
+```bash
+dorad keys add pqc-recovery --key-type ml_dsa_65 --keyring-backend file
+
+dorad tx pqcauth create-key-proof pqc-recovery "$OWNER" 2 recovery register-recovery \
+  --network-id-base64 "$NETWORK_ID" --chain-id "$CHAIN_ID" \
+  --policy-version 0 --keyring-backend file > recovery-proof.json
+```
+
+Use a fresh, separate seed phrase for each PQC key. Do not reuse the original account's seed phrase or share one between the two PQC keys. Back them up separately offline. The initial key proofs use key IDs 1 and 2 and policy version 0. Successful registration creates policy version 1. These PQC keys authorize your existing account and do not need separate funded balances.
+
+Bring only `signing-proof.json` and `recovery-proof.json` back to the online wallet machine. These files contain only public keys and proofs.
+
+### Step 4: Submit Registration from the Online Wallet Machine
+
+```bash
+dorad tx pqcauth register-key 1 \
+  "$(jq -er '.public_key_base64' signing-proof.json)" \
+  "$(jq -er '.proof_base64' signing-proof.json)" \
+  --recovery-public-key-base64 "$(jq -er '.public_key_base64' recovery-proof.json)" \
+  --recovery-proof-base64 "$(jq -er '.proof_base64' recovery-proof.json)" \
+  --from "$OWNER_KEY" --chain-id "$CHAIN_ID" --node "$RPC" \
+  --keyring-backend file --gas auto --gas-adjustment 1.5 --gas-prices "$GAS_PRICE"
+```
+
+Receiving a transaction hash or a successful broadcast response does not mean registration succeeded. Query the committed transaction and confirm that its `code` is 0. If it was included at height H, wait until H+1 before checking that protection is active:
+
+```bash
+TXHASH=TRANSACTION_HASH_FROM_THE_PREVIOUS_STEP
+dorad query tx "$TXHASH" --node "$RPC" --output json
+dorad query pqcauth account "$OWNER" --node "$RPC" --output json
+```
+
+Protection is active when `active_signing_key` matches the signing public key you generated and `policy.self_enforced` is `true`.
+
+### Step 5: Send Your First Protected Transfer
+
+Run each section on the indicated device. Copy `send.prepared.json` to the signing device, then copy `send.signed.json` back to the online wallet machine. Review the recipient, amount, fees, and network before signing.
+
+```bash
+TO="$OWNER"                          # Send to yourself first
+AMOUNT=1000000000000000000peaka      # 1 DORA = 10^18 peaka
+GAS_LIMIT=200000                     # Example only, not guaranteed for every full transaction; see below
+FEES=20000000000000000peaka          # 0.02 DORA at the example price of 1e11; recalculate if gas or price changes
+
+# Online machine: freeze the transaction and prepare the signing bundle
+dorad tx bank send "$OWNER_KEY" "$TO" "$AMOUNT" \
+  --chain-id "$CHAIN_ID" --node "$RPC" --keyring-backend file \
+  --generate-only --gas "$GAS_LIMIT" --fees "$FEES" > send.json
+dorad tx pqcauth prepare-bundle send.json send.prepared.json \
+  --from "$OWNER_KEY" --chain-id "$CHAIN_ID" --node "$RPC" --keyring-backend file
+
+# Signing device: review and sign; no network connection is needed
+dorad tx pqcauth sign-bundle send.prepared.json pqc-signing send.signed.json \
+  --keyring-backend file
+
+# Online machine: recheck, add the original account signature, and broadcast
+dorad tx pqcauth broadcast-bundle send.signed.json \
+  --from "$OWNER_KEY" --chain-id "$CHAIN_ID" --node "$RPC" --keyring-backend file
+```
+
+After broadcasting, query the transfer from the online machine. A committed receipt with `code=0` confirms successful execution; a broadcast response alone does not. If the receipt is not yet available, query the same hash again rather than sending the transaction again.
+
+```bash
+TRANSFER_TXHASH=TRANSACTION_HASH_FROM_BROADCAST_BUNDLE
+dorad query tx "$TRANSFER_TXHASH" --node "$RPC" --output json
+```
+
+`GAS_LIMIT` must cover **the entire protected transaction**, including execution, extension bytes, signature verification, and state reads. A single-signature PQC extension is approximately 3.4 KB. If the target network charges 10 gas per byte, the additional bytes alone cost approximately 34,000 gas. The default PQC signature verification cost in v1.1.0 is 750 gas; check the target network's actual parameters. The 200,000 limit above is an example, not a guarantee for every transaction. Calculate the fee as the gas limit multiplied by the gas price.
+
+Once protection is active, you can simulate the same transfer below to obtain a reference value. This includes simulated signature-verification costs and some state reads, but it omits the PQC extension and skips some state reads required when the extension is present. **Do not assume that adding 40,000 to the simulation result is always enough.** Allow for extension bytes, additional state reads, and a margin, then validate the limit with a complete protected transaction on testnet:
+
+```bash
+dorad tx bank send "$OWNER" "$TO" "$AMOUNT" \
+  --chain-id "$CHAIN_ID" --node "$RPC" --keyring-backend file --dry-run
+```
+
+`--dry-run` does not read the local keyring. The sender must be the address `$OWNER`, not the key name `$OWNER_KEY`.
+
+`prepare-bundle` and `broadcast-bundle` reject transaction-changing flags such as `--gas`, `--fees`, and `--sequence`. Output bundle filenames must not already exist.
+
+The same three-step workflow applies to other single-signer transactions, such as staking, voting, and revoking authorizations.
+
+### Other Operations
+
+| Action | Command | Required authorization | Takes effect |
+|---|---|---|---|
+| Replace the signing key | `rotate-key` | Original account signature + current signing key | H+1 |
+| Replace the recovery key | `rotate-recovery-key` | Original account signature + current signing key | H+1 |
+| Request recovery after losing the signing key | `recover-key` → `sign-recovery-bundle` → `broadcast-recovery-bundle` | Original account signature + recovery key | After approximately seven days |
+| Cancel a recovery you did not initiate | `cancel-recovery` | Original account signature + current signing key | Immediately |
+| Enable or disable personal protection | `set-protection` | Original account signature + current signing key | H+1 |
+| Revoke a historical key | `revoke-key` | Original account signature + current signing key | Immediately |
+
+All commands are under `dorad tx pqcauth`. Use `--help` for their arguments.
+
+Rotation and recovery require the next unused key ID and the current policy version. After initial registration, the next key ID is 3. Each allocation increments it, and even a canceled recovery consumes an ID. Do not guess by adding 1 to the current key ID.
+
+## Safety Checklist
+
+| Avoid | Do this instead |
+|---|---|
+| Keeping all three private keys on one online machine | Use a separate signing device, keep the recovery key offline, and generate a fresh seed phrase for each PQC key |
+| Sending private keys or seed phrases to websites, RPC endpoints, colleagues, or chat tools | Transfer only public keys, proofs, and signing bundles between devices |
+| Registering without checking public keys | A proof only establishes that someone holds the key. Verify each public key on its own device before registering |
+| Deleting old keys or backups as soon as broadcasting succeeds | Confirm `code=0`, wait for the activation height, and query the correct active public key first |
+| Editing a signed transaction or sending another transaction from the same account at the same time | Contents and sequence are bound by the signature. Prepare a new bundle if the state changes |
+| Immediately sending another transaction after a broadcast timeout | Query the original transaction by hash and check the account sequence before deciding what to do next |
+| Assuming the original account signature alone can disable protection | Disabling personal protection also requires the current PQC signing key |
+| Assuming the recovery key can restore the original account | It only replaces the PQC signing key. Back up the original account key separately |

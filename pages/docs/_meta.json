@@ -30,7 +30,7 @@
     "display": "hidden"
   },
 
-  "pqc-auth": "PQC Auth",
+  "pqc": "Post-Quantum Cryptography (PQC)",
 
   "-- references": {
     "type": "separator",
