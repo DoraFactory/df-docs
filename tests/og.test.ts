@@ -12,10 +12,12 @@ import path from 'node:path'
 import test from 'node:test'
 import { fileURLToPath } from 'node:url'
 import sizeOf from 'image-size'
-import { normalizeRoute, seoProps, siteOrigin } from '../lib/seo.mjs'
-import { parseDocument, readPages, shorten } from '../scripts/og/content.mjs'
-import { generate } from '../scripts/og/generate.mjs'
-import { loadAssets, renderCard, wrapText } from '../scripts/og/render.mjs'
+import { normalizeRoute, seoProps, siteOrigin } from '../lib/seo'
+import { parseDocument, readPages, shorten } from '../scripts/og/content'
+import { generate } from '../scripts/og/generate'
+import { loadAssets, renderCard, wrapText } from '../scripts/og/render'
+import { checkHtml } from '../scripts/og/check'
+import type { SharingPage } from '../lib/seo'
 
 const root = fileURLToPath(new URL('..', import.meta.url))
 const context = {
@@ -95,6 +97,7 @@ test('canonical routes exclude query strings, anchors and trailing slashes', () 
         url: '/og/card.123.png',
         width: 1200,
         height: 628,
+        type: 'image/png',
         alt: 'Article'
       }
     },
@@ -106,11 +109,11 @@ test('canonical routes exclude query strings, anchors and trailing slashes', () 
     'https://docs.example.com/og/card.123.png'
   )
   assert.equal(
-    props.additionalMetaTags.find(tag => tag.name === 'twitter:title').content,
+    props.additionalMetaTags.find(tag => tag.name === 'twitter:title')?.content,
     'Article'
   )
   assert.equal(
-    props.additionalMetaTags.find(tag => tag.name === 'twitter:image').content,
+    props.additionalMetaTags.find(tag => tag.name === 'twitter:image')?.content,
     props.openGraph.images[0].url
   )
 })
@@ -123,15 +126,46 @@ test('summary shortening respects complete sentences and word boundaries', () =>
   assert.equal(Array.from(shorten('中文说明'.repeat(100), 60)).length, 60)
 })
 
+test('HTML validation rejects missing and duplicate crawler titles', () => {
+  const page: SharingPage = {
+    ...parseDocument(`# Article\n\n${intro}`, context),
+    image: {
+      url: '/og/article.png',
+      width: 1200,
+      height: 628,
+      type: 'image/png',
+      alt: 'Article'
+    }
+  }
+  assert.throws(
+    () =>
+      checkHtml(
+        '<html><head></head><body></body></html>',
+        page,
+        'https://docs.example.com'
+      ),
+    /expected exactly one og:title, found 0/
+  )
+  assert.throws(
+    () =>
+      checkHtml(
+        '<html><head><meta property="og:title" content="Article"><meta property="og:title" content="Brand fallback"></head></html>',
+        page,
+        'https://docs.example.com'
+      ),
+    /expected exactly one og:title, found 2/
+  )
+})
+
 test('line wrapping fits long URLs and truncates ordinary text at word boundaries', () => {
-  const measureText = text => Array.from(text).length
+  const measureText = (text: string) => Array.from(text).length
   const { lines, truncated } = wrapText(
     'a long title with several meaningful words that cannot all fit',
     { size: 1, maxLines: 2, width: 20, measureText }
   )
   assert(truncated)
   assert(lines.every(line => measureText(line) <= 20))
-  assert(lines.at(-1).endsWith('…'))
+  assert(lines.at(-1)?.endsWith('…'))
   const identifier = wrapText('x'.repeat(300), {
     size: 1,
     maxLines: 3,
@@ -183,22 +217,25 @@ test('generation discovers new routes, reuses stable images, and changes image U
   await writeFile(document, `# New document\n\n${intro}`)
   const first = await generate(fixture)
   assert.equal(Object.keys(first).length, 2)
-  assert.equal(first['/docs/new'].section, 'New Guide')
+  assert.equal(first['/docs/new']!.section, 'New Guide')
   const stable = await generate(fixture)
-  assert.equal(first['/docs/new'].image.url, stable['/docs/new'].image.url)
+  assert.equal(first['/docs/new']!.image.url, stable['/docs/new']!.image.url)
   await writeFile(
     document,
     '# Updated document\n\nLearn about completely updated content and metadata in this new document.'
   )
   const updated = await generate(fixture)
-  assert.notEqual(first['/docs/new'].image.url, updated['/docs/new'].image.url)
-  assert.equal(first['/'].image.url, updated['/'].image.url)
+  assert.notEqual(
+    first['/docs/new']!.image.url,
+    updated['/docs/new']!.image.url
+  )
+  assert.equal(first['/']!.image.url, updated['/']!.image.url)
   // Both old and new images remain available during a dev-session transition.
   await readFile(
-    path.join(fixture, 'public', `.${first['/docs/new'].image.url}`)
+    path.join(fixture, 'public', `.${first['/docs/new']!.image.url}`)
   )
   await readFile(
-    path.join(fixture, 'public', `.${updated['/docs/new'].image.url}`)
+    path.join(fixture, 'public', `.${updated['/docs/new']!.image.url}`)
   )
   await mkdir(path.join(fixture, 'pages/docs/added'), { recursive: true })
   await writeFile(
@@ -224,9 +261,9 @@ test('local custom covers are fingerprinted and remote covers fail explicitly', 
     `---\nogImage: /cover.png\nogImageAlt: Custom cover\n---\n# Covered article\n\n${intro}`
   )
   const pages = await generate(fixture)
-  assert.equal(pages['/cover'].image.alt, 'Custom cover')
-  assert.match(pages['/cover'].image.url, /^\/og\/cover\.[a-f0-9]+\.png$/)
-  assert.equal(pages['/cover'].image.width, 1200)
+  assert.equal(pages['/cover']!.image.alt, 'Custom cover')
+  assert.match(pages['/cover']!.image.url, /^\/og\/cover\.[a-f0-9]+\.png$/)
+  assert.equal(pages['/cover']!.image.width, 1200)
   assert.throws(
     () =>
       parseDocument(

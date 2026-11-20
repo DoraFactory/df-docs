@@ -2,23 +2,77 @@ import { createHash } from 'node:crypto'
 import { readFile } from 'node:fs/promises'
 import { createRequire } from 'node:module'
 import path from 'node:path'
-import { createElement as h } from 'react'
 import * as fontkit from 'fontkit'
+import type { Font as FontMetrics } from 'fontkit'
 import satori from 'satori'
+import type { Font as SatoriFont, SatoriNode } from 'satori'
 import { Resvg } from '@resvg/resvg-js'
+import type { DocumentMetadata } from '../../lib/seo'
+
+interface LoadedFont {
+  data: Buffer
+  metric: FontMetrics
+}
+
+interface FallbackFont extends SatoriFont {
+  data: Buffer
+  metric: FontMetrics
+  weight: 400
+  style: 'normal'
+}
+
+export interface CardAssets {
+  fonts: SatoriFont[]
+  metrics: [FontMetrics, FontMetrics]
+  background: string
+  fontCss: string
+  fingerprint: string
+  fallbackCache: Map<string, LoadedFont>
+}
+
+interface WrappedText {
+  lines: string[]
+  truncated: boolean
+}
+
+interface WrapOptions {
+  size: number
+  maxLines: number
+  width?: number
+  measureText: (text: string, size: number) => number
+}
+
+export interface CardLayout {
+  titleSize: number
+  titleLines: string[]
+  descriptionLines: string[]
+}
+
+interface RenderedCard {
+  png: Buffer
+  fingerprint: string
+  layout: CardLayout
+}
+
+function fontMetrics(data: Buffer): FontMetrics {
+  const font = fontkit.create(data)
+  if ('fonts' in font)
+    throw new Error('OG fonts must be individual fonts, not font collections')
+  return font
+}
 
 const require = createRequire(import.meta.url)
 export const WIDTH = 1200
 export const HEIGHT = 628
 const TEXT_WIDTH = 936
 
-export async function loadAssets(root) {
+export async function loadAssets(root: string): Promise<CardAssets> {
   const [regular, bold, background, template, fontCss, fontVersion] =
     await Promise.all([
       readFile(path.join(root, 'assets/PublicSans-Regular.woff')),
       readFile(path.join(root, 'assets/PublicSans-ExtraBold.woff')),
       readFile(path.join(root, 'assets/og-bg.png')),
-      readFile(new URL('./render.mjs', import.meta.url)),
+      readFile(new URL('./render.tsx', import.meta.url)),
       readFile(require.resolve('@fontsource/noto-sans-sc/400.css'), 'utf8'),
       readFile(require.resolve('@fontsource/noto-sans-sc/package.json'))
     ])
@@ -34,7 +88,7 @@ export async function loadAssets(root) {
       { name: 'Public Sans', data: regular, weight: 400, style: 'normal' },
       { name: 'Public Sans', data: bold, weight: 800, style: 'normal' }
     ],
-    metrics: [fontkit.create(regular), fontkit.create(bold)],
+    metrics: [fontMetrics(regular), fontMetrics(bold)],
     background: `data:image/png;base64,${background.toString('base64')}`,
     fontCss,
     fingerprint: hash.digest('hex'),
@@ -42,35 +96,45 @@ export async function loadAssets(root) {
   }
 }
 
-async function fontsFor(text, assets) {
+async function fontsFor(
+  text: string,
+  assets: CardAssets
+): Promise<FallbackFont[]> {
   const missing = new Set(
     Array.from(text)
       .map(char => char.codePointAt(0))
-      .filter(code => !assets.metrics[0].hasGlyphForCodePoint(code))
+      .filter(
+        (code): code is number =>
+          code !== undefined && !assets.metrics[0].hasGlyphForCodePoint(code)
+      )
   )
-  const fallback = []
+  const fallback: FallbackFont[] = []
   // Fontsource includes local Unicode subsets; only load subsets this card needs.
   // No runtime/build-time font or emoji downloads are required.
   for (const block of assets.fontCss.matchAll(/@font-face\s*\{([^}]+)\}/g)) {
     if (!missing.size) break
     const ranges = [
-      ...block[1].matchAll(/U\+([\da-f]+)(?:-([\da-f]+))?/gi)
-    ].map(([, a, b]) => [parseInt(a, 16), parseInt(b || a, 16)])
+      ...(block[1] || '').matchAll(/U\+([\da-f]+)(?:-([\da-f]+))?/gi)
+    ].map(([, a = '', b]): [number, number] => [
+      parseInt(a, 16),
+      parseInt(b || a, 16)
+    ])
     if (
       ![...missing].some(code =>
         ranges.some(([a, b]) => code >= a && code <= b)
       )
     )
       continue
-    const file = /url\(\.\/files\/([^)]*\.woff)\)/.exec(block[1])?.[1]
+    const file = /url\(\.\/files\/([^)]*\.woff)\)/.exec(block[1] || '')?.[1]
     if (!file) continue
-    if (!assets.fallbackCache.has(file)) {
+    let loaded = assets.fallbackCache.get(file)
+    if (!loaded) {
       const data = await readFile(
         require.resolve(`@fontsource/noto-sans-sc/files/${file}`)
       )
-      assets.fallbackCache.set(file, { data, metric: fontkit.create(data) })
+      loaded = { data, metric: fontMetrics(data) }
+      assets.fallbackCache.set(file, loaded)
     }
-    const loaded = assets.fallbackCache.get(file)
     fallback.push({
       name: `Fallback ${fallback.length}`,
       data: loaded.data,
@@ -93,13 +157,19 @@ async function fontsFor(text, assets) {
   return fallback
 }
 
-function measure(text, size, bold, assets, fallback) {
+function measure(
+  text: string,
+  size: number,
+  bold: boolean,
+  assets: CardAssets,
+  fallback: FallbackFont[]
+): number {
   const primary = assets.metrics[bold ? 1 : 0]
   let width = 0
   let run = ''
-  let previous
+  let previous: FontMetrics | undefined
   function flush() {
-    if (run)
+    if (run && previous)
       width +=
         (previous
           .layout(run)
@@ -110,6 +180,7 @@ function measure(text, size, bold, assets, fallback) {
   }
   for (const char of text) {
     const code = char.codePointAt(0)
+    if (code === undefined) continue
     const metric = primary.hasGlyphForCodePoint(code)
       ? primary
       : fallback.find(font => font.metric.hasGlyphForCodePoint(code))?.metric
@@ -125,13 +196,13 @@ function measure(text, size, bold, assets, fallback) {
 }
 
 export function wrapText(
-  text,
-  { size, maxLines, width = TEXT_WIDTH, measureText }
-) {
+  text: string,
+  { size, maxLines, width = TEXT_WIDTH, measureText }: WrapOptions
+): WrappedText {
   const tokens = [
     ...new Intl.Segmenter('en', { granularity: 'word' }).segment(text)
   ].map(item => item.segment)
-  const lines = []
+  const lines: string[] = []
   let line = ''
   for (const token of tokens) {
     const next = `${line}${token}`
@@ -159,7 +230,7 @@ export function wrapText(
   if (line.trim()) lines.push(line.trimEnd())
   if (lines.length <= maxLines) return { lines, truncated: false }
   const visible = lines.slice(0, maxLines)
-  let last = visible.at(-1)
+  let last = visible.at(-1) || ''
   while (measureText(`${last}…`, size) > width)
     last = Array.from(last).slice(0, -1).join('')
   const boundary = last.lastIndexOf(' ')
@@ -168,15 +239,18 @@ export function wrapText(
   return { lines: visible, truncated: true }
 }
 
-export async function renderCard(page, assets) {
+export async function renderCard(
+  page: DocumentMetadata,
+  assets: CardAssets
+): Promise<RenderedCard> {
   const fallback = await fontsFor(
     `${page.title} ${page.description} ${page.section} ${page.route}…`,
     assets
   )
-  const measureText = (text, size, bold = false) =>
+  const measureText = (text: string, size: number, bold = false) =>
     measure(text, size, bold, assets, fallback)
-  let title
-  let titleSize
+  let title: WrappedText = { lines: [], truncated: false }
+  let titleSize = 36
   for (const size of [54, 48, 42, 36]) {
     titleSize = size
     title = wrapText(page.title, {
@@ -197,35 +271,9 @@ export async function renderCard(page, assets) {
     { size: 16, maxLines: 1, measureText }
   )
   const family = ['Public Sans', ...fallback.map(font => font.name)].join(', ')
-  const textLines = (lines, size, weight, color, lineHeight) =>
-    h(
-      'div',
-      {
-        style: {
-          display: 'flex',
-          flexDirection: 'column',
-          fontSize: size,
-          fontWeight: weight,
-          color,
-          lineHeight,
-          flexShrink: 0
-        }
-      },
-      ...lines.map((text, index) =>
-        h(
-          'div',
-          {
-            key: index,
-            style: { display: 'flex', whiteSpace: 'pre', flexShrink: 0 }
-          },
-          text
-        )
-      )
-    )
-  const tree = h(
-    'div',
-    {
-      style: {
+  const tree = (
+    <div
+      style={{
         display: 'flex',
         width: WIDTH,
         height: HEIGHT,
@@ -233,39 +281,58 @@ export async function renderCard(page, assets) {
         backgroundImage: `url(${assets.background})`,
         backgroundSize: `${WIDTH}px ${HEIGHT}px`,
         fontFamily: family
-      }
-    },
-    h(
-      'div',
-      {
-        style: {
+      }}
+    >
+      <div
+        style={{
           display: 'flex',
           position: 'absolute',
           left: 132,
           top: 165,
           width: TEXT_WIDTH,
           flexDirection: 'column'
-        }
-      },
-      textLines(section.lines, 18, 400, '#c3a7eb', 1.3),
-      h(
-        'div',
-        { style: { display: 'flex', marginTop: 16 } },
-        textLines(title.lines, titleSize, 800, '#f5f5f5', 1.13)
-      ),
-      h(
-        'div',
-        { style: { display: 'flex', marginTop: 24 } },
-        textLines(description.lines, 26, 400, '#aaaabc', 1.3)
-      )
-    ),
-    h(
-      'div',
-      { style: { display: 'flex', position: 'absolute', top: 574, left: 132 } },
-      textLines(route.lines, 16, 400, '#858599', 1.2)
-    )
+        }}
+      >
+        <TextLines
+          lines={section.lines}
+          size={18}
+          weight={400}
+          color="#c3a7eb"
+          lineHeight={1.3}
+        />
+        <div style={{ display: 'flex', marginTop: 16 }}>
+          <TextLines
+            lines={title.lines}
+            size={titleSize}
+            weight={800}
+            color="#f5f5f5"
+            lineHeight={1.13}
+          />
+        </div>
+        <div style={{ display: 'flex', marginTop: 24 }}>
+          <TextLines
+            lines={description.lines}
+            size={26}
+            weight={400}
+            color="#aaaabc"
+            lineHeight={1.3}
+          />
+        </div>
+      </div>
+      <div
+        style={{ display: 'flex', position: 'absolute', top: 574, left: 132 }}
+      >
+        <TextLines
+          lines={route.lines}
+          size={16}
+          weight={400}
+          color="#858599"
+          lineHeight={1.2}
+        />
+      </div>
+    </div>
   )
-  const nodes = []
+  const nodes: SatoriNode[] = []
   const svg = await satori(tree, {
     width: WIDTH,
     height: HEIGHT,
@@ -299,4 +366,37 @@ export async function renderCard(page, assets) {
       descriptionLines: description.lines
     }
   }
+}
+
+interface TextLinesProps {
+  lines: string[]
+  size: number
+  weight: 400 | 800
+  color: string
+  lineHeight: number
+}
+
+function TextLines({ lines, size, weight, color, lineHeight }: TextLinesProps) {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        fontSize: size,
+        fontWeight: weight,
+        color,
+        lineHeight,
+        flexShrink: 0
+      }}
+    >
+      {lines.map((text, index) => (
+        <div
+          key={index}
+          style={{ display: 'flex', whiteSpace: 'pre', flexShrink: 0 }}
+        >
+          {text}
+        </div>
+      ))}
+    </div>
+  )
 }

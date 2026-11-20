@@ -3,7 +3,7 @@ import { useTheme } from 'nextra-theme-docs'
 import { Logo } from '@components/logo'
 import { Footer } from '@components/footer'
 import pages from './.generated/seo.json'
-import { normalizeRoute, seoProps } from './lib/seo.mjs'
+import { normalizeRoute, seoProps } from './lib/seo'
 
 export default {
   head: () => {

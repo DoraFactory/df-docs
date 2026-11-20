@@ -1,7 +1,7 @@
 import { spawn } from 'node:child_process'
 import { createRequire } from 'node:module'
 import { watch } from 'chokidar'
-import { generate } from './og/generate.mjs'
+import { generate } from './og/generate'
 
 const require = createRequire(import.meta.url)
 await generate()
@@ -10,10 +10,10 @@ const child = spawn(
   [require.resolve('next/dist/bin/next'), 'dev', ...process.argv.slice(2)],
   { stdio: 'inherit' }
 )
-let timer
+let timer: NodeJS.Timeout | undefined
 let running = false
 let pending = false
-async function update() {
+async function update(): Promise<void> {
   if (running) {
     pending = true
     return
@@ -22,7 +22,10 @@ async function update() {
   try {
     await generate()
   } catch (error) {
-    console.error('OG generation failed:', error.message)
+    console.error(
+      'OG generation failed:',
+      error instanceof Error ? error.message : String(error)
+    )
   }
   running = false
   if (pending) {
@@ -30,7 +33,7 @@ async function update() {
     await update()
   }
 }
-const watcher = watch(['pages', 'assets', 'lib/seo.mjs'], {
+const watcher = watch(['pages', 'assets', 'lib/seo.ts'], {
   ignoreInitial: true,
   // The document set is small. Polling also works on mounted filesystems and
   // environments where native filesystem notifications are unavailable.
@@ -43,7 +46,7 @@ watcher.on('all', () => {
   clearTimeout(timer)
   timer = setTimeout(update, 200)
 })
-for (const signal of ['SIGINT', 'SIGTERM']) {
+for (const signal of ['SIGINT', 'SIGTERM'] as const) {
   process.on(signal, () => {
     clearTimeout(timer)
     watcher.close()

@@ -42,6 +42,8 @@ pnpm build
 
 `pnpm dev` and `pnpm build` automatically discover every Markdown/MDX document under `pages/`, including pages hidden from navigation. They generate a metadata index in `.generated/seo.json` and static sharing images in `public/og/`. These outputs are generated locally, ignored by Git, and included in the normal production build. Use these scripts instead of invoking `next dev` or `next build` directly. Docker's existing `yarn build` also runs the same pipeline.
 
+The shared SEO model and tooling are written in TypeScript, with JSX image templates in `scripts/og/render.tsx`. `tsx` executes the Node tools; `tsc` checks their types separately. `pnpm typecheck` checks both the application and the strict tooling configuration in `tsconfig.og.json` (including unchecked array/map access). Production builds run the strict tooling check before generation, followed by Next.js's application check. The shared library, scripts, and tests have local ESM package scopes so the repository's existing CommonJS configuration files can retain their current format. The TypeScript runner is pinned to a version tested on Node 18, matching the Docker build environment.
+
 New documents normally need only an H1 and an introductory paragraph. Sharing titles use `ogTitle`, then `title`, then the H1, then the navigation title. Descriptions use `description`, then the legacy `desc`, then the first substantive prose paragraph. Markdown formatting is removed; code, tables, images, imports, expressions, and callout notices are excluded from automatic summaries. Pure component pages must provide explicit metadata. The home page has its own brand copy; ordinary documents never silently fall back to it.
 
 Optional overrides:
@@ -69,6 +71,7 @@ The document watcher uses polling so it also works on mounted filesystems. If Ne
 ```bash
 pnpm og:generate # Regenerate metadata and sharing images
 pnpm test:og     # Content extraction, compatibility, fonts, wrapping and updates
+pnpm typecheck   # Application types and strict OG/tooling types
 pnpm og:check    # Verify HTML and images from an existing production build
 ```
 

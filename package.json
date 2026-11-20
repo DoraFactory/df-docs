@@ -4,19 +4,21 @@
   "private": true,
   "packageManager": "pnpm@8.15.6+sha512.77b89e9be77a2b06ad8f403a19cae5e22976f61023f98ad323d5c30194958ebc02ee0a6ae5d13ee454f6134e4e8caf29a05f0b1a0e1d2b17bca6b6a1f1159f86",
   "scripts": {
-    "build": "node scripts/build.mjs",
-    "dev": "node scripts/dev.mjs",
+    "build": "tsx --tsconfig tsconfig.og.json scripts/build.ts",
+    "dev": "tsx --tsconfig tsconfig.og.json scripts/dev.ts",
     "lint": "next lint",
-    "og:check": "node scripts/og/check.mjs",
-    "og:generate": "node scripts/og/generate.mjs",
+    "og:check": "tsx --tsconfig tsconfig.og.json scripts/og/check.ts",
+    "og:generate": "tsx --tsconfig tsconfig.og.json scripts/og/generate.ts",
     "prettier": "prettier . --check",
     "prettier:write": "prettier . --write",
     "start": "next start",
-    "test:og": "node --test tests/og.test.mjs"
+    "test:og": "tsx --tsconfig tsconfig.og.json --test tests/og.test.ts",
+    "typecheck": "tsc --noEmit && tsc --project tsconfig.og.json"
   },
   "dependencies": {
     "@vercel/og": "^0.6.1",
     "next": "^13.5.6",
+    "next-seo": "6.1.0",
     "nextra": "^2.13.2",
     "nextra-theme-docs": "^2.13.2",
     "react": "^18.2.0",
@@ -27,6 +29,8 @@
     "@next/env": "13.5.6",
     "@resvg/resvg-js": "^2.6.2",
     "@svgr/webpack": "^8.1.0",
+    "@types/fontkit": "^2.0.8",
+    "@types/mdast": "^3.0.15",
     "@types/node": "20.10.0",
     "@types/react": "^18.2.38",
     "autoprefixer": "^10.4.16",
@@ -47,6 +51,7 @@
     "sass": "^1.69.5",
     "satori": "0.10.9",
     "tailwindcss": "^3.3.5",
+    "tsx": "^4.19.2",
     "typescript": "5.3.2",
     "unified": "^10.1.2"
   }

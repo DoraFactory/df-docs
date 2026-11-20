@@ -1,17 +1,38 @@
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
+import { createRequire } from 'node:module'
+import { fileURLToPath } from 'node:url'
 import { parse } from 'parse5'
+import type { DefaultTreeAdapterMap } from 'parse5'
 import sizeOf from 'image-size'
-import { absoluteUrl, seoProps, siteOrigin } from '../../lib/seo.mjs'
+import { absoluteUrl, seoProps, siteOrigin } from '../../lib/seo'
+import type { SharingPage, SharingManifest } from '../../lib/seo'
 
-function elements(node, predicate, result = []) {
-  if (predicate(node)) result.push(node)
-  for (const child of node.childNodes || []) elements(child, predicate, result)
+type HtmlNode = DefaultTreeAdapterMap['node']
+type HtmlElement = DefaultTreeAdapterMap['element']
+
+// @next/env is CommonJS in Next 13; use its actual export shape on Node 18.
+const { loadEnvConfig } = createRequire(import.meta.url)(
+  '@next/env'
+) as typeof import('@next/env')
+
+function elements(
+  node: HtmlNode,
+  predicate: (node: HtmlElement) => boolean,
+  result: HtmlElement[] = []
+): HtmlElement[] {
+  if ('tagName' in node && predicate(node)) result.push(node)
+  if ('childNodes' in node)
+    for (const child of node.childNodes) elements(child, predicate, result)
   return result
 }
 
-export function checkHtml(html, page, origin) {
+export function checkHtml(
+  html: string,
+  page: SharingPage,
+  origin: string
+): void {
   const tree = parse(html)
   const head = elements(tree, node => node.tagName === 'head')[0]
   assert(head, `${page.route}: missing head`)
@@ -44,7 +65,7 @@ export function checkHtml(html, page, origin) {
       1,
       `${page.route}: expected exactly one ${key}, found ${tags.length}`
     )
-    assert.equal(tags[0].content, value, `${page.route}: incorrect ${key}`)
+    assert.equal(tags[0]?.content, value, `${page.route}: incorrect ${key}`)
   }
   const canonical = elements(
     head,
@@ -54,28 +75,27 @@ export function checkHtml(html, page, origin) {
   )
   assert.equal(canonical.length, 1, `${page.route}: expected one canonical`)
   assert.equal(
-    canonical[0].attrs.find(a => a.name === 'href').value,
+    canonical[0]?.attrs.find(a => a.name === 'href')?.value,
     expected.canonical
   )
   assert.equal(expected.canonical, absoluteUrl(page.route, origin))
 }
 
-export async function checkBuild(root = process.cwd()) {
+export async function checkBuild(root: string = process.cwd()): Promise<void> {
   // Match Next's production environment loading, including .env.local overrides.
-  const { default: nextEnv } = await import('@next/env')
-  nextEnv.loadEnvConfig(root, false)
+  loadEnvConfig(root, false)
   const origin = siteOrigin(process.env.NEXT_PUBLIC_SITE_ROOT)
-  const pages = JSON.parse(
+  const pages: SharingManifest = JSON.parse(
     await readFile(path.join(root, '.generated/seo.json'), 'utf8')
   )
   const serverRoot = path.join(root, '.next/server')
-  const routes = JSON.parse(
+  const routes: Record<string, string> = JSON.parse(
     await readFile(path.join(serverRoot, 'pages-manifest.json'), 'utf8')
   )
   for (const [route, page] of Object.entries(pages)) {
     const output = routes[route]
     assert(
-      output?.endsWith('.html'),
+      output && output.endsWith('.html'),
       `${route}: document must produce static HTML`
     )
     checkHtml(
@@ -97,7 +117,10 @@ export async function checkBuild(root = process.cwd()) {
   )
 }
 
-if (process.argv[1]?.endsWith('/check.mjs')) {
+if (
+  process.argv[1] &&
+  path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
+) {
   checkBuild().catch(error => {
     console.error(error)
     process.exitCode = 1

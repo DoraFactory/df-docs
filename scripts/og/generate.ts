@@ -3,32 +3,45 @@ import { mkdir, readFile, rename, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import sizeOf from 'image-size'
-import { readPages } from './content.mjs'
-import { loadAssets, renderCard, WIDTH, HEIGHT } from './render.mjs'
+import { readPages } from './content'
+import { loadAssets, renderCard, WIDTH, HEIGHT } from './render'
+import type { CardLayout } from './render'
+import type { SharingImage, SharingManifest } from '../../lib/seo'
 
-async function writeIfChanged(filename, value) {
+interface ImageCacheEntry {
+  inputHash: string
+  image: SharingImage
+  layout: CardLayout
+}
+type ImageCache = Record<string, ImageCacheEntry>
+
+async function writeIfChanged(filename: string, value: string): Promise<void> {
   if ((await readFile(filename, 'utf8').catch(() => '')) === value) return
   await writeFile(`${filename}.tmp`, value)
   await rename(`${filename}.tmp`, filename)
 }
 
-export async function generate(root = process.cwd()) {
-  const pages = await readPages(root)
+export async function generate(
+  root: string = process.cwd()
+): Promise<SharingManifest> {
+  const documents = await readPages(root)
+  const pages: SharingManifest = {}
   const generated = path.join(root, '.generated')
   const directory = path.join(root, 'public/og')
   await Promise.all([
     mkdir(generated, { recursive: true }),
     mkdir(directory, { recursive: true })
   ])
-  const cache = JSON.parse(
+  const cache: ImageCache = JSON.parse(
     await readFile(path.join(generated, 'og-cache.json'), 'utf8').catch(
       () => '{}'
     )
   )
-  const nextCache = {}
+  const nextCache: ImageCache = {}
   const assets = await loadAssets(root)
   let rendered = 0
-  for (const [route, page] of Object.entries(pages)) {
+  for (const [route, page] of Object.entries(documents)) {
+    const { customImage, imageAlt, ...metadata } = page
     const slug =
       route === '/'
         ? 'home'
@@ -36,14 +49,18 @@ export async function generate(root = process.cwd()) {
             .slice(1)
             .replace(/[^\p{L}\p{N}-]+/gu, '-')
             .slice(0, 100)
-    let image
-    if (page.customImage) {
-      const input = await readFile(
-        path.join(root, 'public', `.${page.customImage}`)
-      )
+    let image: SharingImage
+    if (customImage) {
+      const input = await readFile(path.join(root, 'public', `.${customImage}`))
       const dimensions = sizeOf(input)
-      if (!['png', 'jpg', 'webp'].includes(dimensions.type))
+      if (
+        dimensions.type !== 'png' &&
+        dimensions.type !== 'jpg' &&
+        dimensions.type !== 'webp'
+      )
         throw new Error(`${route}: ogImage must be PNG, JPEG or WebP`)
+      if (!dimensions.width || !dimensions.height)
+        throw new Error(`${route}: ogImage has no valid dimensions`)
       const hash = createHash('sha256').update(input).digest('hex').slice(0, 16)
       const name = `${slug}.${hash}.${dimensions.type}`
       await writeFile(path.join(directory, name), input)
@@ -53,10 +70,8 @@ export async function generate(root = process.cwd()) {
         height: dimensions.height,
         type:
           dimensions.type === 'jpg' ? 'image/jpeg' : `image/${dimensions.type}`,
-        alt: page.imageAlt
+        alt: imageAlt || page.title
       }
-      delete page.customImage
-      delete page.imageAlt
     } else {
       const inputHash = createHash('sha256')
         .update(assets.fingerprint)
@@ -78,8 +93,13 @@ export async function generate(root = process.cwd()) {
         const { png, fingerprint, layout } = await renderCard(
           page,
           assets
-        ).catch(error => {
-          throw new Error(`${route}: ${error.message}`, { cause: error })
+        ).catch((error: unknown) => {
+          throw new Error(
+            `${route}: ${
+              error instanceof Error ? error.message : String(error)
+            }`,
+            { cause: error }
+          )
         })
         const name = `${slug}.${fingerprint}.png`
         await writeFile(path.join(directory, name), png)
@@ -94,7 +114,7 @@ export async function generate(root = process.cwd()) {
         rendered++
       }
     }
-    page.image = image
+    pages[route] = { ...metadata, image }
   }
   // Publish the index only after every referenced image is ready.
   await writeIfChanged(

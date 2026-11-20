@@ -1,11 +1,35 @@
+import type { NextSeoProps } from 'next-seo'
+
+export interface DocumentMetadata {
+  route: string
+  title: string
+  description: string
+  section: string
+  locale: string
+}
+
+export interface SharingImage {
+  url: string
+  width: number
+  height: number
+  type: 'image/png' | 'image/jpeg' | 'image/webp'
+  alt: string
+}
+
+export interface SharingPage extends DocumentMetadata {
+  image: SharingImage
+}
+
+export type SharingManifest = Record<string, SharingPage>
+
 export const SITE_NAME = 'Dora Factory Documentation'
 export const SITE_ROOT = 'https://docs.dorafactory.org'
 export const HOME_TITLE = 'The Digital Infrastructure of Global Hacker Movement'
 export const HOME_DESCRIPTION =
   'Dora Factory creates protocols, toolings, and public good infrastructures that help open source communities and frontier tech builders to thrive.'
 
-export function normalizeRoute(value = '/') {
-  const pathname = value.split(/[?#]/, 1)[0]
+export function normalizeRoute(value = '/'): string {
+  const pathname = value.split(/[?#]/, 1)[0] || '/'
   const decoded = pathname
     .split('/')
     .map(part => {
@@ -19,7 +43,7 @@ export function normalizeRoute(value = '/') {
   return `/${decoded.split('/').filter(Boolean).join('/')}`
 }
 
-export function siteOrigin(value = SITE_ROOT) {
+export function siteOrigin(value: string = SITE_ROOT): string {
   const url = new URL(value || SITE_ROOT)
   if (
     !['http:', 'https:'].includes(url.protocol) ||
@@ -31,11 +55,11 @@ export function siteOrigin(value = SITE_ROOT) {
   return url.origin
 }
 
-export function absoluteUrl(path, origin) {
+export function absoluteUrl(path: string, origin?: string): string {
   return new URL(path, `${siteOrigin(origin)}/`).href
 }
 
-export function seoProps(page, origin = SITE_ROOT) {
+export function seoProps(page: SharingPage, origin: string = SITE_ROOT) {
   const canonical = absoluteUrl(page.route, origin)
   const image = {
     ...page.image,
@@ -53,7 +77,7 @@ export function seoProps(page, origin = SITE_ROOT) {
       url: canonical,
       title: page.title,
       description: page.description,
-      images: [image]
+      images: [image] as [SharingImage]
     },
     twitter: {
       cardType: 'summary_large_image',
@@ -66,5 +90,5 @@ export function seoProps(page, origin = SITE_ROOT) {
       { name: 'twitter:image', content: image.url },
       { name: 'twitter:image:alt', content: image.alt }
     ]
-  }
+  } satisfies NextSeoProps
 }

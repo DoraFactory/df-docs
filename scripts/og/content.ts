@@ -5,12 +5,38 @@ import { unified } from 'unified'
 import remarkParse from 'remark-parse'
 import remarkMdx from 'remark-mdx'
 import remarkGfm from 'remark-gfm'
+import type { Root } from 'mdast'
+import type { DocumentMetadata } from '../../lib/seo'
 import {
   HOME_DESCRIPTION,
   HOME_TITLE,
   SITE_NAME,
   normalizeRoute
-} from '../../lib/seo.mjs'
+} from '../../lib/seo'
+
+export interface DocumentContext {
+  route: string
+  filename: string
+  navigationTitle?: string
+  section?: string
+}
+
+export interface ParsedDocument extends DocumentMetadata {
+  customImage?: string
+  imageAlt?: string
+}
+
+// A structural view of the fields used from Markdown and MDX AST nodes.
+// This also admits the MDX JSX/expression extensions to the standard mdast.
+interface ContentNode {
+  type: string
+  value?: string
+  name?: string | null
+  children?: ContentNode[]
+  depth?: number
+}
+
+type Navigation = Record<string, unknown>
 
 const parser = unified().use(remarkParse).use(remarkMdx).use(remarkGfm)
 const inlineParser = unified().use(remarkParse)
@@ -40,27 +66,29 @@ const containers = new Set([
   'a'
 ])
 
-export const normalizeText = value =>
+export const normalizeText = (value: unknown): string =>
   String(value ?? '')
     .replace(/\s+/gu, ' ')
     .trim()
 
-export function plainText(node) {
+export function plainText(node: ContentNode | undefined): string {
+  if (!node) return ''
   if (ignoredNodes.has(node.type)) return ''
-  if (node.type.startsWith('mdxJsx') && !containers.has(node.name)) return ''
+  if (node.type.startsWith('mdxJsx') && !containers.has(node.name || ''))
+    return ''
   if (node.type === 'break') return ' '
   if (typeof node.value === 'string') return node.value
   return (node.children || []).map(plainText).join('')
 }
 
-export function shorten(text, limit = 260) {
+export function shorten(text: string, limit = 260): string {
   text = normalizeText(text)
   const chars = Array.from(text)
   if (chars.length <= limit) return text
   const prefix = chars.slice(0, limit - 1).join('')
   const sentences = [...prefix.matchAll(/[.!?。！？](?=\s|$)/gu)]
   const lastSentence = sentences.at(-1)
-  if (lastSentence && lastSentence.index > limit * 0.4) {
+  if (lastSentence?.index !== undefined && lastSentence.index > limit * 0.4) {
     return prefix.slice(0, lastSentence.index + 1)
   }
   const boundary = prefix.lastIndexOf(' ')
@@ -70,7 +98,11 @@ export function shorten(text, limit = 260) {
   ).trimEnd()}…`
 }
 
-function stringField(data, key, source) {
+function stringField(
+  data: Record<string, unknown>,
+  key: string,
+  source: string
+): string {
   const value = data[key]
   if (value == null) return ''
   if (typeof value !== 'string')
@@ -79,22 +111,22 @@ function stringField(data, key, source) {
 }
 
 export function parseDocument(
-  source,
-  { route, filename, navigationTitle, section }
-) {
+  source: string,
+  { route, filename, navigationTitle, section }: DocumentContext
+): ParsedDocument {
   const { data, content } = matter(source)
-  const tree = parser.parse(content)
+  const tree: Root = parser.parse(content)
   const heading = tree.children.find(
     node => node.type === 'heading' && node.depth === 1
   )
-  const paragraphs = []
-  function collect(node) {
+  const paragraphs: string[] = []
+  function collect(node: ContentNode): void {
     if (node.type === 'paragraph') {
       const text = normalizeText(plainText(node))
       if (/[\p{L}\p{N}]/u.test(text)) paragraphs.push(text)
     } else if (
       node.type === 'root' ||
-      (node.type === 'mdxJsxFlowElement' && containers.has(node.name))
+      (node.type === 'mdxJsxFlowElement' && containers.has(node.name || ''))
     ) {
       node.children?.forEach(collect)
     }
@@ -103,8 +135,9 @@ export function parseDocument(
   const title =
     stringField(data, 'ogTitle', filename) ||
     stringField(data, 'title', filename) ||
-    normalizeText(heading && plainText(heading)) ||
-    navigationTitle
+    normalizeText(plainText(heading)) ||
+    navigationTitle ||
+    ''
   const description =
     stringField(data, 'description', filename) ||
     stringField(data, 'desc', filename) ||
@@ -115,7 +148,7 @@ export function parseDocument(
       `${filename}: locale must use language_TERRITORY, e.g. en_US`
     )
   }
-  const page = {
+  const page: ParsedDocument = {
     route,
     title:
       route === '/'
@@ -149,7 +182,7 @@ export function parseDocument(
   return page
 }
 
-export async function walk(directory) {
+export async function walk(directory: string): Promise<string[]> {
   const entries = await readdir(directory, { withFileTypes: true })
   const nested = await Promise.all(
     entries
@@ -172,23 +205,46 @@ export async function walk(directory) {
   return nested.flat()
 }
 
-export async function readPages(root) {
+export async function readPages(
+  root: string
+): Promise<Record<string, ParsedDocument>> {
   const pagesDirectory = path.join(root, 'pages')
   const filenames = await walk(pagesDirectory)
-  const metaCache = new Map()
-  async function navigation(directory, name) {
+  const metaCache = new Map<string, Navigation>()
+  async function navigation(
+    directory: string,
+    name: string
+  ): Promise<string | undefined> {
     if (!metaCache.has(directory)) {
       const file = path.join(directory, '_meta.json')
-      const text = await readFile(file, 'utf8').catch(error => {
-        if (error.code === 'ENOENT') return '{}'
-        throw error
-      })
-      metaCache.set(directory, JSON.parse(text))
+      const text = await readFile(file, 'utf8').catch(
+        (error: NodeJS.ErrnoException) => {
+          if (error.code === 'ENOENT') return '{}'
+          throw error
+        }
+      )
+      const parsed: unknown = JSON.parse(text)
+      if (
+        typeof parsed !== 'object' ||
+        parsed === null ||
+        Array.isArray(parsed)
+      ) {
+        throw new Error(`${file}: navigation metadata must be an object`)
+      }
+      metaCache.set(directory, parsed as Navigation)
     }
-    const entry = metaCache.get(directory)[name]
-    return typeof entry === 'string' ? entry : entry?.title
+    const entry = metaCache.get(directory)?.[name]
+    if (typeof entry === 'string') return entry
+    if (
+      typeof entry === 'object' &&
+      entry !== null &&
+      'title' in entry &&
+      typeof entry.title === 'string'
+    )
+      return entry.title
+    return undefined
   }
-  const result = {}
+  const result: Record<string, ParsedDocument> = {}
   for (const filename of filenames) {
     const relative = path
       .relative(pagesDirectory, filename)
