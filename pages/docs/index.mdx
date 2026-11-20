@@ -1,6 +1,6 @@
 ---
 title: 'Get Started with DF Documentation'
-desc: 'Dora Factory is the digital infrastructure of the Global Hacker Movement. It creates protocols, toolings, and public good infrastructures that help open source communities and frontier tech builders to thrive.'
+description: 'Dora Factory is the digital infrastructure of the Global Hacker Movement. It creates protocols, toolings, and public good infrastructures that help open source communities and frontier tech builders to thrive.'
 ---
 
 import { Cards } from 'nextra/components'
@@ -13,60 +13,28 @@ It creates protocols, toolings, and public good infrastructures that help open s
 
 ## Quickstart
 
-export const CARD_COPY = [
-  // {
-  //   title: 'Dear Doge Testnet Developer Documentation',
-  //   desc: 'This documentation introduces how to use Dear Doge Flatsat Testnet to deploy and simulate applications running in space orbit.',
-  //   url: '/docs/deardoge-testnet'
-  // },
-  {
-    title: 'Dora Vota aMACI Admin Manual',
-    desc: 'By leveraging aMACI operator service, Dora Vota aMACI allows anyone to deploy and manage aMACI voting rounds with ease.',
-    url: '/docs/vota-amaci'
-  },
-  {
-    title: 'Dora Vota Operator Manual',
-    desc: 'Dora Vota is a special purpose blockchain for voting and decentralized community governance.',
-    url: '/docs/vota'
-  },
-  {
-    title: 'Dora Vota Developer Guide',
-    desc: 'This beginner-friendly guide is intended to help you get started with Dora Vota and build on it.',
-    url: '/docs/vota-dev'
-  },
-  {
-    title: 'Dora Vota DevOps Guide',
-    desc: 'This guide provides instructions on running a Dora Vota full node and setting up as a validator. It covers hardware requirements, port and chain configurations, and the process of starting a node and registering as a validator. Ensure your environment meets all requirements to operate Dora Vota nodes successfully.',
-    url: '/docs/vota-devops'
-  },
-  // {
-  //   title: 'Dora Vota Incentivized Testnet Guide (vota-vk)',
-  //   desc: 'This document is to provide a guide for participants of Dora Vota’s first incentivized testnet (vota-vk, a.k.a. Van Kedisi).',
-  //   url: '/docs/vota-vk'
-  // },
-  // {
-  //   title: 'Aptos APIs',
-  //   desc: 'Dora Factory offers a set of Aptos APIs for hackers, developers, and teams working on Aptos native applications. More APIs will be added over time.',
-  //   url: '/docs/aptos'
-  // },
-  {
-    title: 'QRNG Faucet',
-    desc: 'Dora Factory offers a faucet of QRNG (quantum random number generation) for scientific research and product testing. You can request device-independent quantum random numbers for free.',
-    url: '/docs/qrng'
-  }
+import sharingPages from '../../.generated/seo.json'
+
+export const QUICKSTART_ROUTES = [
+  '/docs/vota-amaci',
+  '/docs/vota',
+  '/docs/vota-dev',
+  '/docs/vota-devops',
+  '/docs/qrng'
 ]
 
 <Cards num={2}>
-  {CARD_COPY.map((card, i) => (
-    <Cards.Card key={i} image arrow title={card.title} href={card.url}>
-      <>
+  {QUICKSTART_ROUTES.map(route => {
+    const page = sharingPages[route]
+    return (
+      <Cards.Card key={route} image arrow title={page.title} href={route}>
         <img
-          with="1200"
-          height="628"
-          alt={card.title}
-          src={`${process.env.NEXT_PUBLIC_OG_API_ROOT}/api/og?title=${card.title}&desc=${card.desc}`}
+          width={page.image.width}
+          height={page.image.height}
+          alt={page.image.alt}
+          src={page.image.url}
         />
-      </>
-    </Cards.Card>
-  ))}
+      </Cards.Card>
+    )
+  })}
 </Cards>

@@ -1,6 +1,9 @@
 pnpm-lock.yaml
 .next/
 .vercel/
+.generated/
+public/og/
+.pnpm-store/
 
 # Ignore all SCSS
 **/*.scss
