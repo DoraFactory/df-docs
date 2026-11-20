@@ -12,12 +12,28 @@ module.exports = withNextra({
   reactStrictMode: true, // Recommended for the `pages` directory, default in `app`.
   output: 'standalone',
 
+  async headers() {
+    return [
+      {
+        source: '/og/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable'
+          }
+        ]
+      }
+    ]
+  },
+
   async redirects() {
-    return [{
-      source: '/docs/pqc-auth/benchmark',
-      destination: '/docs/pqc/consensus/benchmark',
-      permanent: true
-    }]
+    return [
+      {
+        source: '/docs/pqc-auth/benchmark',
+        destination: '/docs/pqc/consensus/benchmark',
+        permanent: true
+      }
+    ]
   },
 
   webpack(config) {
